@@ -40,6 +40,7 @@ function onConnect () {
 export const Login = () => {
   const logPnum = useRef(null);
   const logPass = useRef(null);
+  const logDoct = useRef(null);
   
   const regPnum = useRef(null);
   const regPass = useRef(null);
@@ -129,8 +130,8 @@ const login = () =>{
           <button
             className="toggle-btn"
             onClick={() => {
-              document.getElementById("login").style.left = "50px";
-              document.getElementById("register").style.left = "450px";
+              document.getElementById("login").style.left = "3.3rem";
+              document.getElementById("register").style.left = "29rem";
               document.getElementById("btn").style.left = "0px";
             }}
           >
@@ -140,9 +141,9 @@ const login = () =>{
           <button
             className="toggle-btn"
             onClick={() => {
-              document.getElementById("login").style.left = "-400px";
-              document.getElementById("register").style.left = "50px";
-              document.getElementById("btn").style.left = "110px";
+              document.getElementById("login").style.left = "-25rem";
+              document.getElementById("register").style.left = "3.4rem";
+              document.getElementById("btn").style.left = "7rem";
             }}
           >
             Register
@@ -153,6 +154,8 @@ const login = () =>{
           <label >{logResponse}</label>
           <input ref={logPnum} type="text" className="input-field" placeholder="Personal Number"></input>
           <input ref={logPass} type="text" className="input-field" placeholder="Password"></input>
+          <input ref={logDoct} type="checkbox" className="checkbox" value="doctor"></input>
+          <label for="doctor"> Doctor</label>
           <button type="submit" className="submit-btn" onClick={login}>
             Log in
           </button>
