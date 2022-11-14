@@ -1,22 +1,19 @@
-import { Routes, Route } from "react-router-dom";
+import {Routes, Route } from "react-router-dom";
 import Home from "./routes/Home";
 import Login from "./components/Login";
+import MainPage from './routes/MainPage'
 
 function App() {
-  const uname = useRef(null);
-  const pass = useRef(null);
-
-  const sendMQ = () =>{
-    const payload = {operation: 'auth', username:uname.current.value, password:pass.current.value}
-    const strPayload = JSON.stringify(payload)
-    console.log(`common/${uname.current.value}`+ strPayload + pQos)
-    client.publish(`common/${uname.current.value}`, strPayload,pQos)
-  }
-  
   return (
-    <>
-      <Login />
-    </>
+      <div className="App">
+        <div className="content">
+          <Routes>
+            <Route exact path="/" element={ <Home /> } />
+            <Route path="/login" element={ <Login /> } />
+            <Route path="/mainpage" element={ <MainPage /> } />
+          </Routes>
+        </div>
+      </div>
   );
 }
 
