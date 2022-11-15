@@ -2,6 +2,8 @@ import React from "react";
 import "./LoginStyles.css";
 import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom'
+import Popup from "./Popup";
+
 const Paho = require('paho-mqtt')
 
 
@@ -47,8 +49,9 @@ export const Login = () => {
   const regLname = useRef(null);
   const regMail = useRef(null);
  
-  const [regResponse, setRegResp] = useState("Feedback for registration will go here");
-  const [logResponse, setLogResp] = useState("Feedback for login will go here");
+  const [regResponse, setRegResp] = useState(false);
+  const [errRegResponse, setErrRegResp] = useState(false);
+  const [logResponse, setLogResp] = useState(false);
 
   
 
@@ -67,19 +70,19 @@ export const Login = () => {
           if(resJSON.success){
             navigate('/mainpage')
           } else {
-            setLogResp("Wrong username or password");
+            setLogResp(true);
           }
           break;
         case 'register':
           if(resJSON.success){
-            setRegResp("Account successfully created");
+            setRegResp(true);
             regPnum.current.value = ""
             regPass.current.value = ""
             regFname.current.value = ""
             regLname.current.value = ""
             regMail.current.value = ""
           } else {
-            setRegResp("Proper error msg to be added");
+            setErrRegResp(true);
           }
           break;
         default:
@@ -150,7 +153,10 @@ const login = () =>{
         </div>
 
         <form id="login" onSubmit={(event) => { event.preventDefault()}} className="input-group">
-          <label >{logResponse}</label>
+          <Popup trigger={logResponse} setTrigger={setLogResp}> 
+            <h4>Uh oh!</h4>
+            <p>Wrong personal number or password</p>
+          </Popup>
           <input ref={logPnum} type="text" className="input-field" placeholder="Personal Number"></input>
           <input ref={logPass} type="text" className="input-field" placeholder="Password"></input>
           <button type="submit" className="submit-btn" onClick={login}>
@@ -160,6 +166,12 @@ const login = () =>{
 
         <form id="register" onSubmit={(event) => { event.preventDefault()}} className="input-group">
           <label>{regResponse}</label>
+          <Popup trigger={regResponse} setTrigger={setRegResp}> 
+            <p>Account successfully created</p>
+          </Popup>
+          <Popup trigger={errRegResponse} setTrigger={setErrRegResp}> 
+            <p>Proper error msg to be added</p>
+          </Popup>
           <input ref={regPnum} type="text" className="input-field" placeholder="Personal Number"></input>
           <input ref={regPass} type="text" className="input-field" placeholder="Password"></input>
           <input ref={regFname} type="text" className="input-field" placeholder="First Name"></input>
