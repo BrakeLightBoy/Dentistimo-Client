@@ -1,9 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from 'react-router-dom'
 
 import "./NavbarStyles.css";
 
 const NavBar = () => {
+  const navigate = useNavigate();
   return (
     <div className="header">
       <Link to="/">
@@ -20,7 +22,7 @@ const NavBar = () => {
           <Link to="/contactus">Contact Us</Link>
         </li>
         <li>
-          <button>Log In</button>
+          <button onClick={()=>{navigate('/login')}} >Log In</button>
         </li>
       </ul>
     </div>
