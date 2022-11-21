@@ -20,7 +20,7 @@ const NavBar = () => {
           <Link to="/contactus">Contact Us</Link>
         </li>
         <li>
-          <button>Log In</button>
+          <button><Link to="/login">Log In</Link></button>
         </li>
       </ul>
     </div>
