@@ -15,6 +15,7 @@ const client = new Paho.Client(brokerHost,brokerPort,clientId)
 const sQos = 2
 const pQos = 2
 
+let isDoctor = false
 
 client.connect({onSuccess: onConnect})
 
@@ -54,6 +55,7 @@ export const Login = () => {
   const [errRegResponse, setErrRegResp] = useState(false);
   const [logResponse, setLogResp] = useState(false);
   const [emptyResponse, setEmptyResponse] = useState(false);
+  const [uidTextbox, setTextbox] = useState("Personal Number");
 
   
 
@@ -71,6 +73,13 @@ export const Login = () => {
         case 'login':
           if(resJSON.success){
             navigate('/mainpage')
+          } else {
+            setLogResp(true);
+          }
+          break;
+        case 'dentist-login':
+          if(resJSON.success){
+            navigate('/dentist')
           } else {
             setLogResp(true);
           }
@@ -97,8 +106,17 @@ export const Login = () => {
 client.onMessageArrived = onMessage;
 
 const login = () =>{
-  if(logPnum.current.value == "" || logPass.current.value == ""){
+  const dentistCheck = document.getElementsByClassName("checkbox")
+  if(logPnum.current.value === "" || logPass.current.value === ""){
     setEmptyResponse(true);
+  } else if(isDoctor) {
+    const payload = {operation: 'login', username:logPnum.current.value, password:logPass.current.value, opCat: 'dentist'}
+    const strPayload = JSON.stringify(payload)
+    console.log(`common/${logPnum.current.value}`+ strPayload +' qos:'+ pQos)
+    client.subscribe(`${logPnum.current.value}/#`,{qos:sQos, onSuccess: () => {
+    console.log('log subbed')
+    client.publish(`common/${logPnum.current.value}`, strPayload,pQos)
+    }})
   } else {
     const payload = {operation: 'login', personal_number:logPnum.current.value, password:logPass.current.value, opCat: 'user'}
     const strPayload = JSON.stringify(payload)
@@ -112,7 +130,7 @@ const login = () =>{
 }
   
   const register = () =>{
-    if(regPnum.current.value == "" || regPass.current.value == "" || regFname.current.value == "" || regLname.current.value == "" || regMail.current.value == ""){
+    if(regPnum.current.value === "" || regPass.current.value === "" || regFname.current.value === "" || regLname.current.value === "" || regMail.current.value === ""){
       setEmptyResponse(true);
     } else {
       const payload = {
@@ -132,6 +150,18 @@ const login = () =>{
     }})
     }
     
+  }
+
+  
+
+  const toggleDoctor = () => {
+    if(isDoctor){
+      isDoctor = false
+      setTextbox("Personal Number")
+    } else {
+      isDoctor = true
+      setTextbox("Username")
+    }
   }
 
   return (
@@ -170,10 +200,10 @@ const login = () =>{
           <Popup trigger={emptyResponse} setTrigger={setEmptyResponse}> 
             <p>No input field can be blank</p>
           </Popup>
-          <input ref={logPnum} type="text" className="input-field" placeholder="Personal Number"></input>
+          <input ref={logPnum} type="text" className="input-field" placeholder={uidTextbox}></input>
           <input ref={logPass} type="text" className="input-field" placeholder="Password"></input>
-          <input ref={logDoct} type="checkbox" className="checkbox" value="doctor"></input>
-          <label for="doctor"> Doctor</label>
+          <input ref={logDoct} type="checkbox" className="checkbox" value="doctor" onClick={toggleDoctor}></input>
+          <label> Doctor</label>
           <button type="submit" className="submit-btn" onClick={login}>
             Log in
           </button>
