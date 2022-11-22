@@ -2,6 +2,8 @@ import React from "react";
 import "./LoginStyles.css";
 import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom'
+import Popup from "./Popup";
+
 const Paho = require('paho-mqtt')
 
 
@@ -48,8 +50,10 @@ export const Login = () => {
   const regLname = useRef(null);
   const regMail = useRef(null);
  
-  const [regResponse, setRegResp] = useState("Feedback for registration will go here");
-  const [logResponse, setLogResp] = useState("Feedback for login will go here");
+  const [regResponse, setRegResp] = useState(false);
+  const [errRegResponse, setErrRegResp] = useState(false);
+  const [logResponse, setLogResp] = useState(false);
+  const [emptyResponse, setEmptyResponse] = useState(false);
 
   
 
@@ -68,19 +72,19 @@ export const Login = () => {
           if(resJSON.success){
             navigate('/mainpage')
           } else {
-            setLogResp("Wrong username or password");
+            setLogResp(true);
           }
           break;
         case 'register':
           if(resJSON.success){
-            setRegResp("Account successfully created");
+            setRegResp(true);
             regPnum.current.value = ""
             regPass.current.value = ""
             regFname.current.value = ""
             regLname.current.value = ""
             regMail.current.value = ""
           } else {
-            setRegResp("Proper error msg to be added");
+            setErrRegResp(true);
           }
           break;
         default:
@@ -93,18 +97,25 @@ export const Login = () => {
 client.onMessageArrived = onMessage;
 
 const login = () =>{
-  const payload = {operation: 'login', personal_number:logPnum.current.value, password:logPass.current.value, opCat: 'user'}
-  const strPayload = JSON.stringify(payload)
-  console.log(`common/${logPnum.current.value}`+ strPayload +' qos:'+ pQos)
-  client.subscribe(`${logPnum.current.value}/#`,{qos:sQos, onSuccess: () => {
+  if(logPnum.current.value == "" || logPass.current.value == ""){
+    setEmptyResponse(true);
+  } else {
+    const payload = {operation: 'login', personal_number:logPnum.current.value, password:logPass.current.value, opCat: 'user'}
+    const strPayload = JSON.stringify(payload)
+    console.log(`common/${logPnum.current.value}`+ strPayload +' qos:'+ pQos)
+    client.subscribe(`${logPnum.current.value}/#`,{qos:sQos, onSuccess: () => {
     console.log('log subbed')
     client.publish(`common/${logPnum.current.value}`, strPayload,pQos)
-  }})
+  }}) 
+  }
   
 }
   
   const register = () =>{
-    const payload = {
+    if(regPnum.current.value == "" || regPass.current.value == "" || regFname.current.value == "" || regLname.current.value == "" || regMail.current.value == ""){
+      setEmptyResponse(true);
+    } else {
+      const payload = {
       operation: 'register',
       opCat: 'user',
       personal_number: regPnum.current.value,
@@ -119,6 +130,7 @@ const login = () =>{
       console.log('reg subbed')
       client.publish(`common/${regPnum.current.value}`, strPayload,pQos)
     }})
+    }
     
   }
 
@@ -151,7 +163,13 @@ const login = () =>{
         </div>
 
         <form id="login" onSubmit={(event) => { event.preventDefault()}} className="input-group">
-          <label >{logResponse}</label>
+          <Popup trigger={logResponse} setTrigger={setLogResp}> 
+            <h4>Uh oh!</h4>
+            <p>Wrong personal number or password</p>
+          </Popup>
+          <Popup trigger={emptyResponse} setTrigger={setEmptyResponse}> 
+            <p>No input field can be blank</p>
+          </Popup>
           <input ref={logPnum} type="text" className="input-field" placeholder="Personal Number"></input>
           <input ref={logPass} type="text" className="input-field" placeholder="Password"></input>
           <input ref={logDoct} type="checkbox" className="checkbox" value="doctor"></input>
@@ -163,6 +181,15 @@ const login = () =>{
 
         <form id="register" onSubmit={(event) => { event.preventDefault()}} className="input-group">
           <label>{regResponse}</label>
+          <Popup trigger={regResponse} setTrigger={setRegResp}> 
+            <p>Account successfully created</p>
+          </Popup>
+          <Popup trigger={errRegResponse} setTrigger={setErrRegResp}> 
+            <p>Registration failed</p>
+          </Popup>
+          <Popup trigger={emptyResponse} setTrigger={setEmptyResponse}> 
+            <p>No input field can be blank</p>
+          </Popup>
           <input ref={regPnum} type="text" className="input-field" placeholder="Personal Number"></input>
           <input ref={regPass} type="text" className="input-field" placeholder="Password"></input>
           <input ref={regFname} type="text" className="input-field" placeholder="First Name"></input>
