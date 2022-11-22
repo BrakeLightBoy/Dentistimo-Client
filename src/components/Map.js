@@ -21,16 +21,19 @@ let nonReactMarkers = null
 let initLoad = false
 
 let update = null
+let displayInfo = null
 
 const onMessage = (message) => {
     try{
         const resJSON = JSON.parse(message.payloadString)
         clinics = resJSON
+        console.log(clinics)
         let n = 0
         
-        nonReactMarkers = clinics.dentists.map(marker => {
+        nonReactMarkers = clinics.map(marker => {
             n++;
-            return <Marker lat={marker.coordinate.latitude} lng={marker.coordinate.longitude} key={n} icon={icon}/>
+            const info = marker
+            return <Marker lat={marker.coordinate.latitude} clickFunc={displayInfo} lng={marker.coordinate.longitude} info={info} key={n} icon={icon}/>
         })
 
         if(isLoaded){
@@ -54,7 +57,8 @@ function onConnect () {
 const Map = ({center, zoom}) =>{
     
     let [markers, setMarkers] = useState([])
-    
+    let [info, setInfo] = useState("")
+
    isLoaded = true
 
     
@@ -68,14 +72,16 @@ const Map = ({center, zoom}) =>{
         setMarkers(newMarkers)
     }
     
-    
+    displayInfo = setInfo
 
     return (
         <div className="map">
             <GoogleMapReact bootstrapURLKeys={{key:""}} defaultCenter={center} defaultZoom={zoom}>
             {markers}
             </GoogleMapReact>
+            <label>Clinic Info: {info}</label>
         </div>
+       
     )
 }
 
