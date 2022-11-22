@@ -3,6 +3,8 @@ import "./LoginStyles.css";
 import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom'
 import Popup from "./Popup";
+import { useContext } from "react";
+import LoginContext from "../contexts/LoginContext";
 
 const Paho = require('paho-mqtt')
 
@@ -21,22 +23,9 @@ client.connect({onSuccess: onConnect})
 
 
 
-
-
 function onConnect () {
     console.log('CONN SUCC LOGIN')
 }
-
-
-
-  
-
-
-
-
-
-
-
 
 
 
@@ -56,7 +45,7 @@ export const Login = () => {
   const [logResponse, setLogResp] = useState(false);
   const [emptyResponse, setEmptyResponse] = useState(false);
   const [uidTextbox, setTextbox] = useState("Personal Number");
-
+  const {userLogin} = useContext(LoginContext);
   
 
 
@@ -124,6 +113,7 @@ const login = () =>{
     client.subscribe(`${logPnum.current.value}/#`,{qos:sQos, onSuccess: () => {
     console.log('log subbed')
     client.publish(`common/${logPnum.current.value}`, strPayload,pQos)
+    userLogin(logPnum.current.value);
   }}) 
   }
   
