@@ -3,7 +3,7 @@ import "./AppointmentStyles.css";
 
 const Appointment = () => {
   return (
-    <>
+    <div class = "body">
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'></link>
     <div class="app-box">
       <h2>Appointment #123</h2>
@@ -17,7 +17,7 @@ const Appointment = () => {
       <button>delete</button>
       <button>edit</button>
       </div>
-    </>
+    </div>
   );
 };
 

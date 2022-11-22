@@ -1,24 +1,102 @@
-.header {
-  position: fixed;
-  width: 100%;
-  height: 90px;
-  display: flex;
-  align-items: center;
+.steam-button {
+  background-color: #1b86f9;
+  border: none;
+  color: #fff;
+  border-radius: 4px;
+  padding: 16px 50px;
+  box-shadow: 0 0 20px #1b86f9;
+  cursor: pointer;
+  font-size: 1rem;
+  margin: 0.25rem;
+}
+
+h1 {
+  letter-spacing: 0.2rem;
+  line-height: 5rem;
+  font-size: 3rem;
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 5rem;
+  color: rgb(198, 198, 198);
+}
+
+.basicDesc {
+  text-align: center;
+  font-size: 1.7rem;
+  width: 70%;
+  margin-left: 15%;
+}
+
+.col {
   padding: 1rem;
-  z-index: 10;
+  flex: 3;
 }
 
-.nav-menu {
+.deadcol {
+  padding: 1rem;
+  flex: 0.5;
+}
+
+#loginBtn {
+  padding: 2.5rem 7rem;
+  font-size: 1.5rem;
+}
+
+.hp-img {
+  width: 800px;
+  height: 500px;
+  object-fit: cover;
+  border-radius: 30px;
+}
+
+#projName {
+  display: inline-block;
+  padding-left: 1.5rem;
+  padding-top: 1.5rem;
+  padding-right: 15rem;
+}
+
+.buttonsDiv {
+  width: 50%;
+  float:right;
+}
+
+#allBtns {
+  width: 100%;
   display: flex;
+  padding-top: 3rem;
+  padding-left: 7rem;
 }
 
-.nav-menu li {
-  padding: 0 1rem;
-  list-style-type: none;
+html {
+  scroll-behavior: smooth;
 }
 
-.nav-menu a {
-  font-size: 1.2rem;
-  font-weight: 500;
-  color: pink;
+#container {
+  display: flex;
+  height: 800px;
+}
+
+.hp-section {
+  height: 1000px;
+  display: inline-block;
+  width:100%;
+}
+
+#learn-more {
+  background-color: #322c4c;
+}
+
+#contact-us {
+  background-color: #3c2550;
+}
+
+#footer {
+  height: 300px;
+  text-align: center;
+}
+
+a {
+  text-decoration:none;
+  color: white;
 }

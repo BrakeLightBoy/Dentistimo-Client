@@ -1,5 +1,5 @@
 import React from "react";
-import "./LoginStyles.css";
+import LoginCSS from "./LoginStyles.css";
 import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom'
 import Popup from "./Popup";
