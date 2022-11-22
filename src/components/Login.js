@@ -52,6 +52,7 @@ export const Login = () => {
   const [regResponse, setRegResp] = useState(false);
   const [errRegResponse, setErrRegResp] = useState(false);
   const [logResponse, setLogResp] = useState(false);
+  const [emptyResponse, setEmptyResponse] = useState(false);
 
   
 
@@ -95,18 +96,25 @@ export const Login = () => {
 client.onMessageArrived = onMessage;
 
 const login = () =>{
-  const payload = {operation: 'login', personal_number:logPnum.current.value, password:logPass.current.value, opCat: 'user'}
-  const strPayload = JSON.stringify(payload)
-  console.log(`common/${logPnum.current.value}`+ strPayload +' qos:'+ pQos)
-  client.subscribe(`${logPnum.current.value}/#`,{qos:sQos, onSuccess: () => {
+  if(logPnum.current.value == "" || logPass.current.value == ""){
+    setEmptyResponse(true);
+  } else {
+    const payload = {operation: 'login', personal_number:logPnum.current.value, password:logPass.current.value, opCat: 'user'}
+    const strPayload = JSON.stringify(payload)
+    console.log(`common/${logPnum.current.value}`+ strPayload +' qos:'+ pQos)
+    client.subscribe(`${logPnum.current.value}/#`,{qos:sQos, onSuccess: () => {
     console.log('log subbed')
     client.publish(`common/${logPnum.current.value}`, strPayload,pQos)
-  }})
+  }}) 
+  }
   
 }
   
   const register = () =>{
-    const payload = {
+    if(regPnum.current.value == "" || regPass.current.value == "" || regFname.current.value == "" || regLname.current.value == "" || regMail.current.value == ""){
+      setEmptyResponse(true);
+    } else {
+      const payload = {
       operation: 'register',
       opCat: 'user',
       personal_number: regPnum.current.value,
@@ -121,6 +129,7 @@ const login = () =>{
       console.log('reg subbed')
       client.publish(`common/${regPnum.current.value}`, strPayload,pQos)
     }})
+    }
     
   }
 
@@ -132,8 +141,8 @@ const login = () =>{
           <button
             className="toggle-btn"
             onClick={() => {
-              document.getElementById("login").style.left = "50px";
-              document.getElementById("register").style.left = "450px";
+              document.getElementById("login").style.left = "3.3rem";
+              document.getElementById("register").style.left = "29rem";
               document.getElementById("btn").style.left = "0px";
             }}
           >
@@ -143,9 +152,9 @@ const login = () =>{
           <button
             className="toggle-btn"
             onClick={() => {
-              document.getElementById("login").style.left = "-400px";
-              document.getElementById("register").style.left = "50px";
-              document.getElementById("btn").style.left = "110px";
+              document.getElementById("login").style.left = "-25rem";
+              document.getElementById("register").style.left = "3.4rem";
+              document.getElementById("btn").style.left = "7rem";
             }}
           >
             Register
@@ -156,6 +165,9 @@ const login = () =>{
           <Popup trigger={logResponse} setTrigger={setLogResp}> 
             <h4>Uh oh!</h4>
             <p>Wrong personal number or password</p>
+          </Popup>
+          <Popup trigger={emptyResponse} setTrigger={setEmptyResponse}> 
+            <p>No input field can be blank</p>
           </Popup>
           <input ref={logPnum} type="text" className="input-field" placeholder="Personal Number"></input>
           <input ref={logPass} type="text" className="input-field" placeholder="Password"></input>
@@ -170,7 +182,10 @@ const login = () =>{
             <p>Account successfully created</p>
           </Popup>
           <Popup trigger={errRegResponse} setTrigger={setErrRegResp}> 
-            <p>Proper error msg to be added</p>
+            <p>Registration failed</p>
+          </Popup>
+          <Popup trigger={emptyResponse} setTrigger={setEmptyResponse}> 
+            <p>No input field can be blank</p>
           </Popup>
           <input ref={regPnum} type="text" className="input-field" placeholder="Personal Number"></input>
           <input ref={regPass} type="text" className="input-field" placeholder="Password"></input>
