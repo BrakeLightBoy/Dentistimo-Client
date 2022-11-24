@@ -1,5 +1,5 @@
 import React from "react";
-import Appointment from "../components/Appointment";
+import DentistAppointment from "../components/DentistAppointment";
 import Map from "../components/Map";
 import "./MainPage.css";
 import { useState } from "react";
@@ -45,7 +45,7 @@ export default function Home() {
         nonReactAppointments = appointments.map(appointment => {
             n++;
             const info = appointment
-            return <Appointment appointmentInfo={info} key={n} />
+            return <DentistAppointment appointmentInfo={info} key={n} />
         })
 
         if(isLoaded){
