@@ -10,45 +10,33 @@
   cursor: pointer;
   font-size: 1rem;
   margin: 0.25rem;
+  display: inline-block;
+	margin-top: 25px;
+}
+
+body {
+	font-family: 'Open Sans', sans-serif;
+	line-height: 1.5;
 }
 
 h1 {
   letter-spacing: 0.2rem;
   line-height: 5rem;
-  font-size: 3rem;
+  font-size: 4rem;
   text-align: center;
   margin-top: 2rem;
   color: rgb(198, 198, 198);
   font-family: 'Open Sans', sans-serif;
+  font-weight: 300;
+	margin-bottom: 15px;
 }
 
 .basicDesc {
   text-align: center;
-  font-size: 1.7rem;
-  width: 70%;
-  margin-left: 15%;
-}
-
-.col {
-  padding: 1rem;
-  flex: 3;
-}
-
-.deadcol {
-  padding: 1rem;
-  flex: 0.5;
-}
-
-#loginBtn {
-  padding: 2.5rem 7rem;
   font-size: 1.5rem;
-}
-
-.hp-img {
-  width: 800px;
-  height: 500px;
-  object-fit: cover;
-  border-radius: 30px;
+  font-weight: 300;
+	max-width: 1200px;
+	margin: auto;
 }
 
 #projName {
@@ -59,72 +47,50 @@ h1 {
 
 .buttonsDiv {
   width: 50%;
-  float:right;
-}
-
-#allBtns {
-  width: 100%;
-  display: flex;
-  padding-top: 3rem;
-  padding-left: 7rem;
-  margin-top:34rem;
 }
 
 html {
   scroll-behavior: smooth;
 }
 
-#container {
-  display: flex;
-  height: 800px;
-}
-
-.hp-section {
-  height: 1000px;
-  display: inline-block;
-  width:100%;
-}
-
-#learn-more {
-  background-color: #322c4c;
-}
-
-#contact-us {
-  background-color: #3c2550;
-}
-
-#footer {
-  height: 300px;
-  text-align: center;
-}
-
 a {
-  text-decoration:none;
-  color: white;
+	text-decoration: none;
 }
 
 .showcase {
+	height: 100vh;
 	display: flex;
+	align-items: center;
 	justify-content: center;
+	text-align: center;
+	color: #fff;
+	padding: 0 20px;
 }
 
 .video-container {
 	position: absolute;
-	width: 97%;
-	height: 70%;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
 	overflow: hidden;
 }
 
 .video-container video {
+	min-width: 100%;
+	min-height: 100%;
   position: absolute;
 	top: 50%;
 	left: 50%;
-	transform: translate(-50%, -30%);
+	transform: translate(-50%, -50%);
 	object-fit: cover;
-  opacity: 70%;
 }
 
 .content {
 	z-index: 2;
 }
 
+#about {
+	padding: 40px;
+	text-align: center;
+}
