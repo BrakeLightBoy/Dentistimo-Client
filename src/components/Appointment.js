@@ -44,7 +44,7 @@ const Appointment = ({appointmentInfo, deleteFunc, editFunc}) => {
 
 
   return (
-    <>
+    <div class = "body">
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'></link>
     <div className="app-box">
       <h2>Appointment #123</h2>
@@ -58,7 +58,7 @@ const Appointment = ({appointmentInfo, deleteFunc, editFunc}) => {
       <button onClick={deleteFunc}>delete</button>
       <button>edit</button>
       </div>
-    </>
+    </div>
   );
 };
 
