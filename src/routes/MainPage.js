@@ -5,6 +5,8 @@ import "./MainPage.css";
 import { useState } from "react";
 import { useContext } from "react";
 import LoginContext from "../contexts/LoginContext";
+import Popup from "../components/Popup";
+import { useRef } from 'react';
 
 
 let clientLoaded = false
@@ -30,30 +32,45 @@ let update = null
 export default function Home() {
   const { userNum } = useContext(LoginContext);
 
+  const [deleteResponse, setDeleteResp] = useState(false);
+  const [errDeleteResponse, setErrDeleteResp] = useState(false);
+
   if(!clientLoaded){
     clientLoaded = true
     const client = new Paho.Client(brokerHost,brokerPort,clientId)
 
+  
 
   //handles the appointments that are recieved from the request
   const onMessage = (message) => {
+
     try{
-        const resJSON = JSON.parse(message.payloadString)
-        appointments = resJSON
-        console.log("RES appoint:",appointments)
-        let n = -1
-        
-        nonReactAppointments = appointments.map(appointment => {
-            n++;
-            const info = appointment
-            return <Appointment appointmentInfo={info} key={n} />
-        })
+      const resJSON = JSON.parse(message.payloadString)
+      console.log('OP: ' + resJSON.operation)
+      switch(resJSON.operation){
+        case 'delete-user-appointment':
+          if(resJSON.success){
+            setDeleteResp(true);
+          } else {
+            setErrDeleteResp(true);
+          }
+          break;
+        default:
+          appointments = resJSON
+          console.log("RES appoint:",appointments)
+          let n = -1
+          
+          nonReactAppointments = appointments.map(appointment => {
+              n++;
+              const info = appointment
+              return <Appointment appointmentInfo={info} key={n} />
+          })
 
-        if(isLoaded){
-            update(nonReactAppointments)
-        } 
-        
-
+          if(isLoaded){
+              update(nonReactAppointments)
+          }
+          break;
+      }
     } catch(e){
         console.log(e)
     }
@@ -96,8 +113,13 @@ function onConnect () {
       <div>
         {appointments}
         <Map zoom={10} center={{"lat":57.75,"lng":11.92}} />
-        Personal Number: {userNum}
-        
+        <label>{deleteResponse}</label>
+        <Popup trigger={deleteResponse} setTrigger={setDeleteResp}>
+        <p>Appointment successfully deleted</p>
+      </Popup>
+      <Popup trigger={errDeleteResponse} setTrigger={setErrDeleteResp}> 
+        <p>Appointment could not be deleted</p>
+      </Popup>
       </div>
     );
   }
