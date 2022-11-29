@@ -35,12 +35,15 @@ h1 {
   text-align: center;
   font-size: 1.5rem;
   font-weight: 300;
-  max-width: 1200px;
+  max-width: 1000px;
+  padding: 1rem;
   margin: auto;
 }
 
 .quote {
   margin-top: 2rem;
+  padding:0;
+  max-width: 1500px;
   font-style: italic;
 }
 
@@ -96,7 +99,6 @@ a {
 }
 
 #about {
-  padding: 40px;
   text-align: center;
 }
 
@@ -142,10 +144,10 @@ a {
   font-weight: 600;
   margin: 0;
   padding: 0;
-  font-size: 2.8rem;
+  font-size: 2.5rem;
 }
 
 .desc {
-  font-size: 1.1rem;
+  font-size: 1.5rem;
   color: #ce2e2e;
 }

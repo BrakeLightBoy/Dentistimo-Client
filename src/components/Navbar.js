@@ -45,7 +45,22 @@ const NavBar = () => {
         <h1>About</h1>
         <p class="basicDesc">
           Seamless, easy to use, efficient -- Just pick a preferred time and
-          we'll let you know what's available
+          we'll let you know what's available.
+        </p>
+        <p class="basicDesc">
+          Our teeth are one of our most precious tools. 
+          We often don't appreciate them enough until we lose them, for instance due to bad dental 
+          care. We recommend annual checks with a dentist, and strive to make it as simple as possible. 
+        </p>
+        <p class="basicDesc">
+          For someone moving to Sweden, or within Sweden, it is not always easy to get a dentist appointment 
+          as many practices are working on full capacity already and will reject you as a new care-taker. 
+          Rather than a manual search online, Project Titan automates as much of the hard work we can, for you!
+        </p>
+        <p class="basicDesc">
+          Through a seamless graphical user interface, we let you find available times in user-specified time 
+          windows, as our system keeps track of the availability of free time-slots for a number of dentists, 
+          including Dan Tist, the Tooth Fairy, Carmen Corona, and Glen Hysen
         </p>
         <p class="basicDesc quote">
           "Time and health are two precious assets that we don't recognize and
