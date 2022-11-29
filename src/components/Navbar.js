@@ -79,7 +79,7 @@ const NavBar = () => {
         <div class="container">
           <div class="flex-item">
             <div class="pic">
-              <img src={woj} alt="" />
+              <img src={woj} alt="Wojciech" />
             </div>
             <div id="profile-name" class="title">
               Wojciech
@@ -89,7 +89,7 @@ const NavBar = () => {
 
           <div class="flex-item">
             <div class="pic">
-              <img src={noah} alt="" />
+              <img src={noah} alt="Noah" />
             </div>
             <div id="profile-name" class="title">
               Noah
@@ -99,7 +99,7 @@ const NavBar = () => {
 
           <div class="flex-item">
             <div class="pic">
-              <img src={michael} alt="" />
+              <img src={michael} alt="Michael" />
             </div>
             <div id="profile-name" class="title">
               Michael
@@ -111,7 +111,7 @@ const NavBar = () => {
         <div class="container">
           <div class="flex-item">
             <div class="pic">
-              <img src={frida} alt="" />
+              <img src={frida} alt="Frida" />
             </div>
             <div id="profile-name" class="title">
               Frida
@@ -121,7 +121,7 @@ const NavBar = () => {
 
           <div class="flex-item">
             <div class="pic">
-              <img src={emil} alt="" />
+              <img src={emil} alt="Emil" />
             </div>
             <div id="profile-name" class="title">
               Emil
@@ -133,7 +133,7 @@ const NavBar = () => {
         <div class="container">
           <div class="flex-item">
             <div class="pic">
-              <img src={elisa} alt="" />
+              <img src={elisa} alt="Elisa" />
             </div>
             <div id="profile-name" class="title">
               Elisa
@@ -143,7 +143,7 @@ const NavBar = () => {
 
           <div class="flex-item">
             <div class="pic">
-              <img src={john} alt="" />
+              <img src={john} alt="John" />
             </div>
             <div id="profile-name" class="title">
               John
