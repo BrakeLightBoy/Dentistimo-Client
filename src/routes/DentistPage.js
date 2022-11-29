@@ -5,6 +5,7 @@ import "./MainPage.css";
 import { useState } from "react";
 import { useContext } from "react";
 import LoginContext from "../contexts/LoginContext";
+import Popup from "../components/Popup";
 
 let clientLoaded = false
 
@@ -28,49 +29,69 @@ let update = null
 
 export default function Home() {
     const { userNum } = useContext(LoginContext);
+    const username = userNum
+    const [deleteResponse, setDeleteResp] = useState(false);
+    const [errDeleteResponse, setErrDeleteResp] = useState(false);
+
 
   if(!clientLoaded){
     clientLoaded = true
     const client = new Paho.Client(brokerHost,brokerPort,clientId)
+    function requestDentistAppointments() {
+      const payload = {operation: 'dentist-appointments', username: username, opCat: 'appointment'}
+      const strPayload = JSON.stringify(payload)
+      client.publish(`common/${username}`, strPayload,pQos)
+    }
 
 
   //handles the appointments that are recieved from the request
   const onMessage = (message) => {
+
     try{
-        const resJSON = JSON.parse(message.payloadString)
-        appointments = resJSON
-        console.log("RES appoint:",appointments)
-        let n = -1
-        
-        nonReactAppointments = appointments.map(appointment => {
-            n++;
-            const info = appointment
-            return <DentistAppointment appointmentInfo={info} key={n} />
-        })
+      const resJSON = JSON.parse(message.payloadString)
+      console.log('OP: ' + resJSON.operation)
+      switch(resJSON.operation){
+        case 'delete-dentist-appointment':
+          if(resJSON.success){
+            setDeleteResp(true);
+            requestDentistAppointments();
+          } else {
+            setErrDeleteResp(true);
+          }
+          break;
+        default:
+          appointments = resJSON
+          console.log("RES appoint:",appointments)
+          let n = -1
+          
+          nonReactAppointments = appointments.map(appointment => {
+              n++;
+              const info = appointment
+              return <DentistAppointment appointmentInfo={info} key={n} />
+          })
 
-        if(isLoaded){
-            update(nonReactAppointments)
-        } 
-        
-
+          if(isLoaded){
+              update(nonReactAppointments)
+          }
+          break;
+      }
     } catch(e){
         console.log(e)
     }
   }
 
+
 client.onMessageArrived = onMessage;
 
 client.connect({onSuccess: onConnect})
 
-const username = userNum
+
 
 function onConnect () {
   client.subscribe(`${username}/appointments`,{qos:sQos, onSuccess: () => {
     console.log('user appoint subbed')
     console.log('pNumber',username)
-    const payload = {operation: 'dentist-appointments', username: username, opCat: 'appointment'}
-    const strPayload = JSON.stringify(payload)
-    client.publish(`common/${username}`, strPayload,pQos)
+    requestDentistAppointments();
   }})
 }
   }
@@ -94,6 +115,13 @@ function onConnect () {
         <div>
           <Map zoom={10} center={{"lat":57.75,"lng":11.92}} />
           {appointments}
+          <label>{deleteResponse}</label>
+          <Popup trigger={deleteResponse} setTrigger={setDeleteResp}>
+            <p>Appointment successfully deleted</p>
+          </Popup>
+          <Popup trigger={errDeleteResponse} setTrigger={setErrDeleteResp}> 
+            <p>Appointment could not be deleted</p>
+          </Popup>
         </div>
       );
   }

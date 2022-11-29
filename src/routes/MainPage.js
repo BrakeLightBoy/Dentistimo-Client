@@ -28,16 +28,20 @@ let isLoaded = false
 let initLoad = false
 let update = null
 
-
 export default function Home() {
   const { userNum } = useContext(LoginContext);
-
+  const p_number = userNum
   const [deleteResponse, setDeleteResp] = useState(false);
   const [errDeleteResponse, setErrDeleteResp] = useState(false);
 
   if(!clientLoaded){
     clientLoaded = true
     const client = new Paho.Client(brokerHost,brokerPort,clientId)
+    function requestUserAppointments() {
+      const payload = {operation: 'user-appointments', personal_number: p_number, opCat: 'appointment'}
+      const strPayload = JSON.stringify(payload)
+      client.publish(`common/${p_number}`, strPayload,pQos)
+    }
 
   
 
@@ -51,6 +55,7 @@ export default function Home() {
         case 'delete-user-appointment':
           if(resJSON.success){
             setDeleteResp(true);
+            requestUserAppointments();
           } else {
             setErrDeleteResp(true);
           }
@@ -80,15 +85,13 @@ client.onMessageArrived = onMessage;
 
 client.connect({onSuccess: onConnect})
 
-const p_number = userNum
+
 
 function onConnect () {
   client.subscribe(`${p_number}/appointments`,{qos:sQos, onSuccess: () => {
     console.log('user appoint subbed')
     console.log('pNumber',p_number)
-    const payload = {operation: 'user-appointments', personal_number: p_number, opCat: 'appointment'}
-    const strPayload = JSON.stringify(payload)
-    client.publish(`common/${p_number}`, strPayload,pQos)
+    requestUserAppointments();
   }})
 }
   }
