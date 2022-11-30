@@ -1,7 +1,6 @@
-import React, { Component, useEffect } from "react";
+import React from "react";
 import "./AppointmentStyles.css";
-import LoginContext from "../contexts/LoginContext";
-import { useContext } from "react";
+
 
 
 
@@ -34,18 +33,7 @@ const Appointment = ({appointmentInfo, deleteFunc, editFunc}) => {
   );
 };
 
-export function AppointmentBookingPreview(){
-  return(
-  <div className="AppointmentBox">
-     <div className="AppointmentAttributes">
-      <button className="AppointmentAttribute Time">Time</button>
-      <button className="AppointmentAttribute Clinic">Clinic</button>
-      <button className="AppointmentAttribute Dentist">Dentist</button>
-      <button className="AppointmentButton">Book</button>
-    </div>
-   </div>
-  )
-}
+
 
 
 

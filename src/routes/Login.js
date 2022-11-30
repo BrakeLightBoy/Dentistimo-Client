@@ -2,9 +2,12 @@ import React from "react";
 import "./LoginStyles.css";
 import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom'
-import Popup from "./Popup";
+import Popup from "../components/Popup";
 import { useContext } from "react";
 import LoginContext from "../contexts/LoginContext";
+import UserDetails from "../UserDetails";
+
+const uDetails = new UserDetails()
 
 const Paho = require('paho-mqtt')
 
@@ -61,6 +64,7 @@ export const Login = () => {
       switch(resJSON.operation) {
         case 'login':
           if(resJSON.success){
+            uDetails.setUser(logPnum.current.value)
             navigate('/mainpage')
           } else {
             setLogResp(true);
@@ -113,6 +117,7 @@ const login = () =>{
     client.subscribe(`${logPnum.current.value}/#`,{qos:sQos, onSuccess: () => {
     console.log('log subbed')
     client.publish(`common/${logPnum.current.value}`, strPayload,pQos)
+    
     userLogin(logPnum.current.value);
   }}) 
   }

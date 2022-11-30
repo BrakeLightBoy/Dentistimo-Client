@@ -95,7 +95,6 @@ function onConnect () {
     return (
       <div>
         {appointments}
-        <Map zoom={10} center={{"lat":57.75,"lng":11.92}} />
         Personal Number: {userNum}
         
       </div>

@@ -3,7 +3,7 @@
   box-sizing: border-box;
 }
 
-.AppointmentBox {
+.AABox {
   width: 35.5rem;
   height: 3.2rem;
   background-color: #262b40;
@@ -13,7 +13,13 @@
   font-size: large;
 }
 
+.h-left {
+  justify-self: right;
+  justify-content: right;
+}
+
 .header {
+  justify-self: right;
   width: 18rem;
   height: 3rem;
   background-color: #21273c;
@@ -38,7 +44,7 @@
   font-size:  small;
 }
 
-.AppointmentAttribute{
+.AAAtribs label{
   width: 5.5rem;
   height: auto;
   background: transparent;
@@ -47,7 +53,7 @@
   margin-left: 1rem;
 }
 
-.AppointmentButton{
+.AABtn{
   width: auto;
   height: auto;
   background: transparent;

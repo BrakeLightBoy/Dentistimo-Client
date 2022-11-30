@@ -1,8 +1,8 @@
 import {Routes, Route } from "react-router-dom";
 import Home from "./routes/Home";
-import Login from "./components/Login";
+import Login from "./routes/Login";
 import MainPage from './routes/MainPage';
-import BookAppointment from "./components/BookAppointment";
+import Booking from "./routes/Booking";
 import { LoginProvider } from './contexts/LoginContext';
 
 function App() {
@@ -14,7 +14,7 @@ function App() {
             <Route exact path="/" element={ <Home /> } />
             <Route path="/login" element={ <Login /> } />
             <Route path="/mainpage" element={ <MainPage /> } />
-            <Route path="/BookAppointment" element={ <BookAppointment /> } />
+            <Route path="/booking" element={ <Booking /> } />
           </Routes>
           </LoginProvider>
         </div>
