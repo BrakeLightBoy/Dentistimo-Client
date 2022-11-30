@@ -34,6 +34,19 @@ const Appointment = ({appointmentInfo, deleteFunc, editFunc}) => {
   );
 };
 
+export function AppointmentBookingPreview(){
+  return(
+  <div className="AppointmentBox">
+     <div className="AppointmentAttributes">
+      <button className="AppointmentAttribute Time">Time</button>
+      <button className="AppointmentAttribute Clinic">Clinic</button>
+      <button className="AppointmentAttribute Dentist">Dentist</button>
+      <button className="AppointmentButton">Book</button>
+    </div>
+   </div>
+  )
+}
+
 
 
 export default Appointment;

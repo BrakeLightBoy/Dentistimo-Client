@@ -1,0 +1,59 @@
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.AppointmentBox {
+  width: 35.5rem;
+  height: 3.2rem;
+  background-color: #262b40;
+  margin-top: 1rem;
+  margin-left: 1rem;
+  padding-top: 1rem;
+  font-size: large;
+}
+
+.header {
+  width: 18rem;
+  height: 3rem;
+  background-color: #21273c;
+  margin-top: 1rem;
+  margin-left: 0.5rem;
+  font-size: 1.5rem;
+}
+
+.invis {
+  background: transparent;
+  border: transparent;
+  margin-top: 4.3rem;
+}
+
+.Sort {
+  width: 4.8rem;
+  height: 1.5rem;
+  background-color: #262b40;
+  margin-left: 1.5rem;
+  margin-top: 0.4rem;
+  color: rgb(35, 100, 150);
+  font-size:  small;
+}
+
+.AppointmentAttribute{
+  width: 5.5rem;
+  height: auto;
+  background: transparent;
+  color: white;
+  border: transparent;
+  margin-left: 1rem;
+}
+
+.AppointmentButton{
+  width: auto;
+  height: auto;
+  background: transparent;
+  border: transparent;
+  color: lightskyblue;
+  margin-left: 13rem;
+  text-align: right;
+}
+
