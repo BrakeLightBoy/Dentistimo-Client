@@ -71,6 +71,7 @@ export const Login = () => {
         case 'dentist-login':
           if(resJSON.success){
             navigate('/dentist')
+            window.localStorage.setItem('uID', logPnum.current.value)
           } else {
             setLogResp(true);
           }
@@ -107,7 +108,6 @@ const login = () =>{
     client.subscribe(`${logPnum.current.value}/#`,{qos:sQos, onSuccess: () => {
     console.log('log subbed')
     client.publish(`common/${logPnum.current.value}`, strPayload,pQos)
-    userLogin(logPnum.current.value);
     }})
   } else {
     const payload = {operation: 'login', personal_number:logPnum.current.value, password:logPass.current.value, opCat: 'user'}

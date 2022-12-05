@@ -1,7 +1,6 @@
 import React, { Component, useEffect } from "react";
 import "./AppointmentStyles.css";
-import LoginContext from "../contexts/LoginContext";
-import { useContext } from "react";
+
 
 const Paho = require('paho-mqtt')
 
@@ -20,7 +19,7 @@ function onConnect () {
 }
 
 const DentistAppointment = ({appointmentInfo, deleteFunc, editFunc}) => {
-  const { userNum } = useContext(LoginContext);
+  const uID = window.localStorage.getItem('uID')
   console.log("appINFO:",appointmentInfo)
   
   const issuance = appointmentInfo.issuance
@@ -28,16 +27,16 @@ const DentistAppointment = ({appointmentInfo, deleteFunc, editFunc}) => {
   const appointmentDate = date.getDate() + '-' + (date.getMonth()+1) + '-' + date.getFullYear()
   const appointmentTime = date.getHours() + ':' + date.getMinutes()
   const request  = appointmentInfo.request_id
-  const clinic = appointmentInfo.dentist_id[0].works_at[0].name
-  const patient = appointmentInfo.user_id[0].first_name + ' ' + appointmentInfo.user_id[0].last_name
+  const clinic = appointmentInfo.dentist_id.works_at[0].name
+  const patient = appointmentInfo.user_id.first_name + ' ' + appointmentInfo.user_id.last_name
   const appointment = appointmentInfo._id
 
   function deleteFunc() {
-    const payload = {operation: 'delete-dentist-appointment', request_id:request, opCat: 'appointment'}
+    const payload = {operation: 'delete-dentist-appointment', appointment_id:appointment, opCat: 'appointment'}
     const strPayload = JSON.stringify(payload)
-    console.log(`common/${userNum}`+ strPayload +' qos:'+ pQos)
-    client.subscribe(`${userNum}/#`,{qos:sQos, onSuccess: () => {
-    client.publish(`common/${userNum}`, strPayload,pQos)
+    console.log(`common/${uID}`+ strPayload +' qos:'+ pQos)
+    client.subscribe(`${uID}/#`,{qos:sQos, onSuccess: () => {
+    client.publish(`common/${uID}`, strPayload,pQos)
   }}) 
   }
   

@@ -3,6 +3,7 @@ import Appointment from "../components/Appointment";
 import Map from "../components/Map";
 import "./MainPage.css";
 import { useState } from "react";
+import Popup from "../components/Popup";
 
 
 let clientLoaded = false
@@ -25,14 +26,16 @@ let update = null
 
 export default function Home() {
   const uID = window.localStorage.getItem('uID')
+  const [deleteResponse, setDeleteResp] = useState(false);
+  const [errDeleteResponse, setErrDeleteResp] = useState(false);
 
   if(!clientLoaded){
     clientLoaded = true
     const client = new Paho.Client(brokerHost,brokerPort,clientId)
     function requestUserAppointments() {
-      const payload = {operation: 'user-appointments', personal_number: p_number, opCat: 'appointment'}
+      const payload = {operation: 'user-appointments', personal_number: uID, opCat: 'appointment'}
       const strPayload = JSON.stringify(payload)
-      client.publish(`common/${p_number}`, strPayload,pQos)
+      client.publish(`common/${uID}`, strPayload,pQos)
     }
 
   
@@ -52,8 +55,8 @@ export default function Home() {
             setErrDeleteResp(true);
           }
           break;
-        default:
-          appointments = resJSON
+        case 'user-appointments':
+            appointments = resJSON.data
           console.log("RES appoint:",appointments)
           let n = -1
           
@@ -66,6 +69,9 @@ export default function Home() {
           if(isLoaded){
               update(nonReactAppointments)
           }
+            break;  
+        default:
+          
           break;
       }
     } catch(e){
@@ -108,8 +114,14 @@ function onConnect () {
     return (
       <div>
         {appointments}
+        <label>Hello: {deleteResponse}</label>
+        <Popup trigger={deleteResponse} setTrigger={setDeleteResp}>
+        <p>Appointment successfully deleted</p>
+        </Popup>
+        <Popup trigger={errDeleteResponse} setTrigger={setErrDeleteResp}> 
+        <p>Appointment could not be deleted</p>
+        </Popup>
         Personal Number: {uID}
-        
       </div>
     );
   }
