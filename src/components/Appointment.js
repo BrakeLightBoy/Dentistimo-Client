@@ -10,8 +10,8 @@ const Appointment = ({appointmentInfo, deleteFunc, editFunc}) => {
   const issuance = appointmentInfo.issuance
   const date = appointmentInfo.date
   const request  = appointmentInfo.request_id
-  const dentist = appointmentInfo.dentist_id[0].first_name + " "+  appointmentInfo.dentist_id[0].last_name
-  const clinic = appointmentInfo.dentist_id[0].works_at[0].name
+  const dentist = appointmentInfo.dentist_id.first_name + " "+  appointmentInfo.dentist_id.last_name
+  const clinic = appointmentInfo.dentist_id.works_at[0].name
   const appointment = appointmentInfo._id
 
   return (
