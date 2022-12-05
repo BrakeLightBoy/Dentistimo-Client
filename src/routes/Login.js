@@ -1,5 +1,5 @@
 import React from "react";
-import "./LoginStyles.css";
+import LoginCSS from "./LoginStyles.css";
 import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom'
 import Popup from "../components/Popup";
@@ -107,6 +107,7 @@ const login = () =>{
     client.subscribe(`${logPnum.current.value}/#`,{qos:sQos, onSuccess: () => {
     console.log('log subbed')
     client.publish(`common/${logPnum.current.value}`, strPayload,pQos)
+    userLogin(logPnum.current.value);
     }})
   } else {
     const payload = {operation: 'login', personal_number:logPnum.current.value, password:logPass.current.value, opCat: 'user'}

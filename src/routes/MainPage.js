@@ -23,34 +23,51 @@ let isLoaded = false
 let initLoad = false
 let update = null
 
-
 export default function Home() {
   const uID = window.localStorage.getItem('uID')
 
   if(!clientLoaded){
     clientLoaded = true
     const client = new Paho.Client(brokerHost,brokerPort,clientId)
+    function requestUserAppointments() {
+      const payload = {operation: 'user-appointments', personal_number: p_number, opCat: 'appointment'}
+      const strPayload = JSON.stringify(payload)
+      client.publish(`common/${p_number}`, strPayload,pQos)
+    }
 
+  
 
   //handles the appointments that are recieved from the request
   const onMessage = (message) => {
+
     try{
-        const resJSON = JSON.parse(message.payloadString)
-        appointments = resJSON
-        console.log("RES appoint:",appointments)
-        let n = -1
-        
-        nonReactAppointments = appointments.map(appointment => {
-            n++;
-            const info = appointment
-            return <Appointment appointmentInfo={info} key={n} />
-        })
+      const resJSON = JSON.parse(message.payloadString)
+      console.log('OP: ' + resJSON.operation)
+      switch(resJSON.operation){
+        case 'delete-user-appointment':
+          if(resJSON.success){
+            setDeleteResp(true);
+            requestUserAppointments();
+          } else {
+            setErrDeleteResp(true);
+          }
+          break;
+        default:
+          appointments = resJSON
+          console.log("RES appoint:",appointments)
+          let n = -1
+          
+          nonReactAppointments = appointments.map(appointment => {
+              n++;
+              const info = appointment
+              return <Appointment appointmentInfo={info} key={n} />
+          })
 
-        if(isLoaded){
-            update(nonReactAppointments)
-        } 
-        
-
+          if(isLoaded){
+              update(nonReactAppointments)
+          }
+          break;
+      }
     } catch(e){
         console.log(e)
     }
