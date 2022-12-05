@@ -3,8 +3,6 @@ import "./LoginStyles.css";
 import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom'
 import Popup from "../components/Popup";
-import { useContext } from "react";
-import LoginContext from "../contexts/LoginContext";
 import UserDetails from "../UserDetails";
 
 const uDetails = new UserDetails()
@@ -48,7 +46,6 @@ export const Login = () => {
   const [logResponse, setLogResp] = useState(false);
   const [emptyResponse, setEmptyResponse] = useState(false);
   const [uidTextbox, setTextbox] = useState("Personal Number");
-  const {userLogin} = useContext(LoginContext);
   
 
 
@@ -65,6 +62,7 @@ export const Login = () => {
         case 'login':
           if(resJSON.success){
             uDetails.setUser(logPnum.current.value)
+            window.localStorage.setItem('uID', logPnum.current.value)
             navigate('/mainpage')
           } else {
             setLogResp(true);
@@ -117,8 +115,7 @@ const login = () =>{
     client.subscribe(`${logPnum.current.value}/#`,{qos:sQos, onSuccess: () => {
     console.log('log subbed')
     client.publish(`common/${logPnum.current.value}`, strPayload,pQos)
-    
-    userLogin(logPnum.current.value);
+
   }}) 
   }
   

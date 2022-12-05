@@ -6,11 +6,8 @@ import AvailableAppointment from "../components/AvailableAppointment";
 import Map from "../components/Map";
 
 import { useState, useRef } from "react";
-import { useContext } from "react";
-import LoginContext from "../contexts/LoginContext";
 import UserDetails from "../UserDetails";
 const uDetails = new UserDetails()
-
 
 let clientLoaded = false
 
@@ -40,7 +37,7 @@ export const Booking = () =>{
   const cId = useRef(null);
   const mNum = useRef(null);
   const yNum = useRef(null);
-  const { userNum } = useContext(LoginContext);
+  const uID = window.localStorage.getItem('uID')
   const u = uDetails.getUser()
   console.log("USER_ID:",u)
   if(!clientLoaded){
@@ -49,7 +46,7 @@ export const Booking = () =>{
 
     const bookAppointment = (date) => {
     
-      const payload = {operation: 'book-appointment', date:date, clinicId:currentClinic, userId:'superclient1', opCat: 'appointment'}
+      const payload = {operation: 'book-appointment', date:date, clinicId:currentClinic, userId:uID, opCat: 'appointment'}
       const strPayload = JSON.stringify(payload)
       client.publish(`common/common`, strPayload,pQos)
     }
@@ -108,7 +105,7 @@ export const Booking = () =>{
 
       client.subscribe(currentSub,{qos:sQos, onSuccess: () => {
         console.log('user appoint subbed')
-        console.log('pNumber',p_number)
+        console.log('pNumber', uID)
         const payload = {operation: 'unbooked-appointments', year: year, month:month, clinicId:clinic, opCat: 'appointment'}
         const strPayload = JSON.stringify(payload)
         client.publish(`common/common`, strPayload,pQos)
@@ -121,8 +118,6 @@ export const Booking = () =>{
   client.onMessageArrived = onMessage;
 
   client.connect({onSuccess: onConnect})
-
-  const p_number = userNum
 
   function onConnect () {
     isConnected = true

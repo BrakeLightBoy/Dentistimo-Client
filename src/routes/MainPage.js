@@ -3,8 +3,6 @@ import Appointment from "../components/Appointment";
 import Map from "../components/Map";
 import "./MainPage.css";
 import { useState } from "react";
-import { useContext } from "react";
-import LoginContext from "../contexts/LoginContext";
 
 
 let clientLoaded = false
@@ -15,7 +13,6 @@ const Paho = require('paho-mqtt')
 const brokerHost = 'localhost'
 const brokerPort = 9001
 const clientId = ""
-
 
 const sQos = 2
 const pQos = 2
@@ -28,7 +25,7 @@ let update = null
 
 
 export default function Home() {
-  const { userNum } = useContext(LoginContext);
+  const uID = window.localStorage.getItem('uID')
 
   if(!clientLoaded){
     clientLoaded = true
@@ -63,15 +60,14 @@ client.onMessageArrived = onMessage;
 
 client.connect({onSuccess: onConnect})
 
-const p_number = userNum
 
 function onConnect () {
-  client.subscribe(`${p_number}/appointments`,{qos:sQos, onSuccess: () => {
+  client.subscribe(`${uID}/appointments`,{qos:sQos, onSuccess: () => {
     console.log('user appoint subbed')
-    console.log('pNumber',p_number)
-    const payload = {operation: 'user-appointments', personal_number: p_number, opCat: 'appointment'}
+    console.log('pNumber',uID)
+    const payload = {operation: 'user-appointments', personal_number: uID, opCat: 'appointment'}
     const strPayload = JSON.stringify(payload)
-    client.publish(`common/${p_number}`, strPayload,pQos)
+    client.publish(`common/${uID}`, strPayload,pQos)
   }})
 }
   }
@@ -95,7 +91,7 @@ function onConnect () {
     return (
       <div>
         {appointments}
-        Personal Number: {userNum}
+        Personal Number: {uID}
         
       </div>
     );
