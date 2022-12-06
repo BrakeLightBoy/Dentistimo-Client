@@ -7,7 +7,7 @@ import { useContext } from "react";
 import LoginContext from "../contexts/LoginContext";
 import Popup from "../components/Popup";
 import { useRef } from 'react';
-
+import NavPanel from "../components/NavPanel";
 
 let clientLoaded = false
 
@@ -114,6 +114,7 @@ function onConnect () {
 
     return (
       <div>
+        <NavPanel></NavPanel>
         {appointments}
         <Map zoom={10} center={{"lat":57.75,"lng":11.92}} />
         <label>{deleteResponse}</label>

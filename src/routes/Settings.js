@@ -2,10 +2,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import "./SettingsStyles.css";
+import NavPanel from "../components/NavPanel";
 
 function Settings() {
   return (
     <>
+    <NavPanel></NavPanel>
     <h1>Settings</h1>
     <h2>Email Address</h2>
     <input type="text" placeholder="Email"></input>
