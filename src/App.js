@@ -3,6 +3,7 @@ import Home from "./routes/Home";
 import Login from "./components/Login";
 import MainPage from './routes/MainPage';
 import DentistPage from './routes/DentistPage';
+import Settings from './routes/Settings';
 import { LoginProvider } from './contexts/LoginContext';
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
             <Route path="/login" element={ <Login /> } />
             <Route path="/mainpage" element={ <MainPage /> } />
             <Route path="/dentist" element={ <DentistPage /> } />
+            <Route path="/Settings" element={ <Settings /> } />
           </Routes>
           </LoginProvider>
         </div>
