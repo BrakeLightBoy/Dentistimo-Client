@@ -5,6 +5,9 @@ import { useNavigate } from 'react-router-dom'
 import Popup from "../components/Popup";
 import UserDetails from "../UserDetails";
 
+const engLang = require('../languages/english').login
+const sweLang = require('../languages/swedish').login
+
 const uDetails = new UserDetails()
 
 const Paho = require('paho-mqtt')
@@ -46,9 +49,49 @@ export const Login = () => {
   const [logResponse, setLogResp] = useState(false);
   const [emptyResponse, setEmptyResponse] = useState(false);
   const [uidTextbox, setTextbox] = useState("Personal Number");
-  
 
+  const [loginButtonText, setLoginButtonText] = useState(engLang.loginButtonText);
+  const [registerButtonText, setRegisterButtonText] = useState(engLang.registerButtonText);
+  const [uIDText, setuIDText] = useState(engLang.uIDText);
+  const [passwordText, setPasswordText] = useState(engLang.passwordText);
+  const [checkboxText, setCheckboxText] = useState(engLang.checkboxText);
+  const [loginErrorPopup, setLoginErrorPopup] = useState(engLang.loginErrorPopup);
+  const [blankInputPopup, setBlankInputPopup] = useState(engLang.blankInputPopup);
+  const [registrationSuccess, setRegistrationSuccess] = useState(engLang.registrationSuccess);
+  const [registrationFailed, setRegistrationFailed] = useState(engLang.registrationFailed);
 
+  const chosenLang = localStorage.getItem('lang');
+  const [pageLang, setLang] = useState('eng'); 
+
+  function checkLang() {
+    if(chosenLang !== pageLang){
+      
+      setLang(chosenLang)
+      let langObj = null
+      switch (chosenLang) {
+        case 'eng':
+          langObj = engLang  
+          break;
+        case 'swe':
+          langObj = sweLang
+          break;
+        default:
+          langObj = engLang
+          break;
+      }
+      setLoginButtonText(langObj.loginButtonText);
+      setRegisterButtonText(langObj.registerButtonText);
+      setuIDText(langObj.uIDText);
+      setPasswordText(langObj.passwordText);
+      setCheckboxText(langObj.checkboxText);
+      setLoginErrorPopup(langObj.loginErrorPopup);
+      setBlankInputPopup(langObj.blankInputPopup);
+      setRegistrationSuccess(langObj.registrationSuccess);
+      setRegistrationFailed(langObj.registrationFailed);
+    }
+  }
+
+  checkLang()
 
   const navigate = useNavigate();
   
@@ -170,7 +213,7 @@ const login = () =>{
               document.getElementById("btn").style.left = "0px";
             }}
           >
-            Login
+            {loginButtonText}
           </button>
 
           <button
@@ -181,37 +224,36 @@ const login = () =>{
               document.getElementById("btn").style.left = "7rem";
             }}
           >
-            Register
+            {registerButtonText}
           </button>
         </div>
 
         <form id="login" onSubmit={(event) => { event.preventDefault()}} className="input-group">
           <Popup trigger={logResponse} setTrigger={setLogResp}> 
-            <h4>Uh oh!</h4>
-            <p>Wrong personal number or password</p>
+            <p>{loginErrorPopup}</p>
           </Popup>
           <Popup trigger={emptyResponse} setTrigger={setEmptyResponse}> 
-            <p>No input field can be blank</p>
+            <p>{blankInputPopup}</p>
           </Popup>
           <input ref={logPnum} type="text" className="input-field" placeholder={uidTextbox}></input>
           <input ref={logPass} type="text" className="input-field" placeholder="Password"></input>
           <input ref={logDoct} type="checkbox" className="checkbox" value="doctor" onClick={toggleDoctor}></input>
-          <label> Doctor</label>
+          <label> {checkboxText}</label>
           <button type="submit" className="submit-btn" onClick={login}>
-            Log in
+            {loginButtonText}
           </button>
         </form>
 
         <form id="register" onSubmit={(event) => { event.preventDefault()}} className="input-group">
           <label>{regResponse}</label>
           <Popup trigger={regResponse} setTrigger={setRegResp}> 
-            <p>Account successfully created</p>
+            <p>{registrationSuccess}</p>
           </Popup>
           <Popup trigger={errRegResponse} setTrigger={setErrRegResp}> 
-            <p>Registration failed</p>
+            <p>{registrationFailed}</p>
           </Popup>
           <Popup trigger={emptyResponse} setTrigger={setEmptyResponse}> 
-            <p>No input field can be blank</p>
+            <p>{blankInputPopup}</p>
           </Popup>
           <input ref={regPnum} type="text" className="input-field" placeholder="Personal Number"></input>
           <input ref={regPass} type="text" className="input-field" placeholder="Password"></input>
@@ -219,7 +261,7 @@ const login = () =>{
           <input ref={regLname} type="text" className="input-field" placeholder="Last Name"></input>
           <input ref={regMail} type="text" className="input-field" placeholder="Email"></input>
           <button type="submit" className="submit-btn" onClick={register}>
-            Register
+            {registerButtonText}
           </button>
         </form>
       </div>

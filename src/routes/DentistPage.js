@@ -5,6 +5,9 @@ import "./MainPage.css";
 import { useState } from "react";
 import Popup from "../components/Popup";
 
+const engLang = require('../languages/english').mainpage
+const sweLang = require('../languages/swedish').mainpage
+
 let clientLoaded = false
 
 const Paho = require('paho-mqtt')
@@ -29,6 +32,10 @@ export default function Home() {
     const uID = window.localStorage.getItem('uID')
     const [deleteResponse, setDeleteResp] = useState(false);
     const [errDeleteResponse, setErrDeleteResp] = useState(false);
+
+    const [successfulDelete, setSuccessfulDelete] = useState(engLang.successfulDelete);
+    const [unsuccessfulDelete, setUnsuccessfulDelete] = useState(engLang.unsuccessfulDelete );
+
 
 
   if(!clientLoaded){
@@ -108,16 +115,43 @@ function onConnect () {
     setAppointments(newAppointments)
   }
 
+  const chosenLang = localStorage.getItem('lang');
+  const [pageLang, setLang] = useState('eng'); 
+
+  function checkLang() {
+    if(chosenLang !== pageLang){
+      
+      setLang(chosenLang)
+      let langObj = null
+      switch (chosenLang) {
+        case 'eng':
+          langObj = engLang  
+          break;
+        case 'swe':
+          langObj = sweLang
+          break;
+        default:
+          langObj = engLang
+          break;
+      }
+      setSuccessfulDelete(langObj.successfulDelete);
+      setUnsuccessfulDelete(langObj.unsuccessfulDelete);
+    }
+  }
+
+  checkLang()
+
+
     return (
         <div>
           <Map zoom={10} center={{"lat":57.75,"lng":11.92}} />
           {appointments}
           <label>{deleteResponse}</label>
           <Popup trigger={deleteResponse} setTrigger={setDeleteResp}>
-            <p>Appointment successfully deleted</p>
+            <p>{successfulDelete}</p>
           </Popup>
           <Popup trigger={errDeleteResponse} setTrigger={setErrDeleteResp}> 
-            <p>Appointment could not be deleted</p>
+            <p>{unsuccessfulDelete}</p>
           </Popup>
         </div>
       );

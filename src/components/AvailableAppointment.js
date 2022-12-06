@@ -1,5 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import "./AppointmentStyles.css";
+
+const engLang = require('../languages/english').availableappointments
+const sweLang = require('../languages/swedish').availableappointments
+
 
 const slotToString = (slot) => {
 
@@ -23,7 +27,38 @@ const AvailableAppointment = ({appointmentInfo, bookFunc}) => {
     const info = appointmentInfo || {}
     const time =  calcTimeStr(info.s)
     const date = info.year+"-"+info.month+"-"+info.d
-    
+
+    const [dateNum, setDate] = useState(engLang.date);
+    const [timeNum, setTime] = useState(engLang.time);
+    const [book, setBook] = useState(engLang.book);
+
+    const chosenLang = localStorage.getItem('lang');
+    const [pageLang, setLang] = useState('eng'); 
+
+    function checkLang() {
+        if(chosenLang !== pageLang){
+        
+        setLang(chosenLang)
+        let langObj = null
+        switch (chosenLang) {
+            case 'eng':
+            langObj = engLang  
+            break;
+            case 'swe':
+            langObj = sweLang
+            break;
+            default:
+            langObj = engLang
+            break;
+        }
+         setDate(langObj.date);
+         setTime(langObj.time);
+         setBook(langObj.book);
+        }
+    }
+
+    checkLang()
+
     
     const f = () => {
         console.log('dat:',new Date(info.year+"-"+info.month+"-"+info.d))
@@ -34,9 +69,9 @@ const AvailableAppointment = ({appointmentInfo, bookFunc}) => {
     return (
         <div className="AABox">
             <div className="AAAtribs">
-                <label className="AATime">Date: {date} </label>
-                <label className="AATime">Time: {time} </label>
-                <button onClick={f} className="AABtn">Book</button>
+                <label className="AATime">{dateNum}: {date} </label>
+                <label className="AATime">{timeNum}: {time} </label>
+                <button onClick={f} className="AABtn">{book}</button>
             </div>
         </div>
     );
