@@ -18,7 +18,7 @@ let inUse = false
 
 const NavBar = () => {
   
-  const chosenLang = localStorage.getItem('lang');
+  let chosenLang = localStorage.getItem('lang');
 
   const navigate = useNavigate();
   const [pageLang, setLang] = useState('eng'); 
@@ -76,6 +76,24 @@ const NavBar = () => {
   
   checkLang()
 
+  function toggleLang() {
+    switch (chosenLang) {
+      case 'eng':
+        localStorage.setItem('lang','swe')
+        chosenLang = 'swe'
+        break;
+      case 'swe':
+        localStorage.setItem('lang','eng')
+        chosenLang = 'eng'
+        break;
+      default:
+        localStorage.setItem('lang','eng')
+        chosenLang = 'eng'
+        break;
+    }
+    checkLang()
+  }
+
   return (
     <>
       <section className="showcase" id="top-page">
@@ -98,9 +116,11 @@ const NavBar = () => {
           <a href="#about" className="steam-button">
             {aboutButtonText}
           </a>
+          
           <a href="#contact-us" className="steam-button">
             {contactText}
           </a>
+          <a onClick={toggleLang} className="steam-button">Language Button (not final): {pageLang}</a>
         </div>
       </section>
 
