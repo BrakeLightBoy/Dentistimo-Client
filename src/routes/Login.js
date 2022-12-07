@@ -31,7 +31,8 @@ function onConnect () {
     console.log('CONN SUCC LOGIN')
 }
 
-
+//helps with dentist/user username/personal number text field
+let curLang = engLang
 
 export const Login = () => {
   const logPnum = useRef(null);
@@ -48,12 +49,15 @@ export const Login = () => {
   const [errRegResponse, setErrRegResp] = useState(false);
   const [logResponse, setLogResp] = useState(false);
   const [emptyResponse, setEmptyResponse] = useState(false);
-  const [uidTextbox, setTextbox] = useState("Personal Number");
+  const [uidTextbox, setTextbox] = useState(engLang.uIDText);
 
   const [loginButtonText, setLoginButtonText] = useState(engLang.loginButtonText);
   const [registerButtonText, setRegisterButtonText] = useState(engLang.registerButtonText);
   const [uIDText, setuIDText] = useState(engLang.uIDText);
   const [passwordText, setPasswordText] = useState(engLang.passwordText);
+  const [regFNameText, setregFNameText] = useState(engLang.regFName);
+  const [regLNameText, setregLNameText] = useState(engLang.regLName);
+  const [regMailText, setRegMailText] = useState(engLang.regMail);
   const [checkboxText, setCheckboxText] = useState(engLang.checkboxText);
   const [loginErrorPopup, setLoginErrorPopup] = useState(engLang.loginErrorPopup);
   const [blankInputPopup, setBlankInputPopup] = useState(engLang.blankInputPopup);
@@ -63,6 +67,7 @@ export const Login = () => {
   const chosenLang = localStorage.getItem('lang');
   const [pageLang, setLang] = useState('eng'); 
 
+  
   function checkLang() {
     if(chosenLang !== pageLang){
       
@@ -70,24 +75,37 @@ export const Login = () => {
       let langObj = null
       switch (chosenLang) {
         case 'eng':
-          langObj = engLang  
+          langObj = engLang
+          curLang = langObj  
           break;
         case 'swe':
           langObj = sweLang
+          curLang = langObj
           break;
         default:
           langObj = engLang
+          curLang = langObj
           break;
       }
       setLoginButtonText(langObj.loginButtonText);
       setRegisterButtonText(langObj.registerButtonText);
       setuIDText(langObj.uIDText);
       setPasswordText(langObj.passwordText);
+      setregFNameText(langObj.regFName);
+      setregLNameText(langObj.regLName);
+      setRegMailText(langObj.regMail);
       setCheckboxText(langObj.checkboxText);
       setLoginErrorPopup(langObj.loginErrorPopup);
       setBlankInputPopup(langObj.blankInputPopup);
       setRegistrationSuccess(langObj.registrationSuccess);
       setRegistrationFailed(langObj.registrationFailed);
+
+      if(!isDoctor){
+        setTextbox(curLang.uIDText)
+      } else {
+        setTextbox(curLang.username)
+      }
+
     }
   }
 
@@ -193,10 +211,10 @@ const login = () =>{
   const toggleDoctor = () => {
     if(isDoctor){
       isDoctor = false
-      setTextbox("Personal Number")
+      setTextbox(curLang.uIDText)
     } else {
       isDoctor = true
-      setTextbox("Username")
+      setTextbox(curLang.username)
     }
   }
 
@@ -236,7 +254,7 @@ const login = () =>{
             <p>{blankInputPopup}</p>
           </Popup>
           <input ref={logPnum} type="text" className="input-field" placeholder={uidTextbox}></input>
-          <input ref={logPass} type="text" className="input-field" placeholder="Password"></input>
+          <input ref={logPass} type="text" className="input-field" placeholder={passwordText}></input>
           <input ref={logDoct} type="checkbox" className="checkbox" value="doctor" onClick={toggleDoctor}></input>
           <label> {checkboxText}</label>
           <button type="submit" className="submit-btn" onClick={login}>
@@ -255,11 +273,11 @@ const login = () =>{
           <Popup trigger={emptyResponse} setTrigger={setEmptyResponse}> 
             <p>{blankInputPopup}</p>
           </Popup>
-          <input ref={regPnum} type="text" className="input-field" placeholder="Personal Number"></input>
-          <input ref={regPass} type="text" className="input-field" placeholder="Password"></input>
-          <input ref={regFname} type="text" className="input-field" placeholder="First Name"></input>
-          <input ref={regLname} type="text" className="input-field" placeholder="Last Name"></input>
-          <input ref={regMail} type="text" className="input-field" placeholder="Email"></input>
+          <input ref={regPnum} type="text" className="input-field" placeholder={uIDText}></input>
+          <input ref={regPass} type="text" className="input-field" placeholder={passwordText}></input>
+          <input ref={regFname} type="text" className="input-field" placeholder={regFNameText}></input>
+          <input ref={regLname} type="text" className="input-field" placeholder={regLNameText}></input>
+          <input ref={regMail} type="text" className="input-field" placeholder={regMailText}></input>
           <button type="submit" className="submit-btn" onClick={register}>
             {registerButtonText}
           </button>
