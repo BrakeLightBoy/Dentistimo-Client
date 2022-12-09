@@ -1,7 +1,6 @@
-import React, { Component, useEffect } from "react";
+import React, { Component, useEffect, useContext } from "react";
 import "./AppointmentStyles.css";
 import LoginContext from "../contexts/LoginContext";
-import { useContext } from "react";
 
 const Paho = require('paho-mqtt')
 
