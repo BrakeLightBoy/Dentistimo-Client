@@ -5,6 +5,7 @@ import MainPage from './routes/MainPage';
 import DentistPage from './routes/DentistPage';
 import Settings from './routes/Settings';
 import { LoginProvider } from './contexts/LoginContext';
+import SettingsDentist from "./routes/SettingsDentist";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
             <Route path="/mainpage" element={ <MainPage /> } />
             <Route path="/dentist" element={ <DentistPage /> } />
             <Route path="/Settings" element={ <Settings /> } />
+            <Route path="/SettingsDentist" element={ <SettingsDentist /> } />
           </Routes>
           </LoginProvider>
         </div>
