@@ -3,8 +3,6 @@ import Appointment from "../components/Appointment";
 import Map from "../components/Map";
 import "./MainPage.css";
 import { useState } from "react";
-import { useContext } from "react";
-import LoginContext from "../contexts/LoginContext";
 import Popup from "../components/Popup";
 import { useRef } from 'react';
 import NavPanel from "../components/NavPanel";
@@ -18,7 +16,6 @@ const brokerHost = 'localhost'
 const brokerPort = 9001
 const clientId = ""
 
-
 const sQos = 2
 const pQos = 2
 //list of all the appointments that are not connected to the react variable
@@ -29,8 +26,7 @@ let initLoad = false
 let update = null
 
 export default function Home() {
-  const { userNum } = useContext(LoginContext);
-  const p_number = userNum
+  const uID = window.localStorage.getItem('uID')
   const [deleteResponse, setDeleteResp] = useState(false);
   const [errDeleteResponse, setErrDeleteResp] = useState(false);
 
@@ -38,9 +34,9 @@ export default function Home() {
     clientLoaded = true
     const client = new Paho.Client(brokerHost,brokerPort,clientId)
     function requestUserAppointments() {
-      const payload = {operation: 'user-appointments', personal_number: p_number, opCat: 'appointment'}
+      const payload = {operation: 'user-appointments', personal_number: uID, opCat: 'appointment'}
       const strPayload = JSON.stringify(payload)
-      client.publish(`common/${p_number}`, strPayload,pQos)
+      client.publish(`common/${uID}`, strPayload,pQos)
     }
 
   
@@ -60,8 +56,8 @@ export default function Home() {
             setErrDeleteResp(true);
           }
           break;
-        default:
-          appointments = resJSON
+        case 'user-appointments':
+            appointments = resJSON.data
           console.log("RES appoint:",appointments)
           let n = -1
           
@@ -74,6 +70,9 @@ export default function Home() {
           if(isLoaded){
               update(nonReactAppointments)
           }
+            break;  
+        default:
+          
           break;
       }
     } catch(e){
@@ -86,12 +85,13 @@ client.onMessageArrived = onMessage;
 client.connect({onSuccess: onConnect})
 
 
-
 function onConnect () {
-  client.subscribe(`${p_number}/appointments`,{qos:sQos, onSuccess: () => {
+  client.subscribe(`${uID}/appointments`,{qos:sQos, onSuccess: () => {
     console.log('user appoint subbed')
-    console.log('pNumber',p_number)
-    requestUserAppointments();
+    console.log('pNumber',uID)
+    const payload = {operation: 'user-appointments', personal_number: uID, opCat: 'appointment'}
+    const strPayload = JSON.stringify(payload)
+    client.publish(`common/${uID}`, strPayload,pQos)
   }})
 }
   }
@@ -116,14 +116,14 @@ function onConnect () {
       <div>
         <NavPanel></NavPanel>
         {appointments}
-        <Map zoom={10} center={{"lat":57.75,"lng":11.92}} />
-        <label>{deleteResponse}</label>
+        <label>Hello: {deleteResponse}</label>
         <Popup trigger={deleteResponse} setTrigger={setDeleteResp}>
         <p>Appointment successfully deleted</p>
-      </Popup>
-      <Popup trigger={errDeleteResponse} setTrigger={setErrDeleteResp}> 
+        </Popup>
+        <Popup trigger={errDeleteResponse} setTrigger={setErrDeleteResp}> 
         <p>Appointment could not be deleted</p>
-      </Popup>
+        </Popup>
+        Personal Number: {uID}
       </div>
     );
   }

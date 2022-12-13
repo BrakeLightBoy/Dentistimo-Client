@@ -3,8 +3,6 @@ import DentistAppointment from "../components/DentistAppointment";
 import Map from "../components/Map";
 import "./MainPage.css";
 import { useState } from "react";
-import { useContext } from "react";
-import LoginContext from "../contexts/LoginContext";
 import Popup from "../components/Popup";
 
 let clientLoaded = false
@@ -28,8 +26,7 @@ let update = null
 
 
 export default function Home() {
-    const { userNum } = useContext(LoginContext);
-    const username = userNum
+    const uID = window.localStorage.getItem('uID')
     const [deleteResponse, setDeleteResp] = useState(false);
     const [errDeleteResponse, setErrDeleteResp] = useState(false);
 
@@ -38,9 +35,9 @@ export default function Home() {
     clientLoaded = true
     const client = new Paho.Client(brokerHost,brokerPort,clientId)
     function requestDentistAppointments() {
-      const payload = {operation: 'dentist-appointments', username: username, opCat: 'appointment'}
+      const payload = {operation: 'dentist-appointments', username: uID, opCat: 'appointment'}
       const strPayload = JSON.stringify(payload)
-      client.publish(`common/${username}`, strPayload,pQos)
+      client.publish(`common/${uID}`, strPayload,pQos)
     }
 
 
@@ -88,9 +85,9 @@ client.connect({onSuccess: onConnect})
 
 
 function onConnect () {
-  client.subscribe(`${username}/appointments`,{qos:sQos, onSuccess: () => {
+  client.subscribe(`${uID}/appointments`,{qos:sQos, onSuccess: () => {
     console.log('user appoint subbed')
-    console.log('pNumber',username)
+    console.log('pNumber',uID)
     requestDentistAppointments();
   }})
 }

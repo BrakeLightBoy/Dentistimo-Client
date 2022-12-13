@@ -51,7 +51,7 @@ client.onMessageArrived = onMessage;
 function onConnect () {
     client.subscribe(`clinics`,{qos:sQos, onSuccess: () => {
         console.log('clinics subbed')
-      }})
+    }})
 }
 
 const Map = ({center, zoom}) =>{

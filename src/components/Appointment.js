@@ -1,6 +1,6 @@
-import React, { Component, useEffect, useContext } from "react";
+import React from "react";
 import "./AppointmentStyles.css";
-import LoginContext from "../contexts/LoginContext";
+
 
 const Paho = require('paho-mqtt')
 
@@ -12,6 +12,8 @@ const client = new Paho.Client(brokerHost,brokerPort,clientId)
 const sQos = 2
 const pQos = 2
 
+
+
 client.connect({onSuccess: onConnect})
 
 function onConnect () {
@@ -20,7 +22,7 @@ function onConnect () {
 
 
 const Appointment = ({appointmentInfo, deleteFunc, editFunc}) => {
-  const { userNum } = useContext(LoginContext);
+  const uID = window.localStorage.getItem('uID')
   console.log("appINFO:",appointmentInfo)
   
   const issuance = appointmentInfo.issuance
@@ -28,22 +30,22 @@ const Appointment = ({appointmentInfo, deleteFunc, editFunc}) => {
   const appointmentDate = date.getDate() + '-' + (date.getMonth()+1) + '-' + date.getFullYear()
   const appointmentTime = date.getHours() + ':' + date.getMinutes()
   const request  = appointmentInfo.request_id
-  const dentist = appointmentInfo.dentist_id[0].first_name + " "+  appointmentInfo.dentist_id[0].last_name
-  const clinic = appointmentInfo.dentist_id[0].works_at[0].name
+  const dentist = appointmentInfo.dentist_id.first_name + " "+  appointmentInfo.dentist_id.last_name
+  const clinic = appointmentInfo.dentist_id.works_at[0].name
   const appointment = appointmentInfo._id
   
   function deleteFunc() {
-    const payload = {operation: 'delete-user-appointment', request_id:request, opCat: 'appointment'}
+    const payload = {operation: 'delete-user-appointment', appointment_id:appointment, opCat: 'appointment'}
     const strPayload = JSON.stringify(payload)
-    console.log(`common/${userNum}`+ strPayload +' qos:'+ pQos)
-    client.subscribe(`${userNum}/#`,{qos:sQos, onSuccess: () => {
-    client.publish(`common/${userNum}`, strPayload,pQos)
+    console.log(`common/${uID}`+ strPayload +' qos:'+ pQos)
+    client.subscribe(`${uID}/#`,{qos:sQos, onSuccess: () => {
+    client.publish(`common/${uID}`, strPayload,pQos)
   }}) 
   }
 
 
   return (
-    <div class = "body">
+    <div className = "body">
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'></link>
     <div className="app-box">
       <h2>Appointment #123</h2>
@@ -60,6 +62,8 @@ const Appointment = ({appointmentInfo, deleteFunc, editFunc}) => {
     </div>
   );
 };
+
+
 
 
 

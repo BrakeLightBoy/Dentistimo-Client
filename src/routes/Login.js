@@ -2,9 +2,10 @@ import React from "react";
 import LoginCSS from "./LoginStyles.css";
 import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom'
-import Popup from "./Popup";
-import { useContext } from "react";
-import LoginContext from "../contexts/LoginContext";
+import Popup from "../components/Popup";
+import UserDetails from "../UserDetails";
+
+const uDetails = new UserDetails()
 
 const Paho = require('paho-mqtt')
 
@@ -45,7 +46,6 @@ export const Login = () => {
   const [logResponse, setLogResp] = useState(false);
   const [emptyResponse, setEmptyResponse] = useState(false);
   const [uidTextbox, setTextbox] = useState("Personal Number");
-  const {userLogin} = useContext(LoginContext);
   
 
 
@@ -61,6 +61,8 @@ export const Login = () => {
       switch(resJSON.operation) {
         case 'login':
           if(resJSON.success){
+            uDetails.setUser(logPnum.current.value)
+            window.localStorage.setItem('uID', logPnum.current.value)
             navigate('/mainpage')
           } else {
             setLogResp(true);
@@ -69,6 +71,7 @@ export const Login = () => {
         case 'dentist-login':
           if(resJSON.success){
             navigate('/dentist')
+            window.localStorage.setItem('uID', logPnum.current.value)
           } else {
             setLogResp(true);
           }
@@ -105,7 +108,6 @@ const login = () =>{
     client.subscribe(`${logPnum.current.value}/#`,{qos:sQos, onSuccess: () => {
     console.log('log subbed')
     client.publish(`common/${logPnum.current.value}`, strPayload,pQos)
-    userLogin(logPnum.current.value);
     }})
   } else {
     const payload = {operation: 'login', personal_number:logPnum.current.value, password:logPass.current.value, opCat: 'user'}
@@ -114,7 +116,7 @@ const login = () =>{
     client.subscribe(`${logPnum.current.value}/#`,{qos:sQos, onSuccess: () => {
     console.log('log subbed')
     client.publish(`common/${logPnum.current.value}`, strPayload,pQos)
-    userLogin(logPnum.current.value);
+
   }}) 
   }
   
