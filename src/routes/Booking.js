@@ -2,6 +2,8 @@ import React from "react";
 import "./BookingStyles.css";
 import AvailableAppointment from "../components/AvailableAppointment";
 import Popup from "../components/Popup";
+import NavPanel from "../components/NavPanel";
+
 
 
 import Map from "../components/Map";
@@ -158,7 +160,7 @@ export const Booking = () =>{
 
   return (
     <div> 
-      
+      <NavPanel></NavPanel>
       <p className="header">Available Appointments</p>
       
       <button className="invis"></button>   

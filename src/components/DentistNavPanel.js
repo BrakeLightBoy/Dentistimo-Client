@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import "./NavPanelStyles.css";
 
-const NavPanel = () => {
+const DentistNavPanel = () => {
   return (
     <nav class="nav">
       <a href="/" class="nav-title">
@@ -12,15 +12,12 @@ const NavPanel = () => {
       <ul>
 
         <li>
-          <a href="/mainpage">Home</a>
+          <a href="/dentist">Home</a>
         </li>
 
-        <li>
-          <a href="/booking">Make Appointments</a>
-        </li>
 
         <li>
-          <a href="/Settings">Settings</a>
+          <a href="/SettingsDentist">Settings</a>
         </li>
         <button>
             Toggle Language
@@ -35,4 +32,4 @@ const NavPanel = () => {
   );
 };
 
-export default NavPanel;
+export default DentistNavPanel;

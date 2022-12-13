@@ -1,9 +1,8 @@
-import React, { useContext, useRef } from "react";
+import React, { useRef } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import "./SettingsStyles.css";
 import NavPanel from "../components/NavPanel";
-import LoginContext from "../contexts/LoginContext";
 
 const Paho = require('paho-mqtt')
 
@@ -22,7 +21,7 @@ function onConnect () {
 }
 
 export default function Settings() {
-  const { userNum } = useContext(LoginContext);
+  const uID = window.localStorage.getItem('uID')
   
   const email = useRef(null);
   const first = useRef(null);
@@ -33,16 +32,16 @@ export default function Settings() {
     const payload = {
       operation: 'modify',
       opCat: 'user',
-      id: '0000000000',
+      id: uID,
       email_address: email.current.value,
       first_name: first.current.value,
       last_name: last.current.value,
       password: pass.current.value
       }
     const strPayload = JSON.stringify(payload)
-    console.log(`common/0000000000`+ strPayload +' qos:'+ pQos)
-    client.subscribe(`0000000000/#`,{qos:sQos, onSuccess: () => {
-    client.publish(`common/0000000000`, strPayload,pQos)
+    console.log(`common/${uID}`+ strPayload +' qos:'+ pQos)
+    client.subscribe(`${uID}/#`,{qos:sQos, onSuccess: () => {
+    client.publish(`common/${uID}`, strPayload,pQos)
   }}) 
   }
 

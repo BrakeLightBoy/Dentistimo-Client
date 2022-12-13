@@ -4,6 +4,8 @@ import Map from "../components/Map";
 import "./MainPage.css";
 import { useState } from "react";
 import Popup from "../components/Popup";
+import DentistNavPanel from "../components/DentistNavPanel";
+
 
 let clientLoaded = false
 
@@ -110,6 +112,7 @@ function onConnect () {
 
     return (
         <div>
+          <DentistNavPanel></DentistNavPanel>
           <Map zoom={10} center={{"lat":57.75,"lng":11.92}} />
           {appointments}
           <label>{deleteResponse}</label>
