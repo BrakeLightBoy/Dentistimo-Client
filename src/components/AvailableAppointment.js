@@ -1,5 +1,6 @@
 import React from "react";
 import "./AppointmentStyles.css";
+import "./AvailableAppointmentStyles.css";
 
 const slotToString = (slot) => {
 
@@ -32,12 +33,13 @@ const AvailableAppointment = ({appointmentInfo, bookFunc}) => {
 
     let bookAppointment = bookFunc || function(){}
     return (
-        <div className="AABox">
-            <div className="AAAtribs">
-                <label className="AATime">Date: {date} </label>
-                <label className="AATime">Time: {time} </label>
-                <button onClick={f} className="AABtn">Book</button>
+        <div id="root_box" className="AABox">
+            <div id="atrb_box" className="AAAtribs">
+                {/* <label className="AATime">Date: {date} </label> */}
+                <label id="t_lbl" className="AATime">{time} </label>
+                <button onClick={f} id="book_btn" className="AABtn">Book</button>
             </div>
+            
         </div>
     );
 };

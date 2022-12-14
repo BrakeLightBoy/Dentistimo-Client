@@ -2,7 +2,7 @@ import React from "react";
 import "./BookingStyles.css";
 import AvailableAppointment from "../components/AvailableAppointment";
 import Popup from "../components/Popup";
-
+import Calendar from "../components/Calendar";
 
 import Map from "../components/Map";
 
@@ -26,6 +26,8 @@ const pQos = 2
 //list of all the appointments that are not connected to the react variable
 let nonReactAppointments = null
 
+let nonReactEntries = null
+
 let isLoaded = false
 let initLoad = false
 let update = null
@@ -33,6 +35,8 @@ let update = null
 let requestAppointments = null
 let isConnected = false
 let currentSub = null
+
+let bFunc = null
 
 export const Booking = () =>{
   const [bookingResponse, setBookingResp] = useState(false);
@@ -42,17 +46,22 @@ export const Booking = () =>{
   const yNum = useRef(null);
   const uID = window.localStorage.getItem('uID')
   const u = uDetails.getUser()
+
+  const [freeAppointments, setFAppointments] = useState([]); 
+
   console.log("USER_ID:",u)
   if(!clientLoaded){
     clientLoaded = true
     const client = new Paho.Client(brokerHost,brokerPort,clientId)
 
     const bookAppointment = (date) => {
-    
+      console.log('booking.com :',date)
       const payload = {operation: 'book-appointment', date:date, clinicId:currentClinic, userId:uID, opCat: 'appointment'}
       const strPayload = JSON.stringify(payload)
       client.publish(`common/${uID}`, strPayload,pQos)
     }
+
+    bFunc = bookAppointment
 
   //handles the appointments that are recieved from the request
   const onMessage = (message) => {
@@ -81,8 +90,25 @@ export const Booking = () =>{
               return <AvailableAppointment appointmentInfo={info} bookFunc={bookAppointment} key={n} />
           })
 
+          const appDaySorted = []
+          for(const appointment of appointments.slots){
+            
+            const day = appointment.d
+
+            if(appDaySorted[day-1]){
+              appDaySorted[day-1].push(appointment)
+            } else {
+              appDaySorted[day-1] = []
+              appDaySorted[day-1].push(appointment)
+            }
+          }
+          console.log('apds:',appDaySorted)
+          setFAppointments(appDaySorted)
+
+          console.log('react apds:',freeAppointments)
+
           if(isLoaded){
-              update(nonReactAppointments)
+            update(nonReactAppointments)
           } 
           break;  
         default:
@@ -152,8 +178,9 @@ export const Booking = () =>{
     initLoad =true
   }
     
-  update = (newAppointments) =>{
+  update = (newAppointments, sAppoints) =>{
     setAppointments(newAppointments)
+    
   }
 
   return (
@@ -168,6 +195,7 @@ export const Booking = () =>{
         <input ref={mNum} type="text" className="input-field" placeholder="Month"></input>
         <input ref={yNum} type="text" className="input-field" placeholder="Year"></input>
         {/* <button className="Sort">Filter by</button>   */}
+        
         <label>{bookingResponse}</label>
           <Popup trigger={bookingResponse} setTrigger={setBookingResp}>
         <p>Appointment successfully booked</p>
@@ -177,9 +205,10 @@ export const Booking = () =>{
         </Popup>
       </div> 
       <div className="AList">
-          {appointments}
+          {/* {appointments} */}
       </div>
       <Map zoom={10} center={{"lat":57.75,"lng":11.92}}  />
+      <Calendar dayEntries={freeAppointments} bFunc={bFunc} />
     </div>
   )
 };
