@@ -1,14 +1,17 @@
 import React from "react";
 import "./BookingStyles.css";
 import AvailableAppointment from "../components/AvailableAppointment";
-import Popup from "../components/Popup";
 import Calendar from "../components/Calendar";
+import NavPanel from "../components/NavPanel";
 
 import Map from "../components/Map";
 
 import { useState, useRef } from "react";
-import UserDetails from "../UserDetails";
-const uDetails = new UserDetails()
+
+
+const engLang = require('../languages/english').bookings
+const sweLang = require('../languages/swedish').bookings
+
 
 let clientLoaded = false
 
@@ -20,7 +23,6 @@ const brokerPort = 9001
 const clientId = ""
 
 let currentClinic= null
-let currentUser= null
 const sQos = 2
 const pQos = 2
 //list of all the appointments that are not connected to the react variable
@@ -45,11 +47,12 @@ export const Booking = () =>{
   const mNum = useRef(null);
   const yNum = useRef(null);
   const uID = window.localStorage.getItem('uID')
-  const u = uDetails.getUser()
 
   const [freeAppointments, setFAppointments] = useState([]); 
 
-  console.log("USER_ID:",u)
+  const [bookingTitle, setBookingTitle] = useState(engLang.bookingTitle);
+  const [retrieveBookings, setRetrieveBookings] = useState(engLang.retrieveBookings);
+
   if(!clientLoaded){
     clientLoaded = true
     const client = new Paho.Client(brokerHost,brokerPort,clientId)
@@ -143,7 +146,6 @@ export const Booking = () =>{
 
       currentSub = `clinics/${clinic}/${year}/${month}`
       currentClinic = clinic
-      currentUser = uDetails.getUser()
 
       client.subscribe(currentSub,{qos:sQos, onSuccess: () => {
         console.log('user appoint subbed')
@@ -183,14 +185,40 @@ export const Booking = () =>{
     
   }
 
+
+  const chosenLang = localStorage.getItem('lang');
+  const [pageLang, setLang] = useState('eng'); 
+
+  function checkLang() {
+      if(chosenLang !== pageLang){
+      
+      setLang(chosenLang)
+      let langObj = null
+      switch (chosenLang) {
+          case 'eng':
+          langObj = engLang  
+          break;
+          case 'swe':
+          langObj = sweLang
+          break;
+          default:
+          langObj = engLang
+          break;
+      }
+       setBookingTitle(langObj.bookingTitle);
+       setRetrieveBookings(langObj.retrieveBookings);
+      }
+  }
+
+  checkLang()
+
   return (
-    <div> 
-      
-      <p className="header">Available Appointments</p>
-      
+    <div>  
+      <NavPanel></NavPanel>
+      <p className="header">{bookingTitle}</p>
       <button className="invis"></button>   
       <div>
-        <button className="Sort" onClick={requestAppointments}>Get</button>
+        <button className="Sort" onClick={requestAppointments}>{retrieveBookings}</button>
         <input ref={cId} type="text" className="input-field" placeholder="Clinic Id"></input>
         <input ref={mNum} type="text" className="input-field" placeholder="Month"></input>
         <input ref={yNum} type="text" className="input-field" placeholder="Year"></input>

@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import video from "../assets/landing_page_vid_v9.mp4";
 import "./NavbarStyles.css";
+import video from "../assets/landing_page_vid_v9.mp4";
 import noah from "../assets/noah.jpg";
 import michael from "../assets/michael.JPG";
 import woj from "../assets/woj.jpg";
@@ -11,150 +11,224 @@ import john from "../assets/john.JPG";
 import frida from "../assets/frida.JPG";
 import emil from "../assets/emil.JPG";
 
+const engLang = require('../languages/english').navbar
+const sweLang = require('../languages/swedish').navbar
+
+let inUse = false
+
 const NavBar = () => {
+  
+  let chosenLang = localStorage.getItem('lang');
+
   const navigate = useNavigate();
+  const [pageLang, setLang] = useState('eng'); 
+  
+  const [title, setTitle] = useState(engLang.title);
+  const [loginButtonText, setLoginButtonText] = useState(engLang.loginButtonText);
+  const [aboutButtonText, setAboutButtonText] = useState(engLang.aboutButtonText);
+  const [contactText, setContactText] = useState(engLang.contactText);
+  const [p1Text, setp1Text] = useState(engLang.p1Text);
+  const [p2Text, setp2Text] = useState(engLang.p2Text);
+  const [p3Text, setp3Text] = useState(engLang.p3Text);
+  const [p4Text, setp4Text] = useState(engLang.p4Text);
+  const [quoteText, setQuoteText] = useState(engLang.quoteText);
+  const [contactDescriptionText, setContactDescriptionText] = useState(engLang.contactDescriptionText);
+  const [fullStackText, setFullStackText] = useState(engLang.fullStackText);
+  const [backendText, setBackendText] = useState(engLang.backendText);
+  const [frontendText, setFrontendText] = useState(engLang.frontendText);
+  const [toTopText, setToTopText] = useState(engLang.toTopText);
+  
+
+  function checkLang() {
+    if(chosenLang !== pageLang){
+      
+      setLang(chosenLang)
+      let langObj = null
+      switch (chosenLang) {
+        case 'eng':
+          langObj = engLang  
+          break;
+        case 'swe':
+          langObj = sweLang
+          break;
+        default:
+          langObj = engLang
+          break;
+      }
+
+      setTitle(langObj.title);
+      setLoginButtonText(langObj.loginButtonText);
+      setAboutButtonText(langObj.aboutButtonText);
+      setContactText(langObj.contactText);
+      setp1Text(langObj.p1Text);
+      setp2Text(langObj.p2Text);
+      setp3Text(langObj.p3Text);
+      setp4Text(langObj.p4Text);
+      setQuoteText(langObj.quoteText);
+      setContactDescriptionText(langObj.contactDescriptionText);
+      setFullStackText(langObj.fullStackText);
+      setBackendText(langObj.backendText);
+      setFrontendText(langObj.frontendText);
+      setToTopText(langObj.toTopText);
+      inUse = false
+    }
+  }
+  
+  checkLang()
+
+  function toggleLang() {
+    switch (chosenLang) {
+      case 'eng':
+        localStorage.setItem('lang','swe')
+        chosenLang = 'swe'
+        break;
+      case 'swe':
+        localStorage.setItem('lang','eng')
+        chosenLang = 'eng'
+        break;
+      default:
+        localStorage.setItem('lang','eng')
+        chosenLang = 'eng'
+        break;
+    }
+    checkLang()
+  }
+
   return (
     <>
-      <section class="showcase" id="top-page">
-        <div class="video-container">
+      <section className="showcase" id="top-page">
+        <div className="video-container">
           <video src={video} autoPlay muted loop></video>
         </div>
-        <div class="content">
-          <h1>BOOK DENTISTS ALL OVER GOTHENBURG</h1>
+        <div className="content">
+          <h1>{title}</h1>
           <h2 id="projName">PROJECT TITAN</h2>
           <a
             href="#about"
-            class="steam-button"
+            className="steam-button"
             onClick={() => {
               navigate("/login");
             }}
           >
-            Log In
+            {loginButtonText}
           </a>
 
-          <a href="#about" class="steam-button">
-            About
+          <a href="#about" className="steam-button">
+            {aboutButtonText}
           </a>
-          <a href="#contact-us" class="steam-button">
-            Contact Us
+          
+          <a href="#contact-us" className="steam-button">
+            {contactText}
           </a>
+          <a onClick={toggleLang} className="steam-button">Language Button (not final): {pageLang}</a>
         </div>
       </section>
 
       <section id="about">
-        <h1>About</h1>
-        <p class="basicDesc">
-          Seamless, easy to use, efficient -- Just pick a preferred time and
-          we'll let you know what's available.
+        <h1>{aboutButtonText}</h1>
+        <p className="basicDesc">
+          {p1Text}
         </p>
-        <p class="basicDesc">
-          Our teeth are one of our most precious tools. 
-          We often don't appreciate them enough until we lose them, for instance due to bad dental 
-          care. We recommend annual checks with a dentist, and strive to make it as simple as possible. 
+        <p className="basicDesc">
+          {p2Text}
         </p>
-        <p class="basicDesc">
-          For someone moving to Sweden, or within Sweden, it is not always easy to get a dentist appointment 
-          as many practices are working on full capacity already and will reject you as a new care-taker. 
-          Rather than a manual search online, Project Titan automates as much of the hard work we can, for you!
+        <p className="basicDesc">
+          {p3Text}
         </p>
-        <p class="basicDesc">
-          Through a seamless graphical user interface, we let you find available times in user-specified time 
-          windows, as our system keeps track of the availability of free time-slots for a number of dentists, 
-          including Dan Tist, the Tooth Fairy, Carmen Corona, and Glen Hysen
+        <p className="basicDesc">
+          {p4Text}
         </p>
-        <p class="basicDesc quote">
-          "Time and health are two precious assets that we don't recognize and
-          appreciate until they have been depleted.''{" "}
+        <p className="basicDesc quote">
+          {quoteText}
         </p>
-        <p class="basicDesc">- Denis Waitley</p>
+        <p className="basicDesc">- Denis Waitley</p>
       </section>
 
       <section>
-        <h1 id="contact-us">Contact Us</h1>
-        <p class="basicDesc">
-          We're a small group of students with a wide variety of skills and from
-          all over the world!
+        <h1 id="contact-us">{contactText}</h1>
+        <p className="basicDesc">
+          {contactDescriptionText}
         </p>
 
-        <div class="container">
-          <div class="flex-item">
-            <div class="pic">
+        <div className="container">
+          <div className="flex-item">
+            <div className="pic">
               <img src={woj} alt="Wojciech" />
             </div>
-            <div id="profile-name" class="title">
+            <div id="profile-name" className="title">
               Wojciech
             </div>
-            <div class="desc">Full-Stack</div>
+            <div className="desc">{fullStackText}</div>
           </div>
 
-          <div class="flex-item">
-            <div class="pic">
+          <div className="flex-item">
+            <div className="pic">
               <img src={noah} alt="Noah" />
             </div>
-            <div id="profile-name" class="title">
+            <div id="profile-name" className="title">
               Noah
             </div>
-            <div class="desc">Full-Stack</div>
+            <div className="desc">{fullStackText}</div>
           </div>
 
-          <div class="flex-item">
-            <div class="pic">
+          <div className="flex-item">
+            <div className="pic">
               <img src={michael} alt="Michael" />
             </div>
-            <div id="profile-name" class="title">
+            <div id="profile-name" className="title">
               Michael
             </div>
-            <div class="desc">Full-Stack</div>
+            <div className="desc">{fullStackText}</div>
           </div>
         </div>
 
-        <div class="container">
-          <div class="flex-item">
-            <div class="pic">
+        <div className="container">
+          <div className="flex-item">
+            <div className="pic">
               <img src={frida} alt="Frida" />
             </div>
-            <div id="profile-name" class="title">
+            <div id="profile-name" className="title">
               Frida
             </div>
-            <div class="desc">Front-end</div>
+            <div className="desc">{frontendText}</div>
           </div>
 
-          <div class="flex-item">
-            <div class="pic">
+          <div className="flex-item">
+            <div className="pic">
               <img src={emil} alt="Emil" />
             </div>
-            <div id="profile-name" class="title">
+            <div id="profile-name" className="title">
               Emil
             </div>
-            <div class="desc">Front-end</div>
+            <div className="desc">{frontendText}</div>
           </div>
         </div>
 
-        <div class="container">
-          <div class="flex-item">
-            <div class="pic">
+        <div className="container">
+          <div className="flex-item">
+            <div className="pic">
               <img src={elisa} alt="Elisa" />
             </div>
-            <div id="profile-name" class="title">
+            <div id="profile-name" className="title">
               Elisa
             </div>
-            <div class="desc">Back-end</div>
+            <div className="desc">{backendText}</div>
           </div>
 
-          <div class="flex-item">
-            <div class="pic">
+          <div className="flex-item">
+            <div className="pic">
               <img src={john} alt="John" />
             </div>
-            <div id="profile-name" class="title">
+            <div id="profile-name" className="title">
               John
             </div>
-            <div class="desc">Back-end</div>
+            <div className="desc">{backendText}</div>
           </div>
         </div>
       </section>
       <section id="about">
-        <a href="#top-page" class="steam-button">
-          Back to Top
+        <a href="#top-page" className="steam-button">
+          {toTopText}
         </a>
       </section>
     </>

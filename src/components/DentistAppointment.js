@@ -1,6 +1,9 @@
-import React, { Component, useEffect } from "react";
+import React, { Component, useEffect, useState } from "react";
 import "./AppointmentStyles.css";
 
+
+const engLang = require('../languages/english').appointments
+const sweLang = require('../languages/swedish').appointments
 
 const Paho = require('paho-mqtt')
 
@@ -21,6 +24,15 @@ function onConnect () {
 const DentistAppointment = ({appointmentInfo, deleteFunc, editFunc}) => {
   const uID = window.localStorage.getItem('uID')
   console.log("appINFO:",appointmentInfo)
+
+  const [appointmentTitle, setAppointmentTitle] = useState(engLang.appointmentTitle);
+  const [patientName, setDentist] = useState(engLang.patient);
+  const [clinicName, setClinic] = useState(engLang.clinic);
+  const [requestNum, setRequest] = useState(engLang.request);
+  const [deleteButtonText, setDeleteButtonText] = useState(engLang.deleteButtonText);
+  const [issuanceNum, setIssuance] = useState(engLang.issuance);
+  const [dateNum, setDate] = useState(engLang.date);
+  const [timeNum, setTime] = useState(engLang.time);
   
   const issuance = appointmentInfo.issuance
   const date = new Date(appointmentInfo.date)
@@ -40,20 +52,52 @@ const DentistAppointment = ({appointmentInfo, deleteFunc, editFunc}) => {
   }}) 
   }
   
+  const chosenLang = localStorage.getItem('lang');
+  const [pageLang, setLang] = useState('eng');   
+
+  function checkLang() {
+      if(chosenLang !== pageLang){
+      
+      setLang(chosenLang)
+      let langObj = null
+      switch (chosenLang) {
+          case 'eng':
+          langObj = engLang  
+          break;
+          case 'swe':
+          langObj = sweLang
+          break;
+          default:
+          langObj = engLang
+          break;
+      }
+       setAppointmentTitle(langObj.appointmentTitle);
+       setDentist(langObj.patient);
+       setClinic(langObj.clinic);
+       setRequest(langObj.request);
+       setDeleteButtonText(langObj.deleteButtonText);
+       setIssuance(langObj.issuance);
+       setDate(langObj.date);
+       setTime(langObj.time);
+      }
+  }
+
+  checkLang()
+
 
   return (
     <>
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'></link>
     <div className="app-box">
-      <h2>Appointment #123</h2>
-      <p>Patient: {patient}</p>
-      <p>Clinc: {clinic} </p>
-      <p>Request: {request} </p>
-      <p>Appointment: {appointment} </p>
-      <p>issuance: {issuance} </p>
-      <p>Date: {appointmentDate}</p>
-      <p>Time: {appointmentTime}</p>
-      <button onClick={deleteFunc}>delete</button>
+      <h2>{appointmentTitle} #123</h2>
+      <p>{patientName}: {patient} </p>
+      <p>{clinicName}: {clinic} </p>
+      <p>{requestNum}: {request} </p>
+      <p>{appointmentTitle}: {appointment} </p>
+      <p>{issuanceNum}: {issuance} </p>
+      <p>{dateNum}: {appointmentDate} </p>
+      <p>{timeNum}: {appointmentTime}</p>
+      <button onClick={deleteFunc}>{deleteButtonText}</button>
       </div>
     </>
   );

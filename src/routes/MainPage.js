@@ -4,7 +4,11 @@ import Map from "../components/Map";
 import "./MainPage.css";
 import { useState } from "react";
 import Popup from "../components/Popup";
+import { useRef } from 'react';
+import NavPanel from "../components/NavPanel";
 
+const engLang = require('../languages/english').mainpage
+const sweLang = require('../languages/swedish').mainpage
 
 let clientLoaded = false
 
@@ -24,10 +28,17 @@ let isLoaded = false
 let initLoad = false
 let update = null
 
+
+
 export default function Home() {
   const uID = window.localStorage.getItem('uID')
+  const lang = window.localStorage.getItem('lang')
+
   const [deleteResponse, setDeleteResp] = useState(false);
   const [errDeleteResponse, setErrDeleteResp] = useState(false);
+
+  const [successfulDelete, setSuccessfulDelete] = useState(engLang.successfulDelete);
+  const [unsuccessfulDelete, setUnsuccessfulDelete] = useState(engLang.unsuccessfulDelete);
 
   if(!clientLoaded){
     clientLoaded = true
@@ -110,18 +121,45 @@ function onConnect () {
     setAppointments(newAppointments)
   }
 
+  const chosenLang = localStorage.getItem('lang');
+  const [pageLang, setLang] = useState('eng'); 
 
-    return (
-      <div>
-        {appointments}
-        <label>Hello: {deleteResponse}</label>
-        <Popup trigger={deleteResponse} setTrigger={setDeleteResp}>
-        <p>Appointment successfully deleted</p>
-        </Popup>
-        <Popup trigger={errDeleteResponse} setTrigger={setErrDeleteResp}> 
-        <p>Appointment could not be deleted</p>
-        </Popup>
-        Personal Number: {uID}
-      </div>
-    );
+  function checkLang() {
+    if(chosenLang !== pageLang){
+      
+      setLang(chosenLang)
+      let langObj = null
+      switch (chosenLang) {
+        case 'eng':
+          langObj = engLang  
+          break;
+        case 'swe':
+          langObj = sweLang
+          break;
+        default:
+          langObj = engLang
+          break;
+      }
+      setSuccessfulDelete(langObj.successfulDelete);
+      setUnsuccessfulDelete(langObj.unsuccessfulDelete);
+    }
+  }
+
+  checkLang()
+  
+
+  return (
+    <div>
+    <NavPanel></NavPanel>
+      {appointments}
+      <label>Hello: {deleteResponse}</label>
+      <Popup trigger={deleteResponse} setTrigger={setDeleteResp}>
+      <p>{successfulDelete}</p>
+      </Popup>
+      <Popup trigger={errDeleteResponse} setTrigger={setErrDeleteResp}> 
+      <p>{unsuccessfulDelete}</p>
+      </Popup>
+      Personal Number: {uID}
+    </div>
+  );
   }
