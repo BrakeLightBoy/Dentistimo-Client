@@ -1,6 +1,9 @@
 import React from "react";
 import "./BookingStyles.css";
 import AvailableAppointment from "../components/AvailableAppointment";
+import Popup from "../components/Popup";
+import NavPanel from "../components/NavPanel";
+
 
 
 
@@ -37,6 +40,8 @@ let isConnected = false
 let currentSub = null
 
 export const Booking = () =>{
+  const [bookingResponse, setBookingResp] = useState(false);
+  const [errBookingResponse, setErrBookingResp] = useState(false);
   const cId = useRef(null);
   const mNum = useRef(null);
   const yNum = useRef(null);
@@ -53,30 +58,43 @@ export const Booking = () =>{
     
       const payload = {operation: 'book-appointment', date:date, clinicId:currentClinic, userId:uID, opCat: 'appointment'}
       const strPayload = JSON.stringify(payload)
-      client.publish(`common/common`, strPayload,pQos)
+      client.publish(`common/${uID}`, strPayload,pQos)
     }
 
   //handles the appointments that are recieved from the request
   const onMessage = (message) => {
     try{
-        const resJSON = JSON.parse(message.payloadString)
-        appointments = resJSON
-        console.log("RES appoint:",appointments)
-        let n = -1
+      const resJSON = JSON.parse(message.payloadString)
+      console.log('OP: ' + resJSON.operation)
+      switch(resJSON.operation){
+        case 'book-appointment':
+          if(resJSON.success){
+            console.log('SUCCESS WOOOO')
+            setBookingResp(true);
+          } else {
+            setErrBookingResp(true);
+          }
+          break;
+        case 'clinic-free-slots':
+          appointments = resJSON.data
+          console.log("RES appoint:",appointments)
+          let n = -1
         
-        nonReactAppointments = appointments.slots.map(appointment => {
-            n++;
-            const info = appointment
-            info.month = appointments.m
-            info.year = appointments.yr
-            return <AvailableAppointment appointmentInfo={info} bookFunc={bookAppointment} key={n} />
-        })
+          nonReactAppointments = appointments.slots.map(appointment => {
+              n++;
+              const info = appointment
+              info.month = appointments.m
+              info.year = appointments.yr
+              return <AvailableAppointment appointmentInfo={info} bookFunc={bookAppointment} key={n} />
+          })
 
-        if(isLoaded){
-            update(nonReactAppointments)
-        } 
-        
-
+          if(isLoaded){
+              update(nonReactAppointments)
+          } 
+          break;  
+        default:
+          break;
+      }
     } catch(e){
         console.log(e)
     }
@@ -125,6 +143,7 @@ export const Booking = () =>{
 
   function onConnect () {
     isConnected = true
+    client.subscribe(`${uID}/appointments`,{qos:sQos})
   }
 }
 
@@ -171,10 +190,9 @@ export const Booking = () =>{
   checkLang()
 
   return (
-    <div> 
-      
+    <div>  
+      <NavPanel></NavPanel>
       <p className="header">{bookingTitle}</p>
-      
       <button className="invis"></button>   
       <div>
         <button className="Sort" onClick={requestAppointments}>{retrieveBookings}</button>
@@ -182,6 +200,13 @@ export const Booking = () =>{
         <input ref={mNum} type="text" className="input-field" placeholder="Month"></input>
         <input ref={yNum} type="text" className="input-field" placeholder="Year"></input>
         {/* <button className="Sort">Filter by</button>   */}
+        <label>{bookingResponse}</label>
+          <Popup trigger={bookingResponse} setTrigger={setBookingResp}>
+        <p>Appointment successfully booked</p>
+        </Popup>
+        <Popup trigger={errBookingResponse} setTrigger={setErrBookingResp}> 
+        <p>Appointment could not be booked!</p>
+        </Popup>
       </div> 
       <div className="AList">
           {appointments}

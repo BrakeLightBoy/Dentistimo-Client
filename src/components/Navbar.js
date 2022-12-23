@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import video from "../assets/landing_page_vid_v9.mp4";
 import "./NavbarStyles.css";
+import video from "../assets/landing_page_vid_v9.mp4";
 import noah from "../assets/noah.jpg";
 import michael from "../assets/michael.JPG";
 import woj from "../assets/woj.jpg";

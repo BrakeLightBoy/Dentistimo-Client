@@ -4,11 +4,11 @@ import Map from "../components/Map";
 import "./MainPage.css";
 import { useState } from "react";
 import Popup from "../components/Popup";
+import { useRef } from 'react';
+import NavPanel from "../components/NavPanel";
 
 const engLang = require('../languages/english').mainpage
 const sweLang = require('../languages/swedish').mainpage
-
-
 
 let clientLoaded = false
 
@@ -121,7 +121,6 @@ function onConnect () {
     setAppointments(newAppointments)
   }
 
-
   const chosenLang = localStorage.getItem('lang');
   const [pageLang, setLang] = useState('eng'); 
 
@@ -151,6 +150,7 @@ function onConnect () {
 
   return (
     <div>
+    <NavPanel></NavPanel>
       {appointments}
       <label>Hello: {deleteResponse}</label>
       <Popup trigger={deleteResponse} setTrigger={setDeleteResp}>
