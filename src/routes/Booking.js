@@ -3,7 +3,7 @@ import "./BookingStyles.css";
 import AvailableAppointment from "../components/AvailableAppointment";
 import Calendar from "../components/Calendar";
 import NavPanel from "../components/NavPanel";
-
+import Popup from "../components/Popup";
 import Map from "../components/Map";
 
 import { useState, useRef } from "react";
