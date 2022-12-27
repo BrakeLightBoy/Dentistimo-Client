@@ -1,0 +1,85 @@
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.form-box {
+  width: 24rem;
+  height: 30rem;
+  position: relative;
+  margin: 6% auto;
+  background: #6347d6;
+  padding: 0.3rem;
+  overflow: hidden;
+}
+
+.button-box {
+  width: 14rem;
+  margin: 2rem auto;
+  position: relative;
+  box-shadow: 0 0 0.06rem 0.03rem rgb(134, 134, 134);
+}
+
+.toggle-btn {
+  vertical-align: middle;
+  padding: 0.6rem 2.2rem;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  outline: none;
+  position: relative;
+  left: 0.3rem;
+  color: black;
+}
+
+#btn {
+  top: 0;
+  left: 0;
+  position: absolute;
+  width: 7rem;
+  height: 100%;
+  background: rgb(255, 255, 255);
+  transition: 0.5s;
+}
+
+.input-group {
+  top: 8.5rem;
+  position: absolute;
+  width: 17.5rem;
+  transition: 0.5s;
+}
+
+.input-field {
+  width: 100%;
+  padding: 0.6rem 0;
+  margin: 0.3rem 0;
+  border: 0;
+  border-bottom: 0.06rem solid white;
+  background: transparent;
+  outline: none;
+}
+
+.checkbox{ 
+  margin-top: 1rem;
+}
+
+
+.submit-btn {
+  width: 85%;
+  padding: 0.6rem 1.8rem;
+  cursor: pointer;
+  display: block;
+  margin: auto;
+  margin-top: 2rem;
+  background: rgb(255, 255, 255);
+  border: 0;
+  outline: none;
+}
+
+#login {
+  left: 3.3rem;
+}
+
+#register {
+  left: 28rem;
+}
