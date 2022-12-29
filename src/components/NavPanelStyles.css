@@ -1,13 +1,13 @@
 .nav {
     box-sizing: border-box;
     margin: 0;
-    background-color: rgb(33, 48, 117);
     color:white;
     display:flex;
     justify-content: space-between;
     align-items: stretch;
     gap:2rem;
-    padding: 0 1rem;
+    padding: 0.4rem 32px;
+    border-bottom: 2px solid white;
 }
 
 .nav-title {
@@ -18,7 +18,7 @@
     margin:0;
     list-style: none;
     display: flex;
-    gap: 1rem;
+    gap: 3rem;
 }
 
 .nav a, .log-a {
@@ -27,9 +27,19 @@
     height:100%;
     display: flex;
     align-items: center;
-    padding:.25rem;
+    padding:.1rem 1.5rem;
 }
 
+.nav li {
+    transition: transform 0.5s;
+}
 .nav li:hover {
     background: rgb(34, 63, 177);
+    transform: scale(1.1);
 }
+
+.nav-placeholder{
+    color: transparent;
+    font-size: .95rem;
+}
+
