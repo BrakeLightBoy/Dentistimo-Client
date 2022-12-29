@@ -130,16 +130,23 @@ export default function Settings() {
     <>
     <NavPanel></NavPanel>
     <h1>Settings</h1>
-    <h2>Email Address</h2>
-    <input ref={email} type="text" placeholder="Email"></input>
-    <h2>first name</h2>
-    <input ref={first} type="text" placeholder="first name"></input>
-    <h2>last name</h2>
-    <input ref={last} type="text" placeholder="last name"></input>
-    <h2>password</h2>
-    <input ref={pass} type="text" placeholder="password"></input>
-    <button onClick={saveInfo}>Save</button>
-    <a onClick={toggleLang} className="steam-button">Language Button (not final): {pageLang}</a>
+    <div class = "settings-area">
+    <h2 class = "settings-h2">Email Address</h2>
+    <input ref={email} class = "settings-input" type="text" placeholder="Email" autocomplete="new-password"></input>
+    <h2 class = "settings-h2">first name</h2>
+    <input ref={first} class = "settings-input" type="text" placeholder="first name" autocomplete="new-password"></input>
+    <h2 class = "settings-h2">last name</h2>
+    <input ref={last} class = "settings-input" type="text" placeholder="last name" autocomplete="new-password"></input>
+    <h2 class = "settings-h2">password</h2>
+    <input ref={pass} class = "settings-input" type="text" placeholder="password" autocomplete="new-password"></input>
+    <div>
+    <a onClick={toggleLang} class="toggle-lang-btn steam-button">Language Button: {pageLang}</a>
+    </div>
+
+    <div>
+    <button onClick={saveInfo} class=" save-btn steam-button">Save</button>
+    </div>
+    </div>
     </>
   );
 };

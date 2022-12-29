@@ -1,0 +1,41 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400&display=swap");
+
+.settings-h2 {
+    font-size: 2rem;
+    color: rgb(198, 198, 198);
+    font-family: "Open Sans", sans-serif;
+    font-weight: 300;
+    padding-top: .8rem;
+}
+
+.settings-input {
+  padding: 10px 0;
+  font-size: 16px;
+  color: #fff;
+  margin-bottom: 2rem;
+  border: none;
+  border-bottom: 1px solid #fff;
+  outline: none;
+  background: transparent;
+}
+
+.toggle-lang-btn {
+    background-color: #f9691b;
+    box-shadow: 0 0 20px #f9691b;
+    padding: 8px 25px;
+    cursor: pointer;
+    margin:0;
+}
+
+.save-btn {
+    padding: 25px 80px;
+    cursor: pointer;
+    font-size: 1.25rem;
+    margin: 0.25rem;
+    display: inline-block;
+    margin-top: 4rem;
+}
+
+.settings-area {
+    text-align: center;
+}

@@ -1,11 +1,11 @@
 .nav {
     box-sizing: border-box;
     margin: 0;
-    color:white;
-    display:flex;
+    color: white;
+    display: flex;
     justify-content: space-between;
     align-items: stretch;
-    gap:2rem;
+    gap: 2rem;
     padding: 0.4rem 32px;
     border-bottom: 2px solid white;
 }
@@ -13,33 +13,34 @@
 .nav-title {
     font-size: 2rem;
 }
+
 .nav ul {
-    padding:0;
-    margin:0;
+    padding: 0;
+    margin: 0;
     list-style: none;
     display: flex;
     gap: 3rem;
 }
 
 .nav a, .log-a {
-    color:inherit;
+    color: inherit;
     text-decoration: none;
-    height:100%;
+    height: 100%;
     display: flex;
     align-items: center;
-    padding:.1rem 1.5rem;
+    padding: .1rem 1.5rem;
 }
 
 .nav li {
-    transition: transform 0.5s;
+    transition: transform 0.5s ease-out;
 }
+
 .nav li:hover {
-    background: rgb(34, 63, 177);
+    background-color: rgb(34, 63, 177);
     transform: scale(1.1);
 }
 
-.nav-placeholder{
+.nav-placeholder {
     color: transparent;
     font-size: .95rem;
 }
-
