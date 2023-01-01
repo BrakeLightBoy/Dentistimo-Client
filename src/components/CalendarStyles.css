@@ -10,11 +10,9 @@ Both the Calendar and the DayEntry components use this, so ideally it should be 
   
   .AppointmentBox {
     width: 12.2rem;
-    height: 3rem;
-    background-color: #262b40;
-    margin-top: 1rem;
-    margin-left: 1rem;
-    padding-top: 1rem;
+    height: auto;
+    background-color: #4c567e;
+    margin-top: 0.5rem;
     font-size: large;
   }
   
@@ -25,12 +23,6 @@ Both the Calendar and the DayEntry components use this, so ideally it should be 
     margin-top: 1rem;
     margin-left: 0.5rem;
     font-size: 1.5rem;
-  }
-  
-  .invis {
-    background: transparent;
-    border: transparent;
-    margin-top: 4.3rem;
   }
   
   .Sort {
@@ -52,29 +44,42 @@ Both the Calendar and the DayEntry components use this, so ideally it should be 
     margin-left: 0.3rem;
   }
   
-  .AppointmentButton{
-    width: auto;
-    height: auto;
-    background: transparent;
+  .AppointmentDay{
+    width: 4rem;
+    height: 2rem;
+    background: #4c567e;
     border: transparent;
-    color: lightskyblue;
-    margin-left: 2.1rem;
-    text-align: right;
+    text-align: middle;
+    font-size: large;
+    align-self: auto;  
+    align-self: center;
+    margin-left: 4rem;
+  }
+
+  .DayGrid{
+    display: grid;
+    grid-template-columns: repeat(7, 13rem);
+    
   }
   
   .AppointmentGrid{
     display: grid;
     width: 13rem;
     height: 3.5rem;
-    grid-template-columns: 13.5rem 13.5rem 13.5rem 13.5rem 13.5rem 13.5rem 13.5rem;
+    grid-template-columns: repeat(7, 13rem);
+    grid-row: 3.5rem;
+    margin-left: 0.5rem;
+    column-gap: 0.5rem;
+    row-gap: 0.5rem;
   }
   
   .WeekGrid{
     display: grid;
     width: auto;
     height: 3.5rem;
-    grid-template-columns: 5rem 28rem 25rem 28.4rem 5rem;
+    grid-template-columns: 4rem 28rem 25rem 28.4rem 4rem;
     margin-left: 2rem;
+    margin-bottom: 2rem;
   }
   
   .currentDate{
@@ -85,13 +90,22 @@ Both the Calendar and the DayEntry components use this, so ideally it should be 
     text-align: center;
     font-size: xx-large;
     border: transparent;
+    grid-column: 3;
   }
   
   .Arrow{
-    background-color:rgb(35, 100, 150);
+    background-color:rgb(42, 113, 168);
     font-size: larger;
     height: 3.5rem;
-    width: 4.5rem;
+    width: 6rem;  
   }
+
+  .LeftArrow{
+    grid-column: 1;
+  }
+  .RightArrow{
+    grid-column: 5;
+  }
+  
   
   

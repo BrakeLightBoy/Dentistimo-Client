@@ -38,19 +38,37 @@ const Calendar = ({dayEntries, bFunc}) => {
     }
 
     const days = (dayEntries && dayEntries.length > 0) ? processEntries(dayEntries) : createDummies()
+
+    const onMouseOver = event => {
+        const el = event.target;
+        el.style.background = "rgb(42, 98, 144)";
+      };
+      
+      const onMouseOut = event => {
+        const el = event.target;
+        el.style.background = "rgb(42, 113, 168)";
+      };
     
     return (
         <div>
-            <p className="header">Available Appointments</p>
-            <button className="invis"></button>   
-            <div className="WeekGrid">
-                <button className="leftArrow Arrow">Previous</button>
-                <button className="invis"></button> 
-                <button className="currentDate">12 / 2022</button> 
-                <button className="invis"></button> 
-                <button className="RightArrow Arrow">Next</button> 
+            <p className="header">Available Appointments</p> 
+            <div className="WeekGrid" id="BigGrid">
+                <button className="leftArrow Arrow"
+                onClick={() => {
+                    document.getElementById("AppointmentGrid").style.marginLeft = "0.5rem";
+                  }}
+                  onMouseEnter={event => onMouseOver(event)}
+                  onMouseOut={event => onMouseOut(event)}>Previous</button> 
+                <button className="currentDate">12 / 2022</button>  
+                <button className="RightArrow Arrow"
+                onClick={() => {
+                    document.getElementById("AppointmentGrid").style.marginLeft = "-100rem";
+                  }}
+                  onMouseEnter={event => onMouseOver(event)}
+                  onMouseOut={event => onMouseOut(event)}
+                >Next</button> 
             </div> 
-            <div className="AppointmentGrid">
+            <div className="AppointmentGrid" id="AppointmentGrid">
                 {days}
             </div>   
         </div>
