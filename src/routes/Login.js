@@ -224,7 +224,7 @@ const login = () =>{
         <div class="button-box">
           <div id="btn"></div>
           <button
-            class="toggle-btn"
+            class="log-in toggle-btn"
             onClick={() => {
               document.getElementById("login").style.left = "3.3rem";
               document.getElementById("register").style.left = "29rem";
@@ -235,11 +235,11 @@ const login = () =>{
           </button>
 
           <button
-            class="toggle-btn"
+            class="register toggle-btn"
             onClick={() => {
               document.getElementById("login").style.left = "-25rem";
               document.getElementById("register").style.left = "3.4rem";
-              document.getElementById("btn").style.left = "7rem";
+              document.getElementById("btn").style.left = "8rem";
             }}
           >
             {registerButtonText}

@@ -15,7 +15,7 @@
 }
 
 .button-box {
-  width: 15rem;
+  width: 16rem;
   margin: 2rem auto;
   position: relative;
   box-shadow: 0 0 0.06rem 0.03rem rgb(134, 134, 134);
@@ -23,14 +23,19 @@
 
 .toggle-btn {
   vertical-align: middle;
-  padding: 0.6rem 2.2rem;
+  padding: 0.6rem 2.8rem;
   cursor: pointer;
   background: transparent;
   border: 0;
   outline: none;
   position: relative;
-  left: 0.3rem;
+  left: 0rem;
   color: black;
+}
+
+.register {
+  left: 0rem;
+  padding-right: 2.2rem;
 }
 
 #btn {
@@ -45,7 +50,7 @@
 }
 
 .input-group {
-  top: 8.5rem;
+  top: 6.5rem;
   position: absolute;
   width: 17.5rem;
   transition: 0.5s;
@@ -127,6 +132,6 @@ transition: .5s;
 }
 
 .doctor-checkbox-div {
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
+  padding-top: 2rem;
+  padding-bottom: 1rem;
 }
