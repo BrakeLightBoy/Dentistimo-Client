@@ -1,0 +1,55 @@
+* {
+    margin: 0;
+    box-sizing: border-box;
+    color: aliceblue;
+}
+
+.header {
+    position: relative;
+    width: 100%;
+    height: 90px;
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    margin-left: 2rem;
+    color: aliceblue;
+  }
+
+.text {
+    color: aliceblue;
+}
+
+.right {
+    margin-left: 50rem;
+    position: relative;
+}
+
+.date {
+    display: inline-block;
+    margin-left: 1rem;
+}
+
+.dateNav {
+    display: inline-block;
+    border-radius: 0.5rem;
+    padding: 0.3rem;
+    background-color: #0e0e23;
+    margin-left: 1rem;
+    border: thin solid;
+}
+
+.today {
+    background-color: transparent;
+    border: transparent;
+    margin-left: 1rem;
+}
+
+.fika {
+    background-color: #21A6F0;
+    width: 12rem;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    display: inline-block;
+    margin-left: 2rem;
+    border: #21A6F0;
+}

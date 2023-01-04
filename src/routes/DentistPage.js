@@ -5,6 +5,8 @@ import "./MainPage.css";
 import { useState } from "react";
 import Popup from "../components/Popup";
 import DentistNavPanel from "../components/DentistNavPanel";
+import HeadTab from "../components/HeaderTable";
+
 
 
 const engLang = require('../languages/english').mainpage
@@ -147,6 +149,7 @@ function onConnect () {
     return (
         <div>
           <DentistNavPanel></DentistNavPanel>
+          <HeadTab/>
           <Map zoom={10} center={{"lat":57.75,"lng":11.92}} />
           {appointments}
           <label>{deleteResponse}</label>
