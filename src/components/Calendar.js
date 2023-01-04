@@ -3,7 +3,13 @@ import AvailableAppointment from "./AvailableAppointment";
 import "./CalendarStyles.css";
 import DayEntry from "./DayEntry";
 
-const Calendar = ({dayEntries, bFunc}) => {
+
+
+
+const Calendar = ({dayEntries, bFunc, reqApp}) => {
+
+    const theMonth = localStorage.getItem('savedMonth')
+    const theYear = localStorage.getItem('savedYear')
 
     const createDummies = () => {
         const dummies = []
@@ -39,6 +45,9 @@ const Calendar = ({dayEntries, bFunc}) => {
 
     const days = (dayEntries && dayEntries.length > 0) ? processEntries(dayEntries) : createDummies()
 
+    
+
+    //Buttons turn darker on mouse over
     const onMouseOver = event => {
         const el = event.target;
         el.style.background = "rgb(42, 98, 144)";
@@ -48,6 +57,71 @@ const Calendar = ({dayEntries, bFunc}) => {
         const el = event.target;
         el.style.background = "rgb(42, 113, 168)";
       };
+
+      //Dropdownmenu for date selection
+
+      const menuItems = [ 
+        {
+            title: '2023',
+            submenu: [
+                {
+                    title: 'Januari'
+                },
+                {
+                    title: 'Februari'
+                }
+            ]
+        },
+        {
+            title: '2024'
+        },
+        {
+            title: '2025'
+        }
+      ]
+      const Dropdown = ({ submenus }) => {
+        return (
+          <ul className="dropdown">
+            {submenus.map((submenu, index) => (
+              <li key={index} className="menu-items">
+                <a href={submenu.url}>{submenu.title}</a>
+              </li>
+            ))}
+          </ul>
+        );
+      };
+
+      function nextMonth() {
+        let currentMonth = localStorage.getItem('savedMonth')
+        let currentYear = localStorage.getItem('savedYear')
+        if (currentMonth == 12){
+            localStorage.setItem('savedMonth', 1)
+            currentMonth = 1
+            localStorage.setItem('savedYear', currentYear + 1)
+            currentYear =+ 1
+        }else{
+            localStorage.setItem('savedMonth', currentMonth + 1)
+            currentMonth =+ 1
+        }
+        document.getElementById("currentDate").style.cssText = currentMonth + " / " + currentYear
+        reqApp()   
+    }
+
+    function lastMonth() {
+        let currentMonth = localStorage.getItem('savedMonth')
+        let currentYear = localStorage.getItem('savedYear')
+        if (currentMonth == 1){
+            localStorage.setItem('savedMonth', 12)
+            currentMonth = 12
+            localStorage.setItem('savedYear', currentYear - 1)
+            currentYear =- 1
+        }else{
+            localStorage.setItem('savedMonth', currentMonth - 1)
+            currentMonth =- 1
+        }
+                document.getElementById("currentDate").style.cssText = currentMonth + " / " + currentYear
+        reqApp()
+    }
     
     return (
         <div>
@@ -55,14 +129,14 @@ const Calendar = ({dayEntries, bFunc}) => {
             <div className="WeekGrid" id="BigGrid">
                 <button className="leftArrow Arrow"
                 onClick={() => {
-                    document.getElementById("AppointmentGrid").style.marginLeft = "0.5rem";
+                    lastMonth()
                   }}
                   onMouseEnter={event => onMouseOver(event)}
                   onMouseOut={event => onMouseOut(event)}>Previous</button> 
-                <button className="currentDate">12 / 2022</button>  
+                <button className="currentDate" id="currentDate"> / 2022</button> 
                 <button className="RightArrow Arrow"
                 onClick={() => {
-                    document.getElementById("AppointmentGrid").style.marginLeft = "-100rem";
+                    nextMonth()
                   }}
                   onMouseEnter={event => onMouseOver(event)}
                   onMouseOut={event => onMouseOut(event)}
@@ -73,6 +147,8 @@ const Calendar = ({dayEntries, bFunc}) => {
             </div>   
         </div>
     )
+
+    
 }
 
 

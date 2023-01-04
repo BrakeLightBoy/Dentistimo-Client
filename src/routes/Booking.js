@@ -40,12 +40,21 @@ let currentSub = null
 
 let bFunc = null
 
+let savedClinic = null
+let savedMonth = null
+let savedYear = null
+
+
 export const Booking = () =>{
   const [bookingResponse, setBookingResp] = useState(false);
   const [errBookingResponse, setErrBookingResp] = useState(false);
-  const cId = useRef(null);
-  const mNum = useRef(null);
-  const yNum = useRef(null);
+
+  savedClinic = localStorage.getItem('savedClinic')
+  savedMonth = localStorage.getItem('savedMonth')
+  savedYear = localStorage.getItem('savedYear')
+  const cId = savedClinic;
+  const mNum = savedMonth;
+  const yNum = savedYear;
   const uID = window.localStorage.getItem('uID')
 
   const [freeAppointments, setFAppointments] = useState([]); 
@@ -134,9 +143,6 @@ export const Booking = () =>{
         year = yNum.current.value
         month = mNum.current.value
 
-        cId.current.value = null
-        yNum.current.value = null
-        mNum.current.value = null
       } else {
         return
       }
