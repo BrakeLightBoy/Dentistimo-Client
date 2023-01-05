@@ -132,9 +132,9 @@ export const Booking = () =>{
   function reqApp() {
     console.log("RUNNNNNNS")
     if(isConnected){
-      let clinic = savedClinic
-      let year = savedYear
-      let month = savedMonth
+      let clinic = localStorage.getItem('savedClinic')
+      let year = localStorage.getItem('savedYear')
+      let month = localStorage.getItem('savedMonth')
 
       if(currentSub){
         client.unsubscribe(currentSub)

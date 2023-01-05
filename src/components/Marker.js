@@ -7,11 +7,12 @@ const Marker = ({icon, lat, lng, key, info, clickFunc, reqApp}) => {
         <div className="marker" onClick={() => {
             if(clickFunc){
                 clickFunc(JSON.stringify(info))
-                localStorage.setItem('clinicID', )
+                const clinicID = info._id
+                localStorage.setItem('savedClinic', clinicID)
              if (!localStorage.getItem('savedYear') || !localStorage.getItem('savedMonth')){
                 const date = new Date()
-                localStorage.setItem('savedYear', date.getFullYear)
-                localStorage.setItem('savedMonth', date.getMonth + 1)
+                localStorage.setItem('savedYear', date.getFullYear())
+                localStorage.setItem('savedMonth', date.getMonth() + 1)
              }
             reqApp()
                 
