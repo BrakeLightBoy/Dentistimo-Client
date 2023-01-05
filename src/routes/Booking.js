@@ -230,7 +230,7 @@ export const Booking = () =>{
           {/* {appointments} */}
       </div>
       <Map zoom={10} center={{"lat":57.75,"lng":11.92}} reqApp={requestAppointments} />
-      <Calendar dayEntries={freeAppointments} bFunc={bFunc} />
+      <Calendar dayEntries={freeAppointments} bFunc={bFunc} reqApp={requestAppointments} />
     </div>
   )
 };

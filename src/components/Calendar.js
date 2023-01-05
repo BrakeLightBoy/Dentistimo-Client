@@ -66,10 +66,10 @@ const Calendar = ({dayEntries, bFunc, reqApp}) => {
         let intMonth = parseInt(currentMonth)
         if (intMonth === 12){
             localStorage.setItem('savedMonth', 1)
-            intYear =+ 1
+            intYear++
             localStorage.setItem('savedYear', intYear)
         }else{
-            intMonth =+ 1
+            intMonth++
             localStorage.setItem('savedMonth', intMonth)
         }
         reqApp()   
@@ -82,10 +82,10 @@ const Calendar = ({dayEntries, bFunc, reqApp}) => {
         let intMonth = parseInt(currentMonth)
         if (intMonth === 1){
             localStorage.setItem('savedMonth', 12)
-            intYear =- 1
+            intYear--
             localStorage.setItem('savedYear', intYear)
         }else{
-            intMonth =- 1
+            intMonth--
             localStorage.setItem('savedMonth', intMonth)
         }     
         reqApp()
