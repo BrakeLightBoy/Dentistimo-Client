@@ -1,6 +1,5 @@
 import React from "react";
 import DentistAppointment from "../components/DentistAppointment";
-import Map from "../components/Map";
 import "./MainPage.css";
 import { useState } from "react";
 import Popup from "../components/Popup";
@@ -150,7 +149,6 @@ function onConnect () {
         <div>
           <DentistNavPanel></DentistNavPanel>
           <HeadTab/>
-          <Map zoom={10} center={{"lat":57.75,"lng":11.92}} />
           {appointments}
           <label>{deleteResponse}</label>
           <Popup trigger={deleteResponse} setTrigger={setDeleteResp}>

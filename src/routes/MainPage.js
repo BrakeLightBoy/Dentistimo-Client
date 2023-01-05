@@ -1,6 +1,5 @@
 import React from "react";
 import Appointment from "../components/Appointment";
-import Map from "../components/Map";
 import "./MainPage.css";
 import { useState } from "react";
 import Popup from "../components/Popup";
@@ -151,6 +150,7 @@ function onConnect () {
   return (
     <div>
     <NavPanel></NavPanel>
+    <h2 className="title">Upcoming appointments:</h2>
       {appointments}
       <label>Hello: {deleteResponse}</label>
       <Popup trigger={deleteResponse} setTrigger={setDeleteResp}>

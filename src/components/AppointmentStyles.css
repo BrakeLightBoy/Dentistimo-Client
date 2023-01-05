@@ -1,28 +1,41 @@
-p, h2 {
-  font-family: "Montserrat";
-  color: white;
-  font-weight: bold;
-}
-
 html {
   background-color: #0e0d23;
 }
 
 .app-box {
+  position: relative;
   background-color: #171c3f;
   padding: 1rem;
-  margin: 1rem;
-  width: 50%;
+  width: 94%;
+  margin-top: 1rem;
+  color: aliceblue;
+  margin-right: auto;
+  margin-left: auto;
+  
 }
 
-p {
-  color: #dcdcdc;
-  padding: 0.05rem;
-  font-size: .85rem;
+.app-box:hover {
+  background-color: #2e387e;
 }
 
-h2 {
-  color: #5d6edd;
-  padding-bottom: 0.5rem;
-  font-size: 1.25rem;
+.app-box p {
+  display: inline-block;
+  color: aliceblue;
+  padding: 1rem;
+  font-size: 0.85rem;
+}
+
+.app-box button {
+  color: aliceblue;
+  float: right;
+  margin-right: 3ren;
+  border-radius: 0.5rem;
+  padding: 0.3rem;
+  background-color: transparent;
+  border: thin solid;
+}
+
+.app-box button:hover {
+  background-color: aliceblue;
+  color: #0e0d23;
 }

@@ -87,10 +87,8 @@ const Appointment = ({appointmentInfo, deleteFunc, editFunc}) => {
     checkLang()
 
   return (
-    <div className = "body">
-    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'></link>
     <div className="app-box">
-      <h2>{appointmentTitle} #123</h2>
+      <h3>{appointmentTitle} #123</h3>
       <p>{dentistName}: {dentist} </p>
       <p>{clinicName}: {clinic} </p>
       <p>{requestNum}: {request} </p>
@@ -100,7 +98,6 @@ const Appointment = ({appointmentInfo, deleteFunc, editFunc}) => {
       <p>{timeNum}: {appointmentTime}</p>
       <button onClick={deleteFunc}>{deleteButtonText}</button>
       </div>
-    </div>
   );
 };
 

@@ -87,9 +87,8 @@ const DentistAppointment = ({appointmentInfo, deleteFunc, editFunc}) => {
 
   return (
     <>
-    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'></link>
     <div className="app-box">
-      <h2>{appointmentTitle} #123</h2>
+      <h3>{appointmentTitle} #123</h3>
       <p>{patientName}: {patient} </p>
       <p>{clinicName}: {clinic} </p>
       <p>{requestNum}: {request} </p>
