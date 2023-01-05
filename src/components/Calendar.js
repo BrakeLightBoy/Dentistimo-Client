@@ -7,9 +7,7 @@ import DayEntry from "./DayEntry";
 
 
 const Calendar = ({dayEntries, bFunc, reqApp}) => {
-
-    const theMonth = localStorage.getItem('savedMonth')
-    const theYear = localStorage.getItem('savedYear')
+    
 
     const createDummies = () => {
         const dummies = []
@@ -48,7 +46,7 @@ const Calendar = ({dayEntries, bFunc, reqApp}) => {
     
 
     //Buttons turn darker on mouse over
-    const onMouseOver = event => {
+      const onMouseOver = event => {
         const el = event.target;
         el.style.background = "rgb(42, 98, 144)";
       };
@@ -58,38 +56,8 @@ const Calendar = ({dayEntries, bFunc, reqApp}) => {
         el.style.background = "rgb(42, 113, 168)";
       };
 
-      //Dropdownmenu for date selection
-
-      const menuItems = [ 
-        {
-            title: '2023',
-            submenu: [
-                {
-                    title: 'Januari'
-                },
-                {
-                    title: 'Februari'
-                }
-            ]
-        },
-        {
-            title: '2024'
-        },
-        {
-            title: '2025'
-        }
-      ]
-      const Dropdown = ({ submenus }) => {
-        return (
-          <ul className="dropdown">
-            {submenus.map((submenu, index) => (
-              <li key={index} className="menu-items">
-                <a href={submenu.url}>{submenu.title}</a>
-              </li>
-            ))}
-          </ul>
-        );
-      };
+      
+      
 
       function nextMonth() {
         let currentMonth = localStorage.getItem('savedMonth')
@@ -103,7 +71,7 @@ const Calendar = ({dayEntries, bFunc, reqApp}) => {
             localStorage.setItem('savedMonth', currentMonth + 1)
             currentMonth =+ 1
         }
-        document.getElementById("currentDate").style.cssText = currentMonth + " / " + currentYear
+        
         reqApp()   
     }
 
@@ -119,7 +87,7 @@ const Calendar = ({dayEntries, bFunc, reqApp}) => {
             localStorage.setItem('savedMonth', currentMonth - 1)
             currentMonth =- 1
         }
-                document.getElementById("currentDate").style.cssText = currentMonth + " / " + currentYear
+                
         reqApp()
     }
     
@@ -147,7 +115,7 @@ const Calendar = ({dayEntries, bFunc, reqApp}) => {
             </div>   
         </div>
     )
-
+    
     
 }
 

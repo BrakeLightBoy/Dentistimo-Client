@@ -52,9 +52,7 @@ export const Booking = () =>{
   savedClinic = localStorage.getItem('savedClinic')
   savedMonth = localStorage.getItem('savedMonth')
   savedYear = localStorage.getItem('savedYear')
-  const cId = savedClinic;
-  const mNum = savedMonth;
-  const yNum = savedYear;
+ 
   const uID = window.localStorage.getItem('uID')
 
   const [freeAppointments, setFAppointments] = useState([]); 
@@ -134,18 +132,10 @@ export const Booking = () =>{
   function reqApp() {
     console.log("RUNNNNNNS")
     if(isConnected){
-      let clinic = null
-      let year = null
-      let month = null
+      let clinic = savedClinic
+      let year = savedYear
+      let month = savedMonth
 
-      if(cId.current && yNum.current && yNum.current){
-        clinic = cId.current.value
-        year = yNum.current.value
-        month = mNum.current.value
-
-      } else {
-        return
-      }
       if(currentSub){
         client.unsubscribe(currentSub)
       }
@@ -225,9 +215,7 @@ export const Booking = () =>{
       <button className="invis"></button>   
       <div>
         <button className="Sort" onClick={requestAppointments}>{retrieveBookings}</button>
-        <input ref={cId} type="text" className="input-field" placeholder="Clinic Id"></input>
-        <input ref={mNum} type="text" className="input-field" placeholder="Month"></input>
-        <input ref={yNum} type="text" className="input-field" placeholder="Year"></input>
+        
         {/* <button className="Sort">Filter by</button>   */}
         
         <label>{bookingResponse}</label>
@@ -241,7 +229,7 @@ export const Booking = () =>{
       <div className="AList">
           {/* {appointments} */}
       </div>
-      <Map zoom={10} center={{"lat":57.75,"lng":11.92}}  />
+      <Map zoom={10} center={{"lat":57.75,"lng":11.92}} reqApp={requestAppointments} />
       <Calendar dayEntries={freeAppointments} bFunc={bFunc} />
     </div>
   )

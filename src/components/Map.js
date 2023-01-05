@@ -22,6 +22,8 @@ let initLoad = false
 
 let update = null
 let displayInfo = null
+let displayCalendar = null
+let markerReqApp = null
 
 const onMessage = (message) => {
     try{
@@ -33,7 +35,7 @@ const onMessage = (message) => {
         nonReactMarkers = clinics.map(marker => {
             n++;
             const info = marker
-            return <Marker lat={marker.coordinate.latitude} clickFunc={displayInfo} lng={marker.coordinate.longitude} info={info} key={n} icon={icon}/>
+            return <Marker lat={marker.coordinate.latitude} clickFunc={displayInfo} reqApp={markerReqApp} lng={marker.coordinate.longitude} info={info} key={n} icon={icon}/>
         })
 
         if(isLoaded){
@@ -54,7 +56,7 @@ function onConnect () {
     }})
 }
 
-const Map = ({center, zoom}) =>{
+const Map = ({center, zoom, marker, reqApp}) =>{
     
     let [markers, setMarkers] = useState([])
     let [info, setInfo] = useState("")
@@ -68,11 +70,13 @@ const Map = ({center, zoom}) =>{
     }
     
 
+
     update = (newMarkers) =>{
         setMarkers(newMarkers)
     }
     
     displayInfo = setInfo
+    markerReqApp = reqApp
 
     return (
         <div className="map">
