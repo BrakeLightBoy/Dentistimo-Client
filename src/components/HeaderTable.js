@@ -1,19 +1,14 @@
 import React from "react";
-//import "./HeaderTableStyles.css";
+import "./HeaderTableStyles.css";
 
 export function HeadTab() {
     return (
       <div className="header">
-        <div className="text">
-            <h3>Appointments</h3>
-        </div>
+        <h3 className="text">Appointments</h3>
         <div className="right">
-            <div className="date">
-                <button className="dateNav">Back</button>
-                <button className="today"> CurrentDate </button>
-                <button className="dateNav">Forward</button>
-            </div>
-            <button className="fika">Schedule fika break</button>
+            <button className="dateNav">Back</button>
+            <button className="today">Today</button>
+            <button className="dateNav">Forward</button>
         </div>
       </div>
     );

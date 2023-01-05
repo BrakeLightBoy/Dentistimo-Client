@@ -1,32 +1,20 @@
-* {
-    margin: 0;
-    box-sizing: border-box;
-    color: aliceblue;
-}
-
 .header {
     position: relative;
     width: 100%;
     height: 90px;
     display: flex;
-    align-items: center;
+    align-items: stretch;
     padding: 1rem;
-    margin-left: 2rem;
     color: aliceblue;
+    background-color: transparent;
+    font-size: medium;
   }
-
-.text {
-    color: aliceblue;
-}
 
 .right {
     margin-left: 50rem;
     position: relative;
-}
-
-.date {
-    display: inline-block;
-    margin-left: 1rem;
+    color: aliceblue;
+    background-color: transparent;
 }
 
 .dateNav {
@@ -36,20 +24,12 @@
     background-color: #0e0e23;
     margin-left: 1rem;
     border: thin solid;
+    color: aliceblue;
 }
 
 .today {
     background-color: transparent;
     border: transparent;
     margin-left: 1rem;
-}
-
-.fika {
-    background-color: #21A6F0;
-    width: 12rem;
-    border-radius: 0.5rem;
-    padding: 0.5rem;
-    display: inline-block;
-    margin-left: 2rem;
-    border: #21A6F0;
+    color: aliceblue;
 }
