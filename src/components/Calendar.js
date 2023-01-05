@@ -62,32 +62,32 @@ const Calendar = ({dayEntries, bFunc, reqApp}) => {
       function nextMonth() {
         let currentMonth = localStorage.getItem('savedMonth')
         let currentYear = localStorage.getItem('savedYear')
-        if (currentMonth == 12){
+        let intYear = parseInt(currentYear)
+        let intMonth = parseInt(currentMonth)
+        if (intMonth === 12){
             localStorage.setItem('savedMonth', 1)
-            currentMonth = 1
-            localStorage.setItem('savedYear', currentYear + 1)
-            currentYear =+ 1
+            intYear =+ 1
+            localStorage.setItem('savedYear', intYear)
         }else{
-            localStorage.setItem('savedMonth', currentMonth + 1)
-            currentMonth =+ 1
+            intMonth =+ 1
+            localStorage.setItem('savedMonth', intMonth)
         }
-        
         reqApp()   
     }
 
     function lastMonth() {
         let currentMonth = localStorage.getItem('savedMonth')
         let currentYear = localStorage.getItem('savedYear')
-        if (currentMonth == 1){
+        let intYear = parseInt(currentYear)
+        let intMonth = parseInt(currentMonth)
+        if (intMonth === 1){
             localStorage.setItem('savedMonth', 12)
-            currentMonth = 12
-            localStorage.setItem('savedYear', currentYear - 1)
-            currentYear =- 1
+            intYear =- 1
+            localStorage.setItem('savedYear', intYear)
         }else{
-            localStorage.setItem('savedMonth', currentMonth - 1)
-            currentMonth =- 1
-        }
-                
+            intMonth =- 1
+            localStorage.setItem('savedMonth', intMonth)
+        }     
         reqApp()
     }
     
@@ -101,7 +101,7 @@ const Calendar = ({dayEntries, bFunc, reqApp}) => {
                   }}
                   onMouseEnter={event => onMouseOver(event)}
                   onMouseOut={event => onMouseOut(event)}>Previous</button> 
-                <button className="currentDate" id="currentDate"> / 2022</button> 
+                <button className="currentDate" id="currentDate"> 12 / 2022</button> 
                 <button className="RightArrow Arrow"
                 onClick={() => {
                     nextMonth()
