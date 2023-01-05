@@ -1,13 +1,21 @@
 import React from "react";
 import "./HeaderTableStyles.css";
 
+const date = new Date();
+
+let day = date.getDate();
+let month = date.toLocaleString('default', { month: 'short' });
+let year = date.getFullYear();
+
+let CurrentDate = `${month} ${day}, ${year}`;
+
 export function HeadTab() {
     return (
       <div className="header">
         <h3 className="text">Appointments</h3>
         <div className="right">
             <button className="dateNav">Back</button>
-            <button className="today">Today</button>
+            <button className="today">{CurrentDate} Today</button>
             <button className="dateNav">Forward</button>
         </div>
       </div>
