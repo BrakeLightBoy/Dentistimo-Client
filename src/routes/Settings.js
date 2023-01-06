@@ -10,7 +10,6 @@ const sweLang = require('../languages/swedish').navbar
 let inUse = false
 let chosenLang = localStorage.getItem('lang');
 
-
 const Paho = require('paho-mqtt')
 
 const brokerHost = 'localhost'
@@ -21,19 +20,29 @@ const client = new Paho.Client(brokerHost,brokerPort,clientId)
 const sQos = 2
 const pQos = 2
 
+const uID = window.localStorage.getItem('uID')
+
 client.connect({onSuccess: onConnect})
 
 function onConnect () {
   console.log('CONN SUCC LOGIN')
+  client.subscribe(`${uID}/get-user`,{qos:sQos, onSuccess: () => {
+    const payload = {operation: 'get-user', personal_number: uID, opCat: 'user'}
+    const strPayload = JSON.stringify(payload)
+    client.publish(`common/${uID}`, strPayload,pQos)
+  }})
 }
 
 export default function Settings() {
-  const uID = window.localStorage.getItem('uID')
-  
+  const [userFName, setUserFName] = useState("");
+  const [userLName, setUserLName] = useState("");
+  const [userPNum, setUserPNum] = useState("");
+  const [userEmail, setUserEmail] = useState("");
+  const [userPassword, setUserPassword] = useState("");
+
   const email = useRef(null);
-  const first = useRef(null);
-  const last = useRef(null);
   const pass = useRef(null);
+
   
   function saveInfo() {
     const payload = {
@@ -41,16 +50,43 @@ export default function Settings() {
       opCat: 'user',
       id: uID,
       email_address: email.current.value,
-      first_name: first.current.value,
-      last_name: last.current.value,
       password: pass.current.value
-      }
+    }
     const strPayload = JSON.stringify(payload)
     console.log(`common/${uID}`+ strPayload +' qos:'+ pQos)
     client.subscribe(`${uID}/#`,{qos:sQos, onSuccess: () => {
     client.publish(`common/${uID}`, strPayload,pQos)
   }}) 
   }
+
+
+
+
+const onMessage = (message) => {
+
+  try{
+    const resJSON = JSON.parse(message.payloadString)
+    console.log('OP: ' + resJSON.operation)
+    switch(resJSON.operation){
+      case 'get-user':
+          let user = resJSON.data
+          setUserFName(user.first_name)
+          setUserLName(user.last_name)
+          setUserPNum(user.personal_number)
+          setUserEmail(user.email_address)
+          setUserPassword(user.password)
+          break;  
+      default:
+        
+        break;
+    }
+  } catch(e){
+      console.log(e)
+  }
+}
+
+
+  client.onMessageArrived = onMessage;
 
   const navigate = useNavigate();
   const [pageLang, setLang] = useState('eng'); 
@@ -131,20 +167,28 @@ export default function Settings() {
     <NavPanel></NavPanel>
     <h1>Settings</h1>
     <div class = "settings-area">
-    <h2 class = "settings-h2">Email Address</h2>
-    <input ref={email} class = "settings-input" type="text" placeholder="Email" autocomplete="new-password"></input>
-    <h2 class = "settings-h2">first name</h2>
-    <input ref={first} class = "settings-input" type="text" placeholder="first name" autocomplete="new-password"></input>
-    <h2 class = "settings-h2">last name</h2>
-    <input ref={last} class = "settings-input" type="text" placeholder="last name" autocomplete="new-password"></input>
-    <h2 class = "settings-h2">password</h2>
-    <input ref={pass} class = "settings-input" type="text" placeholder="password" autocomplete="new-password"></input>
-    <div>
-    <a onClick={toggleLang} class="toggle-lang-btn steam-button">Language Button: {pageLang}</a>
-    </div>
-
-    <div>
-    <button onClick={saveInfo} class=" save-btn steam-button">Save</button>
+    <div class="row">
+      <div class="column1">
+        <h2 class = "settings-h2">First name</h2>
+        <p id="user-info">{userFName}</p>
+        <h2 class = "settings-h2">Last name</h2>
+        <p id="user-info">{userLName}</p>
+        <h2 class = "settings-h2">Personal number</h2>
+        <p id="user-info">{userPNum}</p>
+        <div>
+          <a onClick={toggleLang} class="toggle-lang-btn steam-button">Language button: {pageLang}</a>
+        </div>
+      </div>
+      <div class="column2">
+        <p id="edit-details">Edit details</p>
+        <h2 class = "settings-h2">Email address</h2>
+        <input ref={email} class = "settings-input" type="text" placeholder={userEmail} autocomplete="new-password"></input>
+        <h2 class = "settings-h2">Password</h2>
+        <input ref={pass} class = "settings-input" type="password" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;" autocomplete="new-password"></input>
+        <div>
+          <button onClick={saveInfo} class=" save-btn steam-button">Save</button>
+        </div>
+      </div>
     </div>
     </div>
     </>
