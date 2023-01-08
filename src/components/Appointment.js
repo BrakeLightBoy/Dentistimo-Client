@@ -38,11 +38,18 @@ const Appointment = ({appointmentInfo, deleteFunc, editFunc}) => {
   const issuance = appointmentInfo.issuance
   const date = new Date(appointmentInfo.date)
   const appointmentDate = date.getDate() + '-' + (date.getMonth()+1) + '-' + date.getFullYear()
-  const appointmentTime = date.getHours() + ':' + date.getMinutes()
+  const appointmentTime = addZero(date.getHours()) + ':' + addZero(date.getMinutes())
   const dentist = appointmentInfo.dentist_id.first_name + " "+  appointmentInfo.dentist_id.last_name
   const clinic = appointmentInfo.dentist_id.works_at[0].name
   const appointment = appointmentInfo._id
   
+  function addZero(i) {
+    if (i < 10) {
+      i = "0" + i
+    }
+    return i;
+  }
+
   function deleteFunc() {
     const payload = {operation: 'delete-user-appointment', appointment_id:appointment, opCat: 'appointment'}
     const strPayload = JSON.stringify(payload)

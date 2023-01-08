@@ -38,6 +38,7 @@ h1 {
   max-width: 1000px;
   padding: 1rem;
   margin: auto;
+  color: rgb(198, 198, 198);
 }
 
 .quote {
@@ -100,6 +101,7 @@ a {
 
 #about {
   text-align: center;
+  color: rgb(198, 198, 198);
 }
 
 .container {

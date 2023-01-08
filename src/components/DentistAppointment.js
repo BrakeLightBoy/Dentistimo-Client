@@ -36,10 +36,17 @@ const DentistAppointment = ({appointmentInfo, deleteFunc, editFunc}) => {
   const issuance = appointmentInfo.issuance
   const date = new Date(appointmentInfo.date)
   const appointmentDate = date.getDate() + '-' + (date.getMonth()+1) + '-' + date.getFullYear()
-  const appointmentTime = date.getHours() + ':' + date.getMinutes()
+  const appointmentTime = addZero(date.getHours()) + ':' + addZero(date.getMinutes())
   const clinic = appointmentInfo.dentist_id.works_at[0].name
   const patient = appointmentInfo.user_id.first_name + ' ' + appointmentInfo.user_id.last_name
   const appointment = appointmentInfo._id
+
+  function addZero(i) {
+    if (i < 10) {
+      i = "0" + i
+    }
+    return i;
+  }
 
   function deleteFunc() {
     const payload = {operation: 'delete-dentist-appointment', appointment_id:appointment, opCat: 'appointment'}
