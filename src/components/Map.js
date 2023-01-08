@@ -28,9 +28,7 @@ let markerReqApp = null
 
 
 function onConnect () {
-    client.subscribe(`clinics`,{qos:sQos, onSuccess: () => {
-        console.log('clinics subbed')
-    }})
+    client.subscribe(`clinics`,{qos:sQos})
 }
 
 const Map = ({center, zoom, marker, reqApp}) =>{
@@ -56,7 +54,6 @@ const Map = ({center, zoom, marker, reqApp}) =>{
         try{
             const resJSON = JSON.parse(message.payloadString)
             clinics = resJSON
-            console.log(clinics)
             let n = 0
             
             nonReactMarkers = clinics.map(marker => {
@@ -72,7 +69,6 @@ const Map = ({center, zoom, marker, reqApp}) =>{
             
     
         } catch(e){
-            console.log(e)
         }
     }
     client.onMessageArrived = onMessage;

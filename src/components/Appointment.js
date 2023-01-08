@@ -15,17 +15,10 @@ const pQos = 2
 const engLang = require('../languages/english').appointments
 const sweLang = require('../languages/swedish').appointments
 
-client.connect({onSuccess: onConnect})
-
-function onConnect () {
-  console.log('CONN SUCC LOGIN')
-}
-
+client.connect()
 
 const Appointment = ({appointmentInfo, deleteFunc, editFunc}) => {
   const uID = window.localStorage.getItem('uID')
-  console.log("appINFO:",appointmentInfo)
-
   
   const [appointmentTitle, setAppointmentTitle] = useState(engLang.appointmentTitle);
   const [dentistName, setDentist] = useState(engLang.dentist);
@@ -53,7 +46,6 @@ const Appointment = ({appointmentInfo, deleteFunc, editFunc}) => {
   function deleteFunc() {
     const payload = {operation: 'delete-user-appointment', appointment_id:appointment, opCat: 'appointment'}
     const strPayload = JSON.stringify(payload)
-    console.log(`common/${uID}`+ strPayload +' qos:'+ pQos)
     client.subscribe(`${uID}/#`,{qos:sQos, onSuccess: () => {
     client.publish(`common/${uID}`, strPayload,pQos)
   }}) 

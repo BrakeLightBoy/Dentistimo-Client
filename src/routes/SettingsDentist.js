@@ -26,8 +26,6 @@ const uID = window.localStorage.getItem('uID')
 client.connect({onSuccess: onConnect})
 
 function onConnect () {
-  console.log(uID)
-  console.log('CONN SUCC LOGIN')
   client.subscribe(`${uID}/get-dentist`,{qos:sQos, onSuccess: () => {
     const payload = {operation: 'get-dentist', username: uID, opCat: 'dentist'}
     const strPayload = JSON.stringify(payload)
@@ -81,7 +79,6 @@ export default function SettingsDentist() {
         payload.password = pass.current.value
       }
     const strPayload = JSON.stringify(payload)
-    console.log(`common/${uID}`+ strPayload +' qos:'+ pQos)
     client.subscribe(`${uID}/#`,{qos:sQos, onSuccess: () => {
     client.publish(`common/${uID}`, strPayload,pQos)
   }}) 
@@ -90,11 +87,8 @@ export default function SettingsDentist() {
   const onMessage = (message) => {
 
     try{
-      console.log(message)
       const resJSON = JSON.parse(message.payloadString)
-      console.log('OP: ' + resJSON.operation)
       let dentist = resJSON.data
-      console.log(resJSON.reason)
       switch(resJSON.operation){
       case 'get-dentist':
           setDentistFName(dentist.first_name)
@@ -121,7 +115,6 @@ export default function SettingsDentist() {
         break;
       }
     } catch(e){
-        console.log(e)
     }
   }
   

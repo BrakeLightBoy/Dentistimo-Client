@@ -20,7 +20,6 @@ class UserDetails{
 
     setUser(userId){
         this.user.uId = userId
-        console.log("UID SET:",this.user.uId)
     }
 }
 

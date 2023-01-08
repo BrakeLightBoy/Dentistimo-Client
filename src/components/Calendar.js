@@ -48,8 +48,6 @@ const Calendar = ({dayEntries, bFunc, reqApp}) => {
             }
         }
 
-        console.log('mapped entries:',dayEntries)
-
         return dayEntries
     }
 

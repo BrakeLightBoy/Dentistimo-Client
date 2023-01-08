@@ -12,8 +12,6 @@ const slotToString = (slot) => {
     const hours = Math.floor(slot/2)
     const time = hours+":"+minutes
 
-    // console.log('orgSlot:',slot)
-    // console.log('time:',time)
     return time
 
 }
@@ -62,7 +60,6 @@ const AvailableAppointment = ({appointmentInfo, bookFunc}) => {
 
     
     const f = () => {
-        console.log('dat:',new Date(info.year+"-"+info.month+"-"+info.d))
         bookFunc(new Date(info.year+"-"+info.month+"-"+info.d+" "+slotToString(info.s)))
     }
 

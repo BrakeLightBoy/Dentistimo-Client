@@ -23,13 +23,7 @@ const pQos = 2
 
 let isDoctor = false
 
-client.connect({onSuccess: onConnect})
-
-
-
-function onConnect () {
-    console.log('CONN SUCC LOGIN')
-}
+client.connect()
 
 //helps with dentist/user username/personal number text field
 let curLang = engLang
@@ -115,7 +109,6 @@ export const Login = () => {
   
 
   const onMessage = (message) => {
-    console.log(message)
     
     try{
       const resJSON = JSON.parse(message.payloadString)
@@ -152,7 +145,6 @@ export const Login = () => {
         default:
       }
     } catch(e) {
-      console.log(e)
     }
 }
 
@@ -165,17 +157,13 @@ const login = () =>{
   } else if(isDoctor) {
     const payload = {operation: 'login', username:logPnum.current.value, password:logPass.current.value, opCat: 'dentist'}
     const strPayload = JSON.stringify(payload)
-    console.log(`common/${logPnum.current.value}`+ strPayload +' qos:'+ pQos)
     client.subscribe(`${logPnum.current.value}/#`,{qos:sQos, onSuccess: () => {
-    console.log('log subbed')
     client.publish(`common/${logPnum.current.value}`, strPayload,pQos)
     }})
   } else {
     const payload = {operation: 'login', personal_number:logPnum.current.value, password:logPass.current.value, opCat: 'user'}
     const strPayload = JSON.stringify(payload)
-    console.log(`common/${logPnum.current.value}`+ strPayload +' qos:'+ pQos)
     client.subscribe(`${logPnum.current.value}/#`,{qos:sQos, onSuccess: () => {
-    console.log('log subbed')
     client.publish(`common/${logPnum.current.value}`, strPayload,pQos)
 
   }}) 
@@ -197,9 +185,7 @@ const login = () =>{
       email_address: regMail.current.value
     }
     const strPayload = JSON.stringify(payload)
-    console.log(`common/${regPnum.current.value}`+ strPayload +' qos:'+ pQos)
     client.subscribe(`${regPnum.current.value}/#`,{qos:sQos, onSuccess: () => {
-      console.log('reg subbed')
       client.publish(`common/${regPnum.current.value}`, strPayload,pQos)
     }})
     }

@@ -15,15 +15,10 @@ const client = new Paho.Client(brokerHost,brokerPort,clientId)
 const sQos = 2
 const pQos = 2
 
-client.connect({onSuccess: onConnect})
-
-function onConnect () {
-  console.log('CONN SUCC LOGIN')
-}
+client.connect()
 
 const DentistAppointment = ({appointmentInfo, deleteFunc, editFunc}) => {
   const uID = window.localStorage.getItem('uID')
-  console.log("appINFO:",appointmentInfo)
 
   const [appointmentTitle, setAppointmentTitle] = useState(engLang.appointmentTitle);
   const [patientName, setDentist] = useState(engLang.patient);
@@ -51,7 +46,6 @@ const DentistAppointment = ({appointmentInfo, deleteFunc, editFunc}) => {
   function deleteFunc() {
     const payload = {operation: 'delete-dentist-appointment', appointment_id:appointment, opCat: 'appointment'}
     const strPayload = JSON.stringify(payload)
-    console.log(`common/${uID}`+ strPayload +' qos:'+ pQos)
     client.subscribe(`${uID}/#`,{qos:sQos, onSuccess: () => {
     client.publish(`common/${uID}`, strPayload,pQos)
   }}) 

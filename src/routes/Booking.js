@@ -57,7 +57,6 @@ export const Booking = () =>{
     const client = new Paho.Client(brokerHost,brokerPort,clientId)
 
     const bookAppointment = (date) => {
-      console.log('booking.com :',date)
       const payload = {operation: 'book-appointment', date:date, clinicId:currentClinic, userId:uID, opCat: 'appointment'}
       const strPayload = JSON.stringify(payload)
       client.publish(`common/${uID}`, strPayload,pQos)
@@ -69,11 +68,9 @@ export const Booking = () =>{
   const onMessage = (message) => {
     try{
       const resJSON = JSON.parse(message.payloadString)
-      console.log('OP: ' + resJSON.operation)
       switch(resJSON.operation){
         case 'book-appointment':
           if(resJSON.success){
-            console.log('SUCCESS WOOOO')
             setBookingResp(true);
           } else {
             setErrBookingResp(true);
@@ -81,7 +78,6 @@ export const Booking = () =>{
           break;
         case 'clinic-free-slots':
           appointments = resJSON.data
-          console.log("RES appoint:",appointments)
           let n = -1
         
           nonReactAppointments = appointments.slots.map(appointment => {
@@ -104,10 +100,7 @@ export const Booking = () =>{
               appDaySorted[day-1].push(appointment)
             }
           }
-          console.log('apds:',appDaySorted)
           setFAppointments(appDaySorted)
-
-          console.log('react apds:',freeAppointments)
 
           if(isLoaded){
             update(nonReactAppointments)
@@ -117,12 +110,10 @@ export const Booking = () =>{
           break;
       }
     } catch(e){
-        console.log(e)
     }
   }
 
   function reqApp() {
-    console.log("RUNNNNNNS")
     if(isConnected){
       let clinic = localStorage.getItem('savedClinic')
       let year = localStorage.getItem('savedYear')
@@ -136,8 +127,6 @@ export const Booking = () =>{
       currentClinic = clinic
 
       client.subscribe(currentSub,{qos:sQos, onSuccess: () => {
-        console.log('user appoint subbed')
-        console.log('pNumber', uID)
         const payload = {operation: 'unbooked-appointments', year: year, month:month, clinicId:clinic, opCat: 'appointment'}
         const strPayload = JSON.stringify(payload)
         client.publish(`common/common`, strPayload,pQos)

@@ -55,7 +55,6 @@ export default function Home() {
 
     try{
       const resJSON = JSON.parse(message.payloadString)
-      console.log('OP: ' + resJSON.operation)
       switch(resJSON.operation){
         case 'delete-user-appointment':
           if(resJSON.success){
@@ -67,7 +66,6 @@ export default function Home() {
           break;
         case 'user-appointments':
             appointments = resJSON.data
-          console.log("RES appoint:",appointments)
           let n = -1
           
           nonReactAppointments = appointments.map(appointment => {
@@ -85,7 +83,6 @@ export default function Home() {
           break;
       }
     } catch(e){
-        console.log(e)
     }
   }
 
@@ -96,8 +93,6 @@ client.connect({onSuccess: onConnect})
 
 function onConnect () {
   client.subscribe(`${uID}/appointments`,{qos:sQos, onSuccess: () => {
-    console.log('user appoint subbed')
-    console.log('pNumber',uID)
     const payload = {operation: 'user-appointments', personal_number: uID, opCat: 'appointment'}
     const strPayload = JSON.stringify(payload)
     client.publish(`common/${uID}`, strPayload,pQos)
