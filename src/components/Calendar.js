@@ -55,12 +55,10 @@ const Calendar = ({dayEntries, bFunc, reqApp}) => {
     //Buttons turn darker on mouse over
       const onMouseOver = event => {
         const el = event.target;
-        el.style.background = "rgb(42, 98, 144)";
       };
       
       const onMouseOut = event => {
         const el = event.target;
-        el.style.background = "rgb(42, 113, 168)";
       };
 
       
