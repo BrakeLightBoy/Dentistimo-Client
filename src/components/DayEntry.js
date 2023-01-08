@@ -7,7 +7,6 @@ const DayEntry = ({day, appointments, monthDisplayed, yearDisplayed, isDummy}) =
     const currentDay = currentDate.getDate()
     const currentMonth = currentDate.getMonth()+1
     const currentYear = currentDate.getFullYear()
-    
 
     const displayFunction = () => {
         if(appointments && appointments.length > 0){
@@ -30,7 +29,7 @@ const DayEntry = ({day, appointments, monthDisplayed, yearDisplayed, isDummy}) =
                     <div className="DayGrid">
                         <div>Day {day}</div>
                     </div>
-                    <div className="AppointmentBox">
+                    <div>
                         {appointments}
                     </div>
                 </div>
