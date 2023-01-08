@@ -22,13 +22,15 @@ const NavPanel = () => {
         <li>
           <a href="/Settings">Settings</a>
         </li>
-        <button>
-            Toggle Language
-    </button>
+
+        <h2 class = "nav-placeholder">placeholder</h2>
+        </ul>
+
+
+        <ul>
         <li>
           <a href="/">Log Out</a>
         </li>
-
       </ul>
     
     </nav>

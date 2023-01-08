@@ -120,7 +120,6 @@ const NavBar = () => {
           <a href="#contact-us" className="steam-button">
             {contactText}
           </a>
-          <a onClick={toggleLang} className="steam-button">Language Button (not final): {pageLang}</a>
         </div>
       </section>
 

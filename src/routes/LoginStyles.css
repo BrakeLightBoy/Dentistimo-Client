@@ -4,17 +4,18 @@
 }
 
 .form-box {
-  width: 24rem;
+  width: 25rem;
   height: 30rem;
   position: relative;
   margin: 6% auto;
-  background: #6347d6;
+  background: #21273c;
   padding: 0.3rem;
   overflow: hidden;
+  border-radius: 1.25rem;
 }
 
 .button-box {
-  width: 14rem;
+  width: 16rem;
   margin: 2rem auto;
   position: relative;
   box-shadow: 0 0 0.06rem 0.03rem rgb(134, 134, 134);
@@ -22,28 +23,36 @@
 
 .toggle-btn {
   vertical-align: middle;
-  padding: 0.6rem 2.2rem;
+  padding: 0.6rem 2.6rem;
   cursor: pointer;
   background: transparent;
   border: 0;
   outline: none;
   position: relative;
-  left: 0.3rem;
-  color: black;
+  left: 0rem;
+  color: #9baacf;
+  font-size: 1rem;
+}
+
+.register {
+  left: .15rem;
+  padding-right: 2.1rem;
+  padding-left: 2rem;
 }
 
 #btn {
   top: 0;
   left: 0;
   position: absolute;
-  width: 7rem;
+  width: 8rem;
   height: 100%;
-  background: rgb(255, 255, 255);
+  background-color: #f9691b;
+  box-shadow: 0 0 20px #f9691b;
   transition: 0.5s;
 }
 
 .input-group {
-  top: 8.5rem;
+  top: 6.5rem;
   position: absolute;
   width: 17.5rem;
   transition: 0.5s;
@@ -59,21 +68,55 @@
   outline: none;
 }
 
-.checkbox{ 
-  margin-top: 1rem;
+.checkbox { 
+  position: relative;
+  width: 70px;
+  height: 30px;
+  appearance: none;
+  background:#9baacf;
+  outline: none;
+  border-radius: 20px;
+  box-shadow: inset 0 0 5px rga(0,0,0,.2);
+  transition: .5s;
 }
 
+.checkbox:checked, .checkbox:checked .form-box {
+  background-image: linear-gradient(330deg, #5b0eeb 0%, #6d5dfc 50%, #8abdff 100%);
 
+}
+
+.checkbox::before {
+content: "";
+position: absolute;
+border-radius: 20px;
+width:20px;
+height: 20px;
+border-radius: 20px;
+top:5px;
+left:10px;
+background:#46516a;
+transform: scale(1.1);
+box-shadow: 0 2px 5px rga(0,0,0,.2);
+transition: .5s;
+}
+
+.checkbox:checked:before {
+  left:40px;
+  background: #9baacf;
+}
 .submit-btn {
   width: 85%;
-  padding: 0.6rem 1.8rem;
+  padding: 1.5rem 1.8rem;
   cursor: pointer;
   display: block;
   margin: auto;
   margin-top: 2rem;
-  background: rgb(255, 255, 255);
+  background-color: #1b86f9;
+  box-shadow: 0 0 20px #1b86f9;
   border: 0;
   outline: none;
+  font-size: 1.2rem;
+  color: #9baacf;
 }
 
 #login {
@@ -82,4 +125,17 @@
 
 #register {
   left: 28rem;
+}
+
+.doctor-checkbox-text {
+  color:white;
+  padding:.7rem;
+  position: relative;
+  bottom: 9px;
+  padding-top: 0;
+}
+
+.doctor-checkbox-div {
+  padding-top: 2rem;
+  padding-bottom: 1rem;
 }

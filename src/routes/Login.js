@@ -220,11 +220,11 @@ const login = () =>{
 
   return (
     <>
-      <div className="form-box">
-        <div className="button-box">
+      <div class="form-box">
+        <div class="button-box">
           <div id="btn"></div>
           <button
-            className="toggle-btn"
+            class="log-in toggle-btn"
             onClick={() => {
               document.getElementById("login").style.left = "3.3rem";
               document.getElementById("register").style.left = "29rem";
@@ -235,11 +235,11 @@ const login = () =>{
           </button>
 
           <button
-            className="toggle-btn"
+            class="register toggle-btn"
             onClick={() => {
               document.getElementById("login").style.left = "-25rem";
               document.getElementById("register").style.left = "3.4rem";
-              document.getElementById("btn").style.left = "7rem";
+              document.getElementById("btn").style.left = "8rem";
             }}
           >
             {registerButtonText}
@@ -253,16 +253,18 @@ const login = () =>{
           <Popup trigger={emptyResponse} setTrigger={setEmptyResponse}> 
             <p>{blankInputPopup}</p>
           </Popup>
-          <input ref={logPnum} type="text" className="input-field" placeholder={uidTextbox}></input>
-          <input ref={logPass} type="text" className="input-field" placeholder={passwordText}></input>
-          <input ref={logDoct} type="checkbox" className="checkbox" value="doctor" onClick={toggleDoctor}></input>
-          <label> {checkboxText}</label>
-          <button type="submit" className="submit-btn" onClick={login}>
+          <input ref={logPnum} type="text" class="input-field" placeholder={uidTextbox}></input>
+          <input ref={logPass} type="text" class="input-field" placeholder={passwordText}></input>
+          <div class = "doctor-checkbox-div">
+          <input ref={logDoct} type="checkbox" class="checkbox" value="doctor" onClick={toggleDoctor}></input>
+          <label class = "doctor-checkbox-text"> {checkboxText}</label>
+          </div>
+          <button type="submit" class="submit-btn" onClick={login}>
             {loginButtonText}
           </button>
         </form>
 
-        <form id="register" onSubmit={(event) => { event.preventDefault()}} className="input-group">
+        <form id="register" onSubmit={(event) => { event.preventDefault()}} class="input-group">
           <label>{regResponse}</label>
           <Popup trigger={regResponse} setTrigger={setRegResp}> 
             <p>{registrationSuccess}</p>
@@ -273,12 +275,12 @@ const login = () =>{
           <Popup trigger={emptyResponse} setTrigger={setEmptyResponse}> 
             <p>{blankInputPopup}</p>
           </Popup>
-          <input ref={regPnum} type="text" className="input-field" placeholder={uIDText}></input>
-          <input ref={regPass} type="text" className="input-field" placeholder={passwordText}></input>
-          <input ref={regFname} type="text" className="input-field" placeholder={regFNameText}></input>
-          <input ref={regLname} type="text" className="input-field" placeholder={regLNameText}></input>
-          <input ref={regMail} type="text" className="input-field" placeholder={regMailText}></input>
-          <button type="submit" className="submit-btn" onClick={register}>
+          <input ref={regPnum} type="text" class="input-field" placeholder={uIDText}></input>
+          <input ref={regPass} type="text" class="input-field" placeholder={passwordText}></input>
+          <input ref={regFname} type="text" class="input-field" placeholder={regFNameText}></input>
+          <input ref={regLname} type="text" class="input-field" placeholder={regLNameText}></input>
+          <input ref={regMail} type="text" class="input-field" placeholder={regMailText}></input>
+          <button type="submit" class="submit-btn" onClick={register}>
             {registerButtonText}
           </button>
         </form>

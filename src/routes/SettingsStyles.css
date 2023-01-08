@@ -1,0 +1,74 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400&display=swap");
+
+.settings-h2 {
+    font-size: 2rem;
+    color: rgb(198, 198, 198);
+    font-family: "Open Sans", sans-serif;
+    font-weight: 300;
+    padding-top: .7rem;
+}
+
+.settings-input {
+  font-family: "Open Sans", sans-serif;
+  padding: 10px 0;
+  font-size: 20px;
+  color: #fff;
+  margin-bottom: 2rem;
+  border: none;
+  border-bottom: 1px solid #fff;
+  outline: none;
+  background: transparent;
+  width: 260px;
+}
+
+#edit-details {
+    font-family: "Open Sans", sans-serif;
+    font-size: 18px;
+    font-weight: bolder;
+    padding-top: 26px;
+    color: #4e4c6a;
+}
+
+.toggle-lang-btn {
+    background-color: #f9691b;
+    box-shadow: 0 0 20px #f9691b;
+    padding: 8px 25px;
+    cursor: pointer;
+}
+
+.save-btn {
+    padding: 25px 80px;
+    cursor: pointer;
+    font-size: 1.25rem;
+    margin: 0.25rem;
+    display: inline-block;
+    margin-top: 1.9rem;
+    font-family: "Open Sans", sans-serif;
+}
+
+.settings-area {
+    text-align: center;
+    padding: 50px;
+    padding-top: 40px;
+}
+
+#user-info {
+    font-family: "Open Sans", sans-serif;
+    font-size: 20px; 
+    color: #757575;
+    margin-bottom: 2rem;
+}
+
+.column1, .column2 {
+    float: left;
+    width: 50%;
+    text-align: left;
+    padding-left: 200px;
+}
+  
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
