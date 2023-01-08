@@ -26,6 +26,7 @@ const uID = window.localStorage.getItem('uID')
 client.connect({onSuccess: onConnect})
 
 function onConnect () {
+  console.log(uID)
   console.log('CONN SUCC LOGIN')
   client.subscribe(`${uID}/get-dentist`,{qos:sQos, onSuccess: () => {
     const payload = {operation: 'get-dentist', username: uID, opCat: 'dentist'}
@@ -43,7 +44,7 @@ export default function SettingsDentist() {
   const [dentistDaysOff, setDentistDaysOff] = useState("");
   const [dentistFika, setDentistFika] = useState("");
   const [dentistLunch, setDentistLunch] = useState("");
-
+  
 
   const pass = useRef(null);
   const user = useRef(null);
@@ -53,34 +54,18 @@ export default function SettingsDentist() {
 
   function validateInfo() {
     setPopupMsg('')
-    //Probably change popup to highlight the fields that are invalid and only show popup on successful changes
-    /*if (!((/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email.current.value))) && email.current.length > 0) {
-      setPopupMsg('Invalid email format')
-      setErrorMsg(true)
-    }
-    */
     if (pass.current.value.length > 0 && pass.current.value.length < 5) {
       setPopupMsg('Password must be at least 5 characters long')
       setErrorMsg(true)
       return
     }
-    if (first.current.value.length > 0 ||
-        last.current.value.length > 0 ||
-        pass.current.value.length > 0 ||
-        user.current.value.length > 0) {
-      saveInfo()
-      setPopupMsg('Updated your info')
-      setErrorMsg(true)
-      return
-    }  
-    if (first.current.value.length === 0 &&
-        last.current.value.length === 0 &&
-        pass.current.value.length ===  0 &&
+    if (pass.current.value.length ===  0 &&
         user.current.value.length === 0) {
       setPopupMsg('All fields are empty')
       setErrorMsg(true)
       return
     } 
+    else saveInfo()
   }
 
   function saveInfo() {
@@ -88,8 +73,12 @@ export default function SettingsDentist() {
       operation: 'modify',
       opCat: 'dentist',
       id: uID,
-      username: user.current.value,
-      password: pass.current.value
+      }
+      if (user.current.value !== '') {
+        payload.username = user.current.value
+      }
+      if (pass.current.value !== '') {
+        payload.password = pass.current.value
       }
     const strPayload = JSON.stringify(payload)
     console.log(`common/${uID}`+ strPayload +' qos:'+ pQos)
@@ -98,14 +87,16 @@ export default function SettingsDentist() {
   }}) 
   }
 
-const onMessage = (message) => {
+  const onMessage = (message) => {
 
-  try{
-    const resJSON = JSON.parse(message.payloadString)
-    console.log('OP: ' + resJSON.operation)
-    switch(resJSON.operation){
+    try{
+      console.log(message)
+      const resJSON = JSON.parse(message.payloadString)
+      console.log('OP: ' + resJSON.operation)
+      let dentist = resJSON.data
+      console.log(resJSON.reason)
+      switch(resJSON.operation){
       case 'get-dentist':
-          let dentist = resJSON.data
           setDentistFName(dentist.first_name)
           setDentistLName(dentist.last_name)
           setDentistUsername(dentist.username)
@@ -114,37 +105,46 @@ const onMessage = (message) => {
           setDentistDaysOff(dentist.days_off)
           setDentistFika(dentist.fika_time)
           setDentistLunch(dentist.lunch_time)
-          break;  
-      default:
-        
+          break;
+      case 'modify':
+        if (resJSON.reason === 'Username is already in use'){
+          setPopupMsg('Username is already in use')
+        } 
+        else {
+        setPopupMsg('Updated your info')
+        }
+        setErrorMsg(true)
+        pass.current.value = null
+        user.current.value = null
         break;
+      default:
+        break;
+      }
+    } catch(e){
+        console.log(e)
     }
-  } catch(e){
-      console.log(e)
   }
-}
-
-
-  client.onMessageArrived = onMessage;
   
-  const navigate = useNavigate();
-  const [pageLang, setLang] = useState('eng'); 
   
-  const [title, setTitle] = useState(engLang.title);
-  const [loginButtonText, setLoginButtonText] = useState(engLang.loginButtonText);
-  const [aboutButtonText, setAboutButtonText] = useState(engLang.aboutButtonText);
-  const [contactText, setContactText] = useState(engLang.contactText);
-  const [p1Text, setp1Text] = useState(engLang.p1Text);
-  const [p2Text, setp2Text] = useState(engLang.p2Text);
-  const [p3Text, setp3Text] = useState(engLang.p3Text);
-  const [p4Text, setp4Text] = useState(engLang.p4Text);
-  const [quoteText, setQuoteText] = useState(engLang.quoteText);
-  const [contactDescriptionText, setContactDescriptionText] = useState(engLang.contactDescriptionText);
-  const [fullStackText, setFullStackText] = useState(engLang.fullStackText);
-  const [backendText, setBackendText] = useState(engLang.backendText);
-  const [frontendText, setFrontendText] = useState(engLang.frontendText);
-  const [toTopText, setToTopText] = useState(engLang.toTopText);
+    client.onMessageArrived = onMessage;
   
+    const navigate = useNavigate();
+    const [pageLang, setLang] = useState('eng'); 
+    
+    const [title, setTitle] = useState(engLang.title);
+    const [loginButtonText, setLoginButtonText] = useState(engLang.loginButtonText);
+    const [aboutButtonText, setAboutButtonText] = useState(engLang.aboutButtonText);
+    const [contactText, setContactText] = useState(engLang.contactText);
+    const [p1Text, setp1Text] = useState(engLang.p1Text);
+    const [p2Text, setp2Text] = useState(engLang.p2Text);
+    const [p3Text, setp3Text] = useState(engLang.p3Text);
+    const [p4Text, setp4Text] = useState(engLang.p4Text);
+    const [quoteText, setQuoteText] = useState(engLang.quoteText);
+    const [contactDescriptionText, setContactDescriptionText] = useState(engLang.contactDescriptionText);
+    const [fullStackText, setFullStackText] = useState(engLang.fullStackText);
+    const [backendText, setBackendText] = useState(engLang.backendText);
+    const [frontendText, setFrontendText] = useState(engLang.frontendText);
+    const [toTopText, setToTopText] = useState(engLang.toTopText);
 
   function checkLang() {
     if(chosenLang !== pageLang){
@@ -201,10 +201,10 @@ const onMessage = (message) => {
     checkLang()
   }
 
-
-  return (
+   return (
     <>
     <DentistNavPanel></DentistNavPanel>
+    <Popup trigger={errorMsg} setTrigger={setErrorMsg}><p>{popupMsg}</p></Popup>
     <h1>Dentist Settings</h1>
     <div class = "settings-area">
     <div class="row">
@@ -222,17 +222,15 @@ const onMessage = (message) => {
       <div class="column2">
         <p id="edit-details">Edit details</p>
         <h2 class = "settings-h2">Username</h2>
-        <input ref={user} class = "settings-input" type="text" placeholder={dentistUsername} autocomplete="new-password"></input>
+        <input ref={user} class = "settings-input" type="text" placeholder={dentistUsername}></input>
         <h2 class = "settings-h2">Password</h2>
-        <input ref={pass} class = "settings-input" type="password" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;" autocomplete="new-password"></input>
+        <input ref={pass} class = "settings-input" type="password" autocomplete="new-password"></input>
         <div>
-          <button onClick={saveInfo} class=" save-btn steam-button">Save</button>
+          <button onClick={validateInfo} class=" save-btn steam-button">Save</button>
         </div>
       </div>
     </div>
     </div>
-
-  
     </>
   );
 };

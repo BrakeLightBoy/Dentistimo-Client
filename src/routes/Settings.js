@@ -50,25 +50,11 @@ export default function Settings() {
 
   function validateInfo() {
     setPopupMsg('')
-    //Probably change popup to highlight the fields that are invalid and only show popup on successful changes
-    /*if (!((/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email.current.value))) && email.current.length > 0) {
-      setPopupMsg('Invalid email format')
-      setErrorMsg(true)
-    }
-    */
     if (pass.current.value.length > 0 && pass.current.value.length < 5) {
       setPopupMsg('Password must be at least 5 characters long')
       setErrorMsg(true)
       return
     }
-    /*if (email.current.value.length > 0 ||
-        pass.current.value.length > 0) {
-      saveInfo()
-      setPopupMsg('Updated your info')
-      setErrorMsg(true)
-      return
-    }  
-    */
     if (email.current.value.length === 0 &&
         pass.current.value.length ===  0) {
       setPopupMsg('All fields are empty')
@@ -94,13 +80,9 @@ export default function Settings() {
     const strPayload = JSON.stringify(payload)
     console.log(`common/${uID}`+ strPayload +' qos:'+ pQos)
     client.subscribe(`${uID}/#`,{qos:sQos, onSuccess: () => {
-    console.log('saysomething')
     client.publish(`common/${uID}`, strPayload,pQos)
   }})
   }
-
-
-
 
 const onMessage = (message) => {
 
@@ -120,10 +102,12 @@ const onMessage = (message) => {
       case 'modify':
         if (resJSON.reason === 'Email address already in use'){
           setPopupMsg("Email address already in use")
-          setErrorMsg(true)
-          break;
       } 
-        else setPopupMsg('Updated your info')
+        else { 
+          setPopupMsg('Updated your info')
+        }
+        pass.current.value = null
+        email.current.value = null
         setErrorMsg(true)
         break;
       default:
@@ -232,9 +216,9 @@ const onMessage = (message) => {
       <div class="column2">
         <p id="edit-details">Edit details</p>
         <h2 class = "settings-h2">Email address</h2>
-        <input ref={email} class = "settings-input" type="text" placeholder={userEmail} autocomplete="new-password"></input>
+        <input ref={email} class = "settings-input" type="text" placeholder={userEmail}></input>
         <h2 class = "settings-h2">Password</h2>
-        <input ref={pass} class = "settings-input" type="password" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;" autocomplete="new-password"></input>
+        <input ref={pass} class = "settings-input" type="password" autocomplete="new-password"></input>
         <div>
           <button onClick={validateInfo} class=" save-btn steam-button">Save</button>
         </div>
