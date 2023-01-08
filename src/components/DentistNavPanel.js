@@ -19,9 +19,6 @@ const DentistNavPanel = () => {
         <li>
           <a href="/SettingsDentist">Settings</a>
         </li>
-        <button>
-            Toggle Language
-    </button>
         <li>
           <a href="/">Log Out</a>
         </li>
