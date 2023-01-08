@@ -47,10 +47,11 @@
 .AAAtribs label{
   width: 5.5rem;
   height: auto;
+  position: relative;
+  bottom: 3px;
   background: transparent;
   color: white;
   border: transparent;
-  margin-left: 10px;
 }
 
 .AABtn{
@@ -59,8 +60,8 @@
   background: transparent;
   border: transparent;
   color: lightskyblue;
-  margin-left: 10px;
   text-align: right;
+  cursor: pointer;
 }
 
 input {

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import "./SettingsStyles.css";
 import NavPanel from "../components/NavPanel";
+import Popup from "../components/Popup";
 
 
 const engLang = require('../languages/english').navbar
@@ -43,38 +44,69 @@ export default function Settings() {
   const pass = useRef(null);
 
   
+  const [errorMsg, setErrorMsg] = useState(false);
+  const [popupMsg, setPopupMsg] = useState('')
+
+  function validateInfo() {
+    setPopupMsg('')
+    if (pass.current.value.length > 0 && pass.current.value.length < 5) {
+      setPopupMsg('Password must be at least 5 characters long')
+      setErrorMsg(true)
+      return
+    }
+    if (email.current.value.length === 0 &&
+        pass.current.value.length ===  0) {
+      setPopupMsg('All fields are empty')
+      setErrorMsg(true)
+      return
+    } 
+    else saveInfo()
+  }
+
   function saveInfo() {
     const payload = {
       operation: 'modify',
       opCat: 'user',
       id: uID,
-      email_address: email.current.value,
-      password: pass.current.value
     }
+    if (email.current.value !== '') {
+    payload.email_address = email.current.value
+    }
+    if (pass.current.value !== '') {
+      payload.password = pass.current.value
+    }
+
     const strPayload = JSON.stringify(payload)
     client.subscribe(`${uID}/#`,{qos:sQos, onSuccess: () => {
     client.publish(`common/${uID}`, strPayload,pQos)
-  }}) 
+  }})
   }
-
-
-
 
 const onMessage = (message) => {
 
   try{
     const resJSON = JSON.parse(message.payloadString)
+    let user = resJSON.data
     switch(resJSON.operation){
       case 'get-user':
-          let user = resJSON.data
           setUserFName(user.first_name)
           setUserLName(user.last_name)
           setUserPNum(user.personal_number)
           setUserEmail(user.email_address)
           setUserPassword(user.password)
           break;  
+      case 'modify':
+        if (resJSON.reason === 'Email address already in use'){
+          setPopupMsg("Email address already in use")
+      } 
+        else { 
+          setPopupMsg('Updated your info')
+        }
+        pass.current.value = null
+        email.current.value = null
+        setErrorMsg(true)
+        break;
       default:
-        
         break;
     }
   } catch(e){
@@ -87,22 +119,7 @@ const onMessage = (message) => {
   const navigate = useNavigate();
   const [pageLang, setLang] = useState('eng'); 
   
-  const [title, setTitle] = useState(engLang.title);
-  const [loginButtonText, setLoginButtonText] = useState(engLang.loginButtonText);
-  const [aboutButtonText, setAboutButtonText] = useState(engLang.aboutButtonText);
-  const [contactText, setContactText] = useState(engLang.contactText);
-  const [p1Text, setp1Text] = useState(engLang.p1Text);
-  const [p2Text, setp2Text] = useState(engLang.p2Text);
-  const [p3Text, setp3Text] = useState(engLang.p3Text);
-  const [p4Text, setp4Text] = useState(engLang.p4Text);
-  const [quoteText, setQuoteText] = useState(engLang.quoteText);
-  const [contactDescriptionText, setContactDescriptionText] = useState(engLang.contactDescriptionText);
-  const [fullStackText, setFullStackText] = useState(engLang.fullStackText);
-  const [backendText, setBackendText] = useState(engLang.backendText);
-  const [frontendText, setFrontendText] = useState(engLang.frontendText);
-  const [toTopText, setToTopText] = useState(engLang.toTopText);
   
-
   function checkLang() {
     if(chosenLang !== pageLang){
       
@@ -120,20 +137,6 @@ const onMessage = (message) => {
           break;
       }
 
-      setTitle(langObj.title);
-      setLoginButtonText(langObj.loginButtonText);
-      setAboutButtonText(langObj.aboutButtonText);
-      setContactText(langObj.contactText);
-      setp1Text(langObj.p1Text);
-      setp2Text(langObj.p2Text);
-      setp3Text(langObj.p3Text);
-      setp4Text(langObj.p4Text);
-      setQuoteText(langObj.quoteText);
-      setContactDescriptionText(langObj.contactDescriptionText);
-      setFullStackText(langObj.fullStackText);
-      setBackendText(langObj.backendText);
-      setFrontendText(langObj.frontendText);
-      setToTopText(langObj.toTopText);
       inUse = false
     }
   }
@@ -161,6 +164,7 @@ const onMessage = (message) => {
   return (
     <>
     <NavPanel></NavPanel>
+    <Popup trigger={errorMsg} setTrigger={setErrorMsg}><p>{popupMsg}</p></Popup>
     <h1>Settings</h1>
     <div class = "settings-area">
     <div class="row">
@@ -178,11 +182,11 @@ const onMessage = (message) => {
       <div class="column2">
         <p id="edit-details">Edit details</p>
         <h2 class = "settings-h2">Email address</h2>
-        <input ref={email} class = "settings-input" type="text" placeholder={userEmail} autocomplete="new-password"></input>
+        <input ref={email} class = "settings-input" type="text" placeholder={userEmail}></input>
         <h2 class = "settings-h2">Password</h2>
-        <input ref={pass} class = "settings-input" type="password" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;" autocomplete="new-password"></input>
+        <input ref={pass} class = "settings-input" type="password" autocomplete="new-password"></input>
         <div>
-          <button onClick={saveInfo} class=" save-btn steam-button">Save</button>
+          <button onClick={validateInfo} class=" save-btn steam-button">Save</button>
         </div>
       </div>
     </div>
