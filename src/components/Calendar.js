@@ -8,7 +8,14 @@ import DayEntry from "./DayEntry";
 
 const Calendar = ({dayEntries, bFunc, reqApp}) => {
     
-
+    let displayDate = null
+    if (!localStorage.getItem('savedYear') || !localStorage.getItem('savedMonth')){
+        const date = new Date()
+        localStorage.setItem('savedYear', date.getFullYear())
+        localStorage.setItem('savedMonth', date.getMonth() + 1)
+     }
+    displayDate = localStorage.getItem('savedMonth') + " / " + localStorage.getItem('savedYear')
+    
     const createDummies = () => {
         const dummies = []
         for (let i=0; i<31; i++){
@@ -72,7 +79,8 @@ const Calendar = ({dayEntries, bFunc, reqApp}) => {
             intMonth++
             localStorage.setItem('savedMonth', intMonth)
         }
-        reqApp()   
+        reqApp() 
+        displayDate = toString(intMonth) + " / " + toString(intYear)  
     }
 
     function lastMonth() {
@@ -89,11 +97,19 @@ const Calendar = ({dayEntries, bFunc, reqApp}) => {
             localStorage.setItem('savedMonth', intMonth)
         }     
         reqApp()
+        displayDate = toString(intMonth) + " / " + toString(intYear)
+    }
+
+    function returnToNow(){
+        const date = new Date()
+        localStorage.setItem('savedYear', date.getFullYear())
+        localStorage.setItem('savedMonth', date.getMonth() + 1)
+        reqApp()
     }
     
     return (
         <div>
-            <p className="header">Available Appointments</p> 
+            <p className="header2">Available Appointments</p> 
             <div className="WeekGrid" id="BigGrid">
                 <button className="leftArrow Arrow"
                 onClick={() => {
@@ -101,7 +117,13 @@ const Calendar = ({dayEntries, bFunc, reqApp}) => {
                   }}
                   onMouseEnter={event => onMouseOver(event)}
                   onMouseOut={event => onMouseOut(event)}>Previous</button> 
-                <button className="currentDate" id="currentDate"> 12 / 2022</button> 
+                <button className="currentDate" 
+                onClick={() => {
+                    returnToNow()
+                  }}
+                  onMouseEnter={event => onMouseOver(event)}
+                  onMouseOut={event => onMouseOut(event)}
+                > {displayDate}</button> 
                 <button className="RightArrow Arrow"
                 onClick={() => {
                     nextMonth()

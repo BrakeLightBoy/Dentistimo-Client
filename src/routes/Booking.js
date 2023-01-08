@@ -40,18 +40,10 @@ let currentSub = null
 
 let bFunc = null
 
-let savedClinic = null
-let savedMonth = null
-let savedYear = null
-
 
 export const Booking = () =>{
   const [bookingResponse, setBookingResp] = useState(false);
   const [errBookingResponse, setErrBookingResp] = useState(false);
-
-  savedClinic = localStorage.getItem('savedClinic')
-  savedMonth = localStorage.getItem('savedMonth')
-  savedYear = localStorage.getItem('savedYear')
  
   const uID = window.localStorage.getItem('uID')
 
@@ -211,11 +203,8 @@ export const Booking = () =>{
   return (
     <div>  
       <NavPanel></NavPanel>
-      <p className="header">{bookingTitle}</p>
-      <button className="invis"></button>   
+      <p className="header"> Choose clinic</p>
       <div>
-        <button className="Sort" onClick={requestAppointments}>{retrieveBookings}</button>
-        
         {/* <button className="Sort">Filter by</button>   */}
         
         <label>{bookingResponse}</label>
