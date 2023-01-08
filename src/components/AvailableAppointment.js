@@ -69,7 +69,7 @@ const AvailableAppointment = ({appointmentInfo, bookFunc}) => {
             <div id="atrb_box" className="AAAtribs">
                 {/* <label className="AATime">Date: {date} </label> */}
                 <label id="t_lbl" className="AATime">{time} </label>
-                <button onClick={f} id="book_btn" className="AABtn">Book</button>
+                <button onClick={f} id="book_btn" className="AABtn">{book}</button>
             </div>
             
         </div>

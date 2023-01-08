@@ -22,8 +22,8 @@ const navbar = {
 }
 
 const login = {
-    loginButtonText: 'Logga in',
-    registerButtonText: 'Registrera',
+    loginButtonText: 'Log in',
+    registerButtonText: 'Skapa',
     uIDText: 'Personnummer',
     passwordText: 'Lösenord',
     regFName: 'Namn',
@@ -38,13 +38,28 @@ const login = {
 }
 
 const mainpage = {
+    pageTitle: 'Upkommande Bokningar',
     successfulDelete: 'Tid avbokad!',
     unsuccessfulDelete: 'Din tid kunde inte avbokas!'
 }
 
 const bookings = {
-    bookingTitle: 'Tillgängliga Tider',
-    retrieveBookings: 'Sök'
+    ownerTitle: 'Ägare',
+    openingTitle: 'Oppet Tider',
+    monday: 'Måndag',
+    tuesday: 'Tisdag',
+    wednesday: 'Onsdag',
+    thursday: 'Torsdag',
+    friday: 'Fridag',
+    address: 'Adress',
+    city: 'Stad',
+    chooseClinic: 'Valj Klinik',
+    nextButton: 'Nästa',
+    previousButton: 'Tidigare',
+    noAppointments: 'INGA BOKNINGAR',
+    dayTitle: 'Dag',
+    bookingSuccess: 'Bokat!',
+    bookingUnsuccess: 'Kunde inte boka!'
 }
 
 const appointments = {
@@ -65,6 +80,39 @@ const availableappointments = {
     book: 'Boka'
 }
 
+const navpanel = {
+    home: 'Hem',
+    makeAppointments: 'Göra en Bokning',
+    settings: 'Inställningar',
+    logOut: 'Logga ut'
+}
+
+const userSettings = {
+    settingsTitle: 'Inställningar',
+    fNameTitle: 'Förnamn',
+    lNameTitle: 'Efternamn',
+    pNumTitle: 'Personnummer',
+    languageButton: 'Språk',
+    editDetails: 'Ändra detaljer',
+    emailTitle: 'Email adress',
+    passwordTitle: 'Lösernord',
+    saveButton: 'Spara',
+    modifySuccess: 'Updaterat!'
+}
+
+const dentistSettings = {
+    settingsTitle: 'Inställningar',
+    nameTitle: 'Namn',
+    fikaTimeTitle: 'Fika tid',
+    lunchTimeTitle: 'Lunch tid',
+    languageButton: 'Språk',
+    editDetails: 'Ändra detaljer',
+    usernameTitle: 'Andvändarnamn',
+    passwordTitle: 'Lösernord',
+    saveButton: 'Spara',
+    modifySuccess: 'Updaterat!'
+}
+
 module.exports = {
-    navbar, login, mainpage, bookings, appointments, availableappointments
+    navbar, login, mainpage, bookings, appointments, availableappointments, navpanel, userSettings, dentistSettings
 }
