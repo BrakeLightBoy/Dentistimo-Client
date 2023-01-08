@@ -6,8 +6,8 @@ import NavPanel from "../components/NavPanel";
 import Popup from "../components/Popup";
 
 
-const engLang = require('../languages/english').navbar
-const sweLang = require('../languages/swedish').navbar
+const engLang = require('../languages/english').userSettings
+const sweLang = require('../languages/swedish').userSettings
 let inUse = false
 let chosenLang = localStorage.getItem('lang');
 
@@ -39,6 +39,16 @@ export default function Settings() {
   const [userPNum, setUserPNum] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
+  const [settingsTitle, setSettingsTitle] = useState(engLang.settingsTitle);
+  const [fNameTitle, setFNameTitle] = useState(engLang.fNameTitle);
+  const [lNameTitle, setLNameTitle] = useState(engLang.lNameTitle);
+  const [pNumTitle, setPNumTitle] = useState(engLang.pNumTitle);
+  const [languageButton, setLanguageButton] = useState(engLang.languageButton);
+  const [editDetails, setEditDetails] = useState(engLang.editDetails);
+  const [emailTitle, setEmailTitle] = useState(engLang.emailTitle);
+  const [passwordTitle, setPasswordTitle] = useState(engLang.passwordTitle);
+  const [saveButton, setSaveButton] = useState(engLang.saveButton);
+  const [modifySuccess, setModifySuccess] = useState(engLang.modifySuccess);
 
   const email = useRef(null);
   const pass = useRef(null);
@@ -136,6 +146,17 @@ const onMessage = (message) => {
           langObj = engLang
           break;
       }
+      setSettingsTitle(langObj.settingsTitle);
+      setFNameTitle(langObj.fNameTitle);
+      setLNameTitle(langObj.lNameTitle);
+      setPNumTitle(langObj.pNumTitle);
+      setLanguageButton(langObj.languageButton);
+      setEditDetails(langObj.editDetails);
+      setEmailTitle(langObj.emailTitle);
+      setPasswordTitle(langObj.passwordTitle);
+      setSaveButton(langObj.saveButton);
+      setModifySuccess(langObj.modifySuccess);
+      
 
       inUse = false
     }
@@ -165,28 +186,28 @@ const onMessage = (message) => {
     <>
     <NavPanel></NavPanel>
     <Popup trigger={errorMsg} setTrigger={setErrorMsg}><p>{popupMsg}</p></Popup>
-    <h1>Settings</h1>
+    <h1>{settingsTitle}</h1>
     <div class = "settings-area">
     <div class="row">
       <div class="column1">
-        <h2 class = "settings-h2">First name</h2>
+        <h2 class = "settings-h2">{fNameTitle}</h2>
         <p id="user-info">{userFName}</p>
-        <h2 class = "settings-h2">Last name</h2>
+        <h2 class = "settings-h2">{lNameTitle}</h2>
         <p id="user-info">{userLName}</p>
-        <h2 class = "settings-h2">Personal number</h2>
+        <h2 class = "settings-h2">{pNumTitle}</h2>
         <p id="user-info">{userPNum}</p>
         <div>
-          <a onClick={toggleLang} class="toggle-lang-btn steam-button">Language button: {pageLang}</a>
+          <a onClick={toggleLang} class="toggle-lang-btn steam-button">{languageButton}: {pageLang}</a>
         </div>
       </div>
       <div class="column2">
-        <p id="edit-details">Edit details</p>
-        <h2 class = "settings-h2">Email address</h2>
+        <p id="edit-details">{editDetails}</p>
+        <h2 class = "settings-h2">{emailTitle}</h2>
         <input ref={email} class = "settings-input" type="text" placeholder={userEmail}></input>
-        <h2 class = "settings-h2">Password</h2>
+        <h2 class = "settings-h2">{passwordTitle}</h2>
         <input ref={pass} class = "settings-input" type="password" autocomplete="new-password"></input>
         <div>
-          <button onClick={validateInfo} class=" save-btn steam-button">Save</button>
+          <button onClick={validateInfo} class=" save-btn steam-button">{saveButton}</button>
         </div>
       </div>
     </div>

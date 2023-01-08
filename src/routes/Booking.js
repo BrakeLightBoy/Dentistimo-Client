@@ -49,9 +49,9 @@ export const Booking = () =>{
 
   const [freeAppointments, setFAppointments] = useState([]); 
 
-  const [bookingTitle, setBookingTitle] = useState(engLang.bookingTitle);
-  const [retrieveBookings, setRetrieveBookings] = useState(engLang.retrieveBookings);
-
+  const [bookingSuccess, setBookingSuccess] = useState(engLang.bookingSuccess);
+  const [bookingUnsuccess, setBookingUnsuccess] = useState(engLang.bookingUnsuccess);
+  const [chooseClinic, setChooseClinic] = useState(engLang.chooseClinic);
   if(!clientLoaded){
     clientLoaded = true
     const client = new Paho.Client(brokerHost,brokerPort,clientId)
@@ -182,8 +182,9 @@ export const Booking = () =>{
           langObj = engLang
           break;
       }
-       setBookingTitle(langObj.bookingTitle);
-       setRetrieveBookings(langObj.retrieveBookings);
+       setBookingSuccess(langObj.bookingSuccess);
+       setBookingUnsuccess(langObj.bookingUnsuccess);
+       setChooseClinic(langObj.chooseClinic);
       }
   }
 
@@ -192,16 +193,16 @@ export const Booking = () =>{
   return (
     <div>  
       <NavPanel></NavPanel>
-      <p className="header"> Choose clinic</p>
+      <p className="header">{chooseClinic}</p>
       <div>
         {/* <button className="Sort">Filter by</button>   */}
         
         <label>{bookingResponse}</label>
           <Popup trigger={bookingResponse} setTrigger={setBookingResp}>
-        <p>Appointment successfully booked</p>
+        <p>{bookingSuccess}</p>
         </Popup>
         <Popup trigger={errBookingResponse} setTrigger={setErrBookingResp}> 
-        <p>Appointment could not be booked!</p>
+        <p>{bookingUnsuccess}</p>
         </Popup>
       </div> 
       <div className="AList">

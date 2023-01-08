@@ -39,13 +39,28 @@ const login = {
 }
 
 const mainpage = {
+    pageTitle: 'Upcoming Appointments',
     successfulDelete: 'Appointment successfully deleted!',
     unsuccessfulDelete: 'Appointment could not be deleted!'
 }
 
 const bookings = {
-    bookingTitle: 'Available Appointments',
-    retrieveBookings: 'Get'
+    ownerTitle: 'Owner',
+    openingTitle: 'Opening Hours',
+    monday: 'Monday',
+    tuesday: 'Tuesday',
+    wednesday: 'Wednesday',
+    thursday: 'Thursday',
+    friday: 'Friday',
+    address: 'Address',
+    city: 'City',
+    chooseClinic: 'Choose Clinic',
+    nextButton: 'Next',
+    previousButton: 'Previous',
+    noAppointments: 'NO APPOINTMENTS',
+    dayTitle: 'Day',
+    bookingSuccess: 'Appointment booked successfully!',
+    bookingUnsuccess: 'Appointment booked unsuccessfully!'
 }
 
 const appointments = {
@@ -67,6 +82,39 @@ const availableappointments = {
     book: 'Book'
 }
 
+const navpanel = {
+    home: 'Home',
+    makeAppointments: 'Make Appointments',
+    settings: 'Settings',
+    logOut: 'Log Out'
+}
+
+const userSettings = {
+    settingsTitle: 'Settings',
+    fNameTitle: 'First name',
+    lNameTitle: 'Last name',
+    pNumTitle: 'Personal number',
+    languageButton: 'Language',
+    editDetails: 'Edit details',
+    emailTitle: 'Email address',
+    passwordTitle: 'Password',
+    saveButton: 'Save',
+    modifySuccess: 'Updated information!'
+}
+
+const dentistSettings = {
+    settingsTitle: 'Settings',
+    nameTitle: 'Name',
+    fikaTimeTitle: 'Fika time',
+    lunchTimeTitle: 'Lunch time',
+    languageButton: 'Language',
+    editDetails: 'Edit details',
+    usernameTitle: 'Username',
+    passwordTitle: 'Password',
+    saveButton: 'Save',
+    modifySuccess: 'Updated information!'
+}
+
 module.exports = {
-    navbar, login, mainpage, bookings, appointments, availableappointments
+    navbar, login, mainpage, bookings, appointments, availableappointments, navpanel, userSettings, dentistSettings
 }

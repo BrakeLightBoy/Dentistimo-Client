@@ -3,10 +3,16 @@ import AvailableAppointment from "./AvailableAppointment";
 import "./CalendarStyles.css";
 import DayEntry from "./DayEntry";
 
+import { useState, useRef } from "react";
 
+const engLang = require('../languages/english').bookings
+const sweLang = require('../languages/swedish').bookings
 
 
 const Calendar = ({dayEntries, bFunc, reqApp}) => {
+    const [previousButton, setPreviousButton] = useState(engLang.previousButton);
+    const [nextButton, setNextButton] = useState(engLang.nextButton);
+  
     
     let displayDate = null
     if (!localStorage.getItem('savedYear') || !localStorage.getItem('savedMonth')){
@@ -121,6 +127,32 @@ const Calendar = ({dayEntries, bFunc, reqApp}) => {
         localStorage.setItem('savedMonth', date.getMonth() + 1)
         reqApp()
     }
+
+    const chosenLang = localStorage.getItem('lang');
+  const [pageLang, setLang] = useState('eng'); 
+
+  function checkLang() {
+      if(chosenLang !== pageLang){
+      
+      setLang(chosenLang)
+      let langObj = null
+      switch (chosenLang) {
+          case 'eng':
+          langObj = engLang  
+          break;
+          case 'swe':
+          langObj = sweLang
+          break;
+          default:
+          langObj = engLang
+          break;
+      }
+       setNextButton(langObj.nextButton);
+       setPreviousButton(langObj.previousButton);
+      }
+  }
+
+  checkLang()
     
     return (
         <div>
@@ -130,7 +162,7 @@ const Calendar = ({dayEntries, bFunc, reqApp}) => {
                     lastMonth()
                   }}
                   onMouseEnter={event => onMouseOver(event)}
-                  onMouseOut={event => onMouseOut(event)}>Previous</button> 
+                  onMouseOut={event => onMouseOut(event)}>{previousButton}</button> 
                 <button className="currentDate" 
                 onClick={() => {
                     returnToNow()
@@ -144,7 +176,7 @@ const Calendar = ({dayEntries, bFunc, reqApp}) => {
                   }}
                   onMouseEnter={event => onMouseOver(event)}
                   onMouseOut={event => onMouseOut(event)}
-                >Next</button> 
+                >{nextButton}</button> 
             </div> 
             <div className="AppointmentGrid" id="AppointmentGrid">
                 {days}

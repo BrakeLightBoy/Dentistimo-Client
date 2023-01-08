@@ -36,6 +36,7 @@ export default function Home() {
   const [deleteResponse, setDeleteResp] = useState(false);
   const [errDeleteResponse, setErrDeleteResp] = useState(false);
 
+  const [pageTitle, setPageTitle] = useState(engLang.pageTitle);
   const [successfulDelete, setSuccessfulDelete] = useState(engLang.successfulDelete);
   const [unsuccessfulDelete, setUnsuccessfulDelete] = useState(engLang.unsuccessfulDelete);
 
@@ -134,6 +135,7 @@ function onConnect () {
           langObj = engLang
           break;
       }
+      setPageTitle(langObj.pageTitle);
       setSuccessfulDelete(langObj.successfulDelete);
       setUnsuccessfulDelete(langObj.unsuccessfulDelete);
     }
@@ -145,7 +147,7 @@ function onConnect () {
   return (
     <div>
     <NavPanel></NavPanel>
-    <h2 className="title">Upcoming appointments:</h2>
+    <h2 className="title">{pageTitle}:</h2>
       {appointments}
       <Popup trigger={deleteResponse} setTrigger={setDeleteResp}>
       <p>{successfulDelete}</p>

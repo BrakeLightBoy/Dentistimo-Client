@@ -5,8 +5,8 @@ import "./SettingsStyles.css";
 import DentistNavPanel from "../components/DentistNavPanel";
 import Popup from "../components/Popup";
 
-const engLang = require('../languages/english').navbar
-const sweLang = require('../languages/swedish').navbar
+const engLang = require('../languages/english').dentistSettings
+const sweLang = require('../languages/swedish').dentistSettings
 let inUse = false
 let chosenLang = localStorage.getItem('lang');
 
@@ -37,12 +37,18 @@ export default function SettingsDentist() {
   const [dentistFName, setDentistFName] = useState("");
   const [dentistLName, setDentistLName] = useState("");
   const [dentistUsername, setDentistUsername] = useState("");
-  const [dentistPassword, setDentistPassword] = useState("");
-  const [dentistWork, setDentistWork] = useState("");
-  const [dentistDaysOff, setDentistDaysOff] = useState("");
   const [dentistFika, setDentistFika] = useState("");
   const [dentistLunch, setDentistLunch] = useState("");
-  
+  const [settingsTitle, setSettingsTitle] = useState(engLang.settingsTitle);
+  const [nameTitle, setNameTitle] = useState(engLang.nameTitle);
+  const [fikaTimeTitle, setFikaTimeTitle] = useState(engLang.fikaTimeTitle);
+  const [lunchTimeTitle, setLunchTimeTitle] = useState(engLang.lunchTimeTitle);
+  const [languageButton, setLanguageButton] = useState(engLang.languageButton);
+  const [editDetails, setEditDetails] = useState(engLang.editDetails);
+  const [usernameTitle, setUsernameTitle] = useState(engLang.usernameTitle);
+  const [passwordTitle, setPasswordTitle] = useState(engLang.passwordTitle);
+  const [saveButton, setSaveButton] = useState(engLang.saveButton);
+
 
   const pass = useRef(null);
   const user = useRef(null);
@@ -94,9 +100,6 @@ export default function SettingsDentist() {
           setDentistFName(dentist.first_name)
           setDentistLName(dentist.last_name)
           setDentistUsername(dentist.username)
-          setDentistWork(dentist.works_at)
-          setDentistPassword(dentist.password)
-          setDentistDaysOff(dentist.days_off)
           setDentistFika(dentist.fika_time)
           setDentistLunch(dentist.lunch_time)
           break;
@@ -141,7 +144,15 @@ export default function SettingsDentist() {
           langObj = engLang
           break;
       }
-
+      setSettingsTitle(langObj.settingsTitle);
+      setNameTitle(langObj.nameTitle);
+      setFikaTimeTitle(langObj.fikaTimeTitle);
+      setLunchTimeTitle(langObj.lunchTimeTitle);
+      setLanguageButton(langObj.languageButton);
+      setEditDetails(langObj.editDetails);
+      setUsernameTitle(langObj.usernameTitle);
+      setPasswordTitle(langObj.passwordTitle);
+      setSaveButton(langObj.saveButton);
       inUse = false
     }
   }
@@ -170,28 +181,28 @@ export default function SettingsDentist() {
     <>
     <DentistNavPanel></DentistNavPanel>
     <Popup trigger={errorMsg} setTrigger={setErrorMsg}><p>{popupMsg}</p></Popup>
-    <h1>Dentist Settings</h1>
+    <h1>{settingsTitle}</h1>
     <div class = "settings-area">
     <div class="row">
       <div class="column1">
-        <h2 class = "settings-h2">Name</h2>
+        <h2 class = "settings-h2">{nameTitle}</h2>
         <p id="user-info">{dentistFName} {dentistLName}</p>
-        <h2 class = "settings-h2">Fika time</h2>
+        <h2 class = "settings-h2">{fikaTimeTitle}</h2>
         <p id="user-info">{dentistFika}</p>
-        <h2 class = "settings-h2">Lunch time</h2>
+        <h2 class = "settings-h2">{lunchTimeTitle}</h2>
         <p id="user-info">{dentistLunch}</p>
         <div>
-          <a onClick={toggleLang} class="toggle-lang-btn steam-button">Language button: {pageLang}</a>
+          <a onClick={toggleLang} class="toggle-lang-btn steam-button">{languageButton}: {pageLang}</a>
         </div>
       </div>
       <div class="column2">
-        <p id="edit-details">Edit details</p>
-        <h2 class = "settings-h2">Username</h2>
+        <p id="edit-details">{editDetails}</p>
+        <h2 class = "settings-h2">{usernameTitle}</h2>
         <input ref={user} class = "settings-input" type="text" placeholder={dentistUsername}></input>
-        <h2 class = "settings-h2">Password</h2>
+        <h2 class = "settings-h2">{passwordTitle}</h2>
         <input ref={pass} class = "settings-input" type="password" autocomplete="new-password"></input>
         <div>
-          <button onClick={validateInfo} class=" save-btn steam-button">Save</button>
+          <button onClick={validateInfo} class=" save-btn steam-button">{saveButton}</button>
         </div>
       </div>
     </div>
