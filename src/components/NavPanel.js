@@ -7,7 +7,7 @@ const NavPanel = () => {
   return (
     <nav class="nav">
       <a href="/" class="nav-title">
-        Project Titan
+      DENTISTIMO
       </a>
       <ul>
 

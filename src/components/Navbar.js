@@ -102,7 +102,7 @@ const NavBar = () => {
         </div>
         <div className="content">
           <h1>{title}</h1>
-          <h2 id="projName">PROJECT TITAN</h2>
+          <h2 id="projName">DENTISTIMO</h2>
           <a
             href="#about"
             className="steam-button"
