@@ -3,18 +3,18 @@ const navbar = {
     loginButtonText: 'Logga in',
     aboutButtonText: 'Om oss',
     contactText: 'Kontakta oss', 
-    p1Text: 'Sömlös, enkelt att använda, effektiv -- Bara välj en tid och se vad som är tillgängligt.',
-    p2Text: 'Våra tänder är en av våra mäst värdefulla verktyg.' 
-    + 'Vi brukar inte upskatta dem tilst det är för sent.'
-    + 'Vi rekommenderar årliga tandvårdsbesök, och vill göra det så enkelt som möjligt.',
-    p3Text: 'För någon som flyttar till Sverige eller inom Sverige, det är inte altid lätt att få en tid hos tandläkaren '
+    p1Text: 'Sömlös, enkel att använda, effektiv -- Bara välj en tid och se vad som är tillgängligt.',
+    p2Text: 'Våra tänder är ett av våra mest värdefulla verktyg.' 
+    + 'Vi upskattar dem sällan tills det är för sent.'
+    + 'Vi rekommenderar årliga tandvårdsbesök och vill göra det så enkelt som möjligt att boka tider.',
+    p3Text: 'För någon som flyttat till en ny stad i Sverige är det inte alltid lätt att få en tid hos tandläkaren '
     + 'eftersom många tandvårdskliniker är fullbokade.' 
-    + 'Istället för att söka manuelt online, Project Titan söker tider åt dig!',
-    p4Text: 'Genom våra sömlosa GUI, vi låter dig se tider inom en tidsperiod som du väljer, '
-    + 'eftersom vår system håller koll på tillgänglighet av tider för alla kliniker!'
-    + 'Inkluderande Dan Tist, the Tooth Fairy, Carmen Corona, och Glen Hysen.',
-    quoteText: '"Tid och hälsa är två värdefulla egendomar som vi upskattar inte tills vi har förlorat dem."',
-    contactDescriptionText: 'Vi är en liten grupp av studenter med varierade kunskaper från över hela världen!',
+    + 'Istället för att söka manuellt online, söker Project Titan tider åt dig!',
+    p4Text: 'Genom våran sömlosa GUI låter vi dig se tider på ett enkelt och förståeligt vis, '
+    + ' vårt system håller koll på tillgängliga tider hos flertalet tandläkare!'
+    + 'Några exempel är Dan Tist, the Tooth Fairy, Carmen Corona, och Glen Hysen.',
+    quoteText: '"Tid och hälsa är två värdefulla egenskaper som vi inte upskattar tills vi har förlorat dem."',
+    contactDescriptionText: 'Vi är en grupp studenter med mångsidig kompetens och medlemmar från hela världen!',
     fullStackText: 'Full-Stack',
     backendText: 'Back-end',
     frontendText: 'Front-end',
@@ -32,13 +32,13 @@ const login = {
     regMail: 'Mailadress',
     checkboxText: 'Tandläkare',
     loginErrorPopup: 'Fel personnummer eller lösernord',
-    blankInputPopup: 'Inget box få vara tomt!',
-    registrationSuccess: 'Konto skapad!',
-    registrationFailed: 'Det gick inte o skapa din konto!',
+    blankInputPopup: 'Ingen box får vara tom!',
+    registrationSuccess: 'Konto skapat!',
+    registrationFailed: 'Det gick inte att skapa ditt konto!',
 }
 
 const mainpage = {
-    successfulDelete: 'Tid avbokat!',
+    successfulDelete: 'Tid avbokad!',
     unsuccessfulDelete: 'Din tid kunde inte avbokas!'
 }
 
