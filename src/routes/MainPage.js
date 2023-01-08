@@ -152,14 +152,12 @@ function onConnect () {
     <NavPanel></NavPanel>
     <h2 className="title">Upcoming appointments:</h2>
       {appointments}
-      <label>Hello: {deleteResponse}</label>
       <Popup trigger={deleteResponse} setTrigger={setDeleteResp}>
       <p>{successfulDelete}</p>
       </Popup>
       <Popup trigger={errDeleteResponse} setTrigger={setErrDeleteResp}> 
       <p>{unsuccessfulDelete}</p>
       </Popup>
-      Personal Number: {uID}
     </div>
   );
   }
