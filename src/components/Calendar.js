@@ -107,7 +107,6 @@ const Calendar = ({dayEntries, bFunc, reqApp}) => {
     
     return (
         <div>
-            <p className="header2">Available Appointments</p> 
             <div className="WeekGrid" id="BigGrid">
                 <button className="leftArrow Arrow"
                 onClick={() => {
