@@ -25,7 +25,6 @@ const uID = window.localStorage.getItem('uID')
 client.connect({onSuccess: onConnect})
 
 function onConnect () {
-  console.log('CONN SUCC LOGIN')
   client.subscribe(`${uID}/get-user`,{qos:sQos, onSuccess: () => {
     const payload = {operation: 'get-user', personal_number: uID, opCat: 'user'}
     const strPayload = JSON.stringify(payload)
@@ -53,7 +52,6 @@ export default function Settings() {
       password: pass.current.value
     }
     const strPayload = JSON.stringify(payload)
-    console.log(`common/${uID}`+ strPayload +' qos:'+ pQos)
     client.subscribe(`${uID}/#`,{qos:sQos, onSuccess: () => {
     client.publish(`common/${uID}`, strPayload,pQos)
   }}) 
@@ -66,7 +64,6 @@ const onMessage = (message) => {
 
   try{
     const resJSON = JSON.parse(message.payloadString)
-    console.log('OP: ' + resJSON.operation)
     switch(resJSON.operation){
       case 'get-user':
           let user = resJSON.data

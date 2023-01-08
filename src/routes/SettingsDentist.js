@@ -14,11 +14,7 @@ const client = new Paho.Client(brokerHost,brokerPort,clientId)
 const sQos = 2
 const pQos = 2
 
-client.connect({onSuccess: onConnect})
-
-function onConnect () {
-  console.log('CONN SUCC LOGIN')
-}
+client.connect()
 
 export default function SettingsDentist() {
   const uID = window.localStorage.getItem('uID')
@@ -39,7 +35,6 @@ export default function SettingsDentist() {
       password: pass.current.value
       }
     const strPayload = JSON.stringify(payload)
-    console.log(`common/${uID}`+ strPayload +' qos:'+ pQos)
     client.subscribe(`${uID}/#`,{qos:sQos, onSuccess: () => {
     client.publish(`common/${uID}`, strPayload,pQos)
   }}) 

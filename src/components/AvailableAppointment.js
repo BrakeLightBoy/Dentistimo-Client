@@ -12,8 +12,6 @@ const slotToString = (slot) => {
     const hours = Math.floor(slot/2)
     const time = hours+":"+minutes
 
-    // console.log('orgSlot:',slot)
-    // console.log('time:',time)
     return time
 
 }

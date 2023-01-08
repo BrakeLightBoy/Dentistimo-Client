@@ -56,7 +56,6 @@ export default function Home() {
 
     try{
       const resJSON = JSON.parse(message.payloadString)
-      console.log('OP: ' + resJSON.operation)
       switch(resJSON.operation){
         case 'delete-dentist-appointment':
           if(resJSON.success){
@@ -68,7 +67,6 @@ export default function Home() {
           break;
         default:
           appointments = resJSON
-          console.log("RES appoint:",appointments)
           let n = -1
           
           nonReactAppointments = appointments.map(appointment => {
@@ -96,8 +94,6 @@ client.connect({onSuccess: onConnect})
 
 function onConnect () {
   client.subscribe(`${uID}/appointments`,{qos:sQos, onSuccess: () => {
-    console.log('user appoint subbed')
-    console.log('pNumber',uID)
     requestDentistAppointments();
   }})
 }
