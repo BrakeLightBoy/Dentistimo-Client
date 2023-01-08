@@ -9,7 +9,7 @@ const DayEntry = ({day, appointments}) => {
             <div className="DayGrid">
             <div>Day {day}</div>
             </div>
-            <div className="AppointmentBox">
+            <div>
                 {appointments}
             </div>
         </div>

@@ -4,11 +4,17 @@
   }
   
   .AppointmentBox {
-    width: 12.2rem;
-    height: auto;
-    background-color: #4c567e;
-    margin-top: 0.5rem;
+    width: 12rem;
+    height: 3rem;
+    margin-top: .6rem;
     font-size: large;
+    
+    background-color: #6f1717;
+    border: none;
+    color: #fff;
+    border-radius: 4px;
+
+    box-shadow: 5px 5px 0 #440808;
   }
   
   .header {
@@ -35,8 +41,9 @@
   .AppointmentDay{
     width: 4rem;
     height: 2rem;
-    background: #4c567e;
     border: transparent;
+    background: transparent;
+    color: rgb(220, 220, 220);
     text-align: middle;
     font-size: large;
     align-self: auto;  
@@ -44,9 +51,25 @@
     margin-left: 4rem;
   }
 
+  .AABox {
+    width: 35.5rem;
+    height: 3.2rem;
+    margin-top: 1rem;
+    margin-left: 1rem;
+    padding-top: 1rem;
+    font-size: large;
+
+    background-color: #1f347c;
+    border: none;
+    color: #fff;
+    border-radius: 4px;
+
+    box-shadow: 5px 5px 0 #172450;
+  }
+  
   .DayGrid{
     display: grid;
-    grid-template-columns: repeat(7, 13rem);
+    grid-template-columns: repeat(7, 14.3rem);
     
   }
   
@@ -55,18 +78,22 @@
     width: 13rem;
     height: 3.5rem;
     grid-template-columns: repeat(7, 13rem);
+
     grid-row: 3.5rem;
-    margin-left: 0.5rem;
-    column-gap: 0.5rem;
-    row-gap: 0.5rem;
+    column-gap: 1rem;
+    row-gap: 1rem;
+    margin-left: 10.1rem;
+
+    text-align: center;
+    color: white;
   }
   
   .WeekGrid{
     display: grid;
     width: auto;
     height: 3.5rem;
-    grid-template-columns: 4rem 32rem 17rem 32.4rem 4rem;
-    margin-left: 2rem;
+    grid-template-columns: 4rem 33.8rem 16rem 30rem 4rem;
+    margin-left: 13rem;
     margin-bottom: 2rem;
     margin-top: 1rem;
   }
@@ -74,19 +101,26 @@
   .currentDate{
     width: auto;
     height: auto;
-    color: white;
-    background-color:rgb(42, 113, 168);
     text-align: center;
     font-size: xx-large;
     border: transparent;
     grid-column: 3;
+    background-color: transparent;
+    color: white;
+    font-size: 2.5rem;
   }
   
   .Arrow{
-    background-color:rgb(42, 113, 168);
+    background-color: #166dca;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+
     font-size: larger;
     height: 3.5rem;
     width: 6rem;  
+
+    box-shadow: 5px 5px 0 #113dad;
   }
 
   .LeftArrow{
