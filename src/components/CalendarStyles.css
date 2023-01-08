@@ -15,8 +15,13 @@
     border-radius: 4px;
 
     box-shadow: 5px 5px 0 #440808;
+
+    transition: transform 0.2s ease-in-out;
   }
   
+  .AppointmentBox:hover {
+    transform:scale(1.1);
+  }
   .header {
     width: 10.5rem;
     height: 3rem;
@@ -65,8 +70,12 @@
     border-radius: 4px;
 
     box-shadow: 5px 5px 0 #172450;
+    transition: transform 0.2s ease-in-out;
   }
   
+  .AABox:hover {
+    transform:scale(1.1);
+  }
   .DayGrid{
     display: grid;
     grid-template-columns: repeat(7, 14.3rem);
@@ -108,7 +117,31 @@
     background-color: transparent;
     color: white;
     font-size: 2.5rem;
+    transition: color 0.2s;
+  color: white;
+}
+
+.currentDate:hover {
+  animation: color-anim 2s infinite;
+}
+
+@keyframes color-anim {
+  0% {
+    color: white;
   }
+  25% {
+    color: #0f98d8;
+  }
+  50% {
+    color: rgb(219, 146, 0);
+  }
+  75% {
+    color: rgb(193, 16, 0);
+  }
+  100% {
+    color: white;
+  }
+}
   
   .Arrow{
     background-color: #166dca;
@@ -120,7 +153,14 @@
     height: 3.5rem;
     width: 6rem;  
 
+    cursor: pointer;
+    
     box-shadow: 5px 5px 0 #113dad;
+    transition: transform 0.2s ease-in-out;
+  }
+
+  .Arrow:hover {
+    transform:scale(1.1);
   }
 
   .LeftArrow{

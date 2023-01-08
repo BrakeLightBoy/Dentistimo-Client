@@ -61,6 +61,7 @@
   border: transparent;
   color: lightskyblue;
   text-align: right;
+  cursor: pointer;
 }
 
 input {
