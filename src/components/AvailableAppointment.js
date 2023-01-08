@@ -60,7 +60,6 @@ const AvailableAppointment = ({appointmentInfo, bookFunc}) => {
 
     
     const f = () => {
-        console.log('dat:',new Date(info.year+"-"+info.month+"-"+info.d))
         bookFunc(new Date(info.year+"-"+info.month+"-"+info.d+" "+slotToString(info.s)))
     }
 

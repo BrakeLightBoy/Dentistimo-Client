@@ -28,9 +28,7 @@ const Marker = ({icon, lat, lng, key, clinic_ID, clinicName, clinicOwner, clinic
                 clickFunc(info)
                 reqApp()
 
-            } else {
-                console.log('no func')
-            }
+            } 
         }}>
             <Icon icon={icon} className='loc-mark' />
         </div>

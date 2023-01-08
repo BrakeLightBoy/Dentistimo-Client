@@ -145,7 +145,6 @@ export const Login = () => {
         default:
       }
     } catch(e) {
-      console.log(e)
     }
 }
 

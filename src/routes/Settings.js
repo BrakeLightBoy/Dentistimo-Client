@@ -78,7 +78,6 @@ const onMessage = (message) => {
         break;
     }
   } catch(e){
-      console.log(e)
   }
 }
 

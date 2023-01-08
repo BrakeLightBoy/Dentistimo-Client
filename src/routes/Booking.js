@@ -110,7 +110,6 @@ export const Booking = () =>{
           break;
       }
     } catch(e){
-        console.log(e)
     }
   }
 

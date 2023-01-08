@@ -81,7 +81,6 @@ export default function Home() {
           break;
       }
     } catch(e){
-        console.log(e)
     }
   }
 
