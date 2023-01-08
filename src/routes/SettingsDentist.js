@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import "./SettingsStyles.css";
 import DentistNavPanel from "../components/DentistNavPanel";
+import Popup from "../components/Popup";
 
 const engLang = require('../languages/english').navbar
 const sweLang = require('../languages/swedish').navbar
@@ -47,6 +48,41 @@ export default function SettingsDentist() {
   const pass = useRef(null);
   const user = useRef(null);
   
+  const [errorMsg, setErrorMsg] = useState(false);
+  const [popupMsg, setPopupMsg] = useState('')
+
+  function validateInfo() {
+    setPopupMsg('')
+    //Probably change popup to highlight the fields that are invalid and only show popup on successful changes
+    /*if (!((/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email.current.value))) && email.current.length > 0) {
+      setPopupMsg('Invalid email format')
+      setErrorMsg(true)
+    }
+    */
+    if (pass.current.value.length > 0 && pass.current.value.length < 5) {
+      setPopupMsg('Password must be at least 5 characters long')
+      setErrorMsg(true)
+      return
+    }
+    if (first.current.value.length > 0 ||
+        last.current.value.length > 0 ||
+        pass.current.value.length > 0 ||
+        user.current.value.length > 0) {
+      saveInfo()
+      setPopupMsg('Updated your info')
+      setErrorMsg(true)
+      return
+    }  
+    if (first.current.value.length === 0 &&
+        last.current.value.length === 0 &&
+        pass.current.value.length ===  0 &&
+        user.current.value.length === 0) {
+      setPopupMsg('All fields are empty')
+      setErrorMsg(true)
+      return
+    } 
+  }
+
   function saveInfo() {
     const payload = {
       operation: 'modify',
