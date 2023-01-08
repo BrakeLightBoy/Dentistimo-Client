@@ -14,3 +14,8 @@
     height: 50px;
     color: red;
 }
+
+.title {
+    color: aliceblue;
+    padding: 1rem;
+}

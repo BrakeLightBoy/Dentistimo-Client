@@ -28,7 +28,6 @@ const DentistAppointment = ({appointmentInfo, deleteFunc, editFunc}) => {
   const [appointmentTitle, setAppointmentTitle] = useState(engLang.appointmentTitle);
   const [patientName, setDentist] = useState(engLang.patient);
   const [clinicName, setClinic] = useState(engLang.clinic);
-  const [requestNum, setRequest] = useState(engLang.request);
   const [deleteButtonText, setDeleteButtonText] = useState(engLang.deleteButtonText);
   const [issuanceNum, setIssuance] = useState(engLang.issuance);
   const [dateNum, setDate] = useState(engLang.date);
@@ -37,11 +36,17 @@ const DentistAppointment = ({appointmentInfo, deleteFunc, editFunc}) => {
   const issuance = appointmentInfo.issuance
   const date = new Date(appointmentInfo.date)
   const appointmentDate = date.getDate() + '-' + (date.getMonth()+1) + '-' + date.getFullYear()
-  const appointmentTime = date.getHours() + ':' + date.getMinutes()
-  const request  = appointmentInfo.request_id
+  const appointmentTime = addZero(date.getHours()) + ':' + addZero(date.getMinutes())
   const clinic = appointmentInfo.dentist_id.works_at[0].name
   const patient = appointmentInfo.user_id.first_name + ' ' + appointmentInfo.user_id.last_name
   const appointment = appointmentInfo._id
+
+  function addZero(i) {
+    if (i < 10) {
+      i = "0" + i
+    }
+    return i;
+  }
 
   function deleteFunc() {
     const payload = {operation: 'delete-dentist-appointment', appointment_id:appointment, opCat: 'appointment'}
@@ -74,7 +79,6 @@ const DentistAppointment = ({appointmentInfo, deleteFunc, editFunc}) => {
        setAppointmentTitle(langObj.appointmentTitle);
        setDentist(langObj.patient);
        setClinic(langObj.clinic);
-       setRequest(langObj.request);
        setDeleteButtonText(langObj.deleteButtonText);
        setIssuance(langObj.issuance);
        setDate(langObj.date);
@@ -87,13 +91,10 @@ const DentistAppointment = ({appointmentInfo, deleteFunc, editFunc}) => {
 
   return (
     <>
-    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'></link>
     <div className="app-box">
-      <h2>{appointmentTitle} #123</h2>
+      <h3>{appointmentTitle} </h3>
       <p>{patientName}: {patient} </p>
       <p>{clinicName}: {clinic} </p>
-      <p>{requestNum}: {request} </p>
-      <p>{appointmentTitle}: {appointment} </p>
       <p>{issuanceNum}: {issuance} </p>
       <p>{dateNum}: {appointmentDate} </p>
       <p>{timeNum}: {appointmentTime}</p>
