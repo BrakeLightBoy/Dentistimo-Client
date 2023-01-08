@@ -14,9 +14,7 @@ export function HeadTab() {
       <div className="header">
         <h3 className="text">Appointments</h3>
         <div className="right">
-            <button className="dateNav">Back</button>
             <button className="today">{CurrentDate} Today</button>
-            <button className="dateNav">Forward</button>
         </div>
       </div>
     );
