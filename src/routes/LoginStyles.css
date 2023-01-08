@@ -14,6 +14,14 @@
   border-radius: 1.25rem;
 }
 
+#background {
+  background-image: url('../assets/stacked-peaks-haikei.svg');
+  aspect-ratio: 960/475;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 .button-box {
   width: 16rem;
   margin: 2rem auto;

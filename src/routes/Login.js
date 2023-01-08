@@ -220,6 +220,7 @@ const login = () =>{
 
   return (
     <>
+    <div id="background">
       <div class="form-box">
         <div class="button-box">
           <div id="btn"></div>
@@ -285,6 +286,7 @@ const login = () =>{
           </button>
         </form>
       </div>
+    </div>
     </>
   );
 };
