@@ -22,9 +22,14 @@ const Calendar = ({dayEntries, bFunc, reqApp}) => {
      }
     displayDate = localStorage.getItem('savedMonth') + " / " + localStorage.getItem('savedYear')
     
+    const month = parseInt(localStorage.getItem('savedMonth')) 
+    const year = parseInt(localStorage.getItem('savedYear'))
+    const curDate = new Date(year,month,0)
+    const daysInCMonth = curDate.getDate()
+
     const createDummies = () => {
         const dummies = []
-        for (let i=0; i<31; i++){
+        for (let i=0; i<daysInCMonth; i++){
             dummies[i] = <DayEntry key={i+1} day={i+1}> isDummy={true} </DayEntry>
         }
         return dummies
@@ -33,8 +38,7 @@ const Calendar = ({dayEntries, bFunc, reqApp}) => {
     const processEntries = (entries) => {
         const dayEntries = createDummies()
 
-        const month = parseInt(localStorage.getItem('savedMonth')) 
-        const year = parseInt(localStorage.getItem('savedYear'))
+
 
         for(let i=0; i<31; i++){
             if(entries[i]){
