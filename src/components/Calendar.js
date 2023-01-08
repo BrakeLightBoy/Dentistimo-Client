@@ -19,7 +19,7 @@ const Calendar = ({dayEntries, bFunc, reqApp}) => {
     const createDummies = () => {
         const dummies = []
         for (let i=0; i<31; i++){
-            dummies[i] = <DayEntry key={i+1} day={i+1}></DayEntry>
+            dummies[i] = <DayEntry key={i+1} day={i+1}> isDummy={true} </DayEntry>
         }
         return dummies
     }
@@ -27,6 +27,8 @@ const Calendar = ({dayEntries, bFunc, reqApp}) => {
     const processEntries = (entries) => {
         const dayEntries = createDummies()
 
+        const month = parseInt(localStorage.getItem('savedMonth')) 
+        const year = parseInt(localStorage.getItem('savedYear'))
 
         for(let i=0; i<31; i++){
             if(entries[i]){
@@ -38,7 +40,10 @@ const Calendar = ({dayEntries, bFunc, reqApp}) => {
 
                     dayAppoints.push(appointment)
                 }
-                const dayEntry = <DayEntry key={i+1} day={i+1} appointments={dayAppoints} />
+
+
+
+                const dayEntry = <DayEntry key={i+1} day={i+1} appointments={dayAppoints} monthDisplayed={month} yearDisplayed={year} />
                 dayEntries[i] = dayEntry
             }
         }
@@ -84,20 +89,34 @@ const Calendar = ({dayEntries, bFunc, reqApp}) => {
     }
 
     function lastMonth() {
+        const currentDate = new Date()
+        const cMonth = currentDate.getMonth() +1
+        const cYear = currentDate.getFullYear()
+
+        
         let currentMonth = localStorage.getItem('savedMonth')
         let currentYear = localStorage.getItem('savedYear')
         let intYear = parseInt(currentYear)
         let intMonth = parseInt(currentMonth)
-        if (intMonth === 1){
-            localStorage.setItem('savedMonth', 12)
-            intYear--
-            localStorage.setItem('savedYear', intYear)
-        }else{
-            intMonth--
-            localStorage.setItem('savedMonth', intMonth)
-        }     
-        reqApp()
-        displayDate = toString(intMonth) + " / " + toString(intYear)
+
+
+        if(cMonth === intMonth && cYear === intYear){
+            //ignored since this month is the latest
+        } else {
+            if (intMonth === 1){
+                localStorage.setItem('savedMonth', 12)
+                intYear--
+                localStorage.setItem('savedYear', intYear)
+            }else{
+                intMonth--
+                localStorage.setItem('savedMonth', intMonth)
+            }     
+            reqApp()
+            displayDate = toString(intMonth) + " / " + toString(intYear)
+        }
+
+
+       
     }
 
     function returnToNow(){
