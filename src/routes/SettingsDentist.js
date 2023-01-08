@@ -131,20 +131,6 @@ export default function SettingsDentist() {
     const navigate = useNavigate();
     const [pageLang, setLang] = useState('eng'); 
     
-    const [title, setTitle] = useState(engLang.title);
-    const [loginButtonText, setLoginButtonText] = useState(engLang.loginButtonText);
-    const [aboutButtonText, setAboutButtonText] = useState(engLang.aboutButtonText);
-    const [contactText, setContactText] = useState(engLang.contactText);
-    const [p1Text, setp1Text] = useState(engLang.p1Text);
-    const [p2Text, setp2Text] = useState(engLang.p2Text);
-    const [p3Text, setp3Text] = useState(engLang.p3Text);
-    const [p4Text, setp4Text] = useState(engLang.p4Text);
-    const [quoteText, setQuoteText] = useState(engLang.quoteText);
-    const [contactDescriptionText, setContactDescriptionText] = useState(engLang.contactDescriptionText);
-    const [fullStackText, setFullStackText] = useState(engLang.fullStackText);
-    const [backendText, setBackendText] = useState(engLang.backendText);
-    const [frontendText, setFrontendText] = useState(engLang.frontendText);
-    const [toTopText, setToTopText] = useState(engLang.toTopText);
 
   function checkLang() {
     if(chosenLang !== pageLang){
@@ -163,20 +149,6 @@ export default function SettingsDentist() {
           break;
       }
 
-      setTitle(langObj.title);
-      setLoginButtonText(langObj.loginButtonText);
-      setAboutButtonText(langObj.aboutButtonText);
-      setContactText(langObj.contactText);
-      setp1Text(langObj.p1Text);
-      setp2Text(langObj.p2Text);
-      setp3Text(langObj.p3Text);
-      setp4Text(langObj.p4Text);
-      setQuoteText(langObj.quoteText);
-      setContactDescriptionText(langObj.contactDescriptionText);
-      setFullStackText(langObj.fullStackText);
-      setBackendText(langObj.backendText);
-      setFrontendText(langObj.frontendText);
-      setToTopText(langObj.toTopText);
       inUse = false
     }
   }
