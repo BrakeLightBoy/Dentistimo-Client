@@ -45,18 +45,15 @@ export default function Settings() {
       setErrorMsg(true)
       return
     }
-    if (email.current.value.length > 0 ||
-        first.current.value.length > 0 ||
-        last.current.value.length > 0 ||
+    /*if (email.current.value.length > 0 ||
         pass.current.value.length > 0) {
       saveInfo()
       setPopupMsg('Updated your info')
       setErrorMsg(true)
       return
     }  
+    */
     if (email.current.value.length === 0 &&
-        first.current.value.length === 0 &&
-        last.current.value.length === 0 &&
         pass.current.value.length ===  0) {
       setPopupMsg('All fields are empty')
       setErrorMsg(true)
