@@ -40,12 +40,11 @@ let currentSub = null
 
 let bFunc = null
 
+
 export const Booking = () =>{
   const [bookingResponse, setBookingResp] = useState(false);
   const [errBookingResponse, setErrBookingResp] = useState(false);
-  const cId = useRef(null);
-  const mNum = useRef(null);
-  const yNum = useRef(null);
+ 
   const uID = window.localStorage.getItem('uID')
 
   const [freeAppointments, setFAppointments] = useState([]); 
@@ -125,21 +124,10 @@ export const Booking = () =>{
   function reqApp() {
     console.log("RUNNNNNNS")
     if(isConnected){
-      let clinic = null
-      let year = null
-      let month = null
+      let clinic = localStorage.getItem('savedClinic')
+      let year = localStorage.getItem('savedYear')
+      let month = localStorage.getItem('savedMonth')
 
-      if(cId.current && yNum.current && yNum.current){
-        clinic = cId.current.value
-        year = yNum.current.value
-        month = mNum.current.value
-
-        cId.current.value = null
-        yNum.current.value = null
-        mNum.current.value = null
-      } else {
-        return
-      }
       if(currentSub){
         client.unsubscribe(currentSub)
       }
@@ -215,13 +203,8 @@ export const Booking = () =>{
   return (
     <div>  
       <NavPanel></NavPanel>
-      <p className="header">{bookingTitle}</p>
-      <button className="invis"></button>   
+      <p className="header"> Choose clinic</p>
       <div>
-        <button className="Sort" onClick={requestAppointments}>{retrieveBookings}</button>
-        <input ref={cId} type="text" className="input-field" placeholder="Clinic Id"></input>
-        <input ref={mNum} type="text" className="input-field" placeholder="Month"></input>
-        <input ref={yNum} type="text" className="input-field" placeholder="Year"></input>
         {/* <button className="Sort">Filter by</button>   */}
         
         <label>{bookingResponse}</label>
@@ -235,8 +218,8 @@ export const Booking = () =>{
       <div className="AList">
           {/* {appointments} */}
       </div>
-      <Map zoom={10} center={{"lat":57.75,"lng":11.92}}  />
-      <Calendar dayEntries={freeAppointments} bFunc={bFunc} />
+      <Map zoom={10} center={{"lat":57.75,"lng":11.92}} reqApp={requestAppointments} />
+      <Calendar dayEntries={freeAppointments} bFunc={bFunc} reqApp={requestAppointments} />
     </div>
   )
 };

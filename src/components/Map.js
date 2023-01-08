@@ -23,7 +23,8 @@ let initLoad = false
 
 let update = null
 let displayInfo = null
-
+let displayCalendar = null
+let markerReqApp = null
 
 
 function onConnect () {
@@ -32,7 +33,7 @@ function onConnect () {
     }})
 }
 
-const Map = ({center, zoom}) =>{
+const Map = ({center, zoom, marker, reqApp}) =>{
     
     let [markers, setMarkers] = useState([])
     let [info, setInfo] = useState("")
@@ -45,6 +46,7 @@ const Map = ({center, zoom}) =>{
         initLoad =true
     }
     
+
 
     update = (newMarkers) =>{
         setMarkers(newMarkers)
@@ -61,7 +63,7 @@ const Map = ({center, zoom}) =>{
                 n++;
                 let info = marker                
 
-                return <Marker lat={marker.coordinate.latitude} clickFunc={displayInfo} lng={marker.coordinate.longitude} clinicName={info.name} clinicOwner={info.owner} clinicAddress={info.address} clinicCity={info.city} clinicOpeningHours={info.opening_hours} key={n} icon={icon}/>
+                return <Marker lat={marker.coordinate.latitude} clickFunc={displayInfo} lng={marker.coordinate.longitude} clinic_ID={info._id} clinicName={info.name} clinicOwner={info.owner} clinicAddress={info.address} clinicCity={info.city} clinicOpeningHours={info.opening_hours} key={n} icon={icon} reqApp={markerReqApp}/>
             })
     
             if(isLoaded){
@@ -76,6 +78,7 @@ const Map = ({center, zoom}) =>{
     client.onMessageArrived = onMessage;
         
     displayInfo = setInfo
+    markerReqApp = reqApp
 
     return (
         <div class="row">

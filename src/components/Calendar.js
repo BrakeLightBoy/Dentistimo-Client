@@ -3,8 +3,19 @@ import AvailableAppointment from "./AvailableAppointment";
 import "./CalendarStyles.css";
 import DayEntry from "./DayEntry";
 
-const Calendar = ({dayEntries, bFunc}) => {
 
+
+
+const Calendar = ({dayEntries, bFunc, reqApp}) => {
+    
+    let displayDate = null
+    if (!localStorage.getItem('savedYear') || !localStorage.getItem('savedMonth')){
+        const date = new Date()
+        localStorage.setItem('savedYear', date.getFullYear())
+        localStorage.setItem('savedMonth', date.getMonth() + 1)
+     }
+    displayDate = localStorage.getItem('savedMonth') + " / " + localStorage.getItem('savedYear')
+    
     const createDummies = () => {
         const dummies = []
         for (let i=0; i<31; i++){
@@ -39,7 +50,10 @@ const Calendar = ({dayEntries, bFunc}) => {
 
     const days = (dayEntries && dayEntries.length > 0) ? processEntries(dayEntries) : createDummies()
 
-    const onMouseOver = event => {
+    
+
+    //Buttons turn darker on mouse over
+      const onMouseOver = event => {
         const el = event.target;
         el.style.background = "rgb(42, 98, 144)";
       };
@@ -48,21 +62,71 @@ const Calendar = ({dayEntries, bFunc}) => {
         const el = event.target;
         el.style.background = "rgb(42, 113, 168)";
       };
+
+      
+      
+
+      function nextMonth() {
+        let currentMonth = localStorage.getItem('savedMonth')
+        let currentYear = localStorage.getItem('savedYear')
+        let intYear = parseInt(currentYear)
+        let intMonth = parseInt(currentMonth)
+        if (intMonth === 12){
+            localStorage.setItem('savedMonth', 1)
+            intYear++
+            localStorage.setItem('savedYear', intYear)
+        }else{
+            intMonth++
+            localStorage.setItem('savedMonth', intMonth)
+        }
+        reqApp() 
+        displayDate = toString(intMonth) + " / " + toString(intYear)  
+    }
+
+    function lastMonth() {
+        let currentMonth = localStorage.getItem('savedMonth')
+        let currentYear = localStorage.getItem('savedYear')
+        let intYear = parseInt(currentYear)
+        let intMonth = parseInt(currentMonth)
+        if (intMonth === 1){
+            localStorage.setItem('savedMonth', 12)
+            intYear--
+            localStorage.setItem('savedYear', intYear)
+        }else{
+            intMonth--
+            localStorage.setItem('savedMonth', intMonth)
+        }     
+        reqApp()
+        displayDate = toString(intMonth) + " / " + toString(intYear)
+    }
+
+    function returnToNow(){
+        const date = new Date()
+        localStorage.setItem('savedYear', date.getFullYear())
+        localStorage.setItem('savedMonth', date.getMonth() + 1)
+        reqApp()
+    }
     
     return (
         <div>
-            <p className="header">Available Appointments</p> 
+            <p className="header2">Available Appointments</p> 
             <div className="WeekGrid" id="BigGrid">
                 <button className="leftArrow Arrow"
                 onClick={() => {
-                    document.getElementById("AppointmentGrid").style.marginLeft = "0.5rem";
+                    lastMonth()
                   }}
                   onMouseEnter={event => onMouseOver(event)}
                   onMouseOut={event => onMouseOut(event)}>Previous</button> 
-                <button className="currentDate">12 / 2022</button>  
+                <button className="currentDate" 
+                onClick={() => {
+                    returnToNow()
+                  }}
+                  onMouseEnter={event => onMouseOver(event)}
+                  onMouseOut={event => onMouseOut(event)}
+                > {displayDate}</button> 
                 <button className="RightArrow Arrow"
                 onClick={() => {
-                    document.getElementById("AppointmentGrid").style.marginLeft = "-100rem";
+                    nextMonth()
                   }}
                   onMouseEnter={event => onMouseOver(event)}
                   onMouseOut={event => onMouseOut(event)}
@@ -73,6 +137,8 @@ const Calendar = ({dayEntries, bFunc}) => {
             </div>   
         </div>
     )
+    
+    
 }
 
 
