@@ -23,16 +23,6 @@
     background-color: transparent;
 }
 
-.dateNav {
-    display: inline-block;
-    border-radius: 0.5rem;
-    padding: 0.3rem;
-    background-color: #0e0e23;
-    margin-left: 1rem;
-    border: thin solid;
-    color: aliceblue;
-}
-
 .today {
     background-color: transparent;
     border: transparent;
